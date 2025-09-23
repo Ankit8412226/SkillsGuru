@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import logo from "../assets/logo_suh.jpg";
 import { ArrowRight, Search } from "lucide-react";
+import React, { useState } from "react";
 
 const navLinks = [
     { name: "Home", href: "#home", key: "home" },
@@ -18,7 +17,7 @@ const Nav = () => {
         <div className="bg-white shadow-md py-4 px-6 flex justify-between items-center fixed top-[44px] left-0 w-full z-40">
             {/* Logo */}
             <div className="flex items-center space-x-2">
-                <img src={logo} alt="Suh Tech Logo" className="w-16 h-16 object-contain" />
+                <img src="./logo_suh.jpg" alt="Suh Tech Logo" className="w-16 h-16 object-contain" />
                 <span className="text-2xl font-bold text-gray-800">Suh Tech</span>
             </div>
 
@@ -40,7 +39,7 @@ const Nav = () => {
             </div>
 
             {/* Right side: Search */}
-            
+
             <div className="flex items-center space-x-6">
                 {/* Search Icon */}
                 <span className="flex items-center justify-center w-11 h-11 rounded-full cursor-pointer">

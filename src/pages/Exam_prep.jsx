@@ -84,7 +84,7 @@ const Exam_prep = () => {
                         </button>
                     </div>
                     <img
-                        src="./girl.png"
+                        src="./boy.png"
                         alt="boy"
                         className="mt-6 md:mt-0 md:ml-6 w-44 md:w-52 transform scale-125 object-contain"
                     />

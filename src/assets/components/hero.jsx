@@ -1,16 +1,12 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa";
-import bgImg from "../assets/bg_img.jpg";
-import hero_image1 from "../assets/Hero_image1.png";
-import hero_image2 from "../assets/Hero_image2.png";
-import Avatar from "../assets/student_avatar.png";
+
 import { Search } from "lucide-react";
 
 const Hero = () => {
     return (
         <section
             className="w-full bg-cover bg-center py-60 px-6 md:px-16 lg:px-24"
-            style={{ backgroundImage: `url(${bgImg})` }}
+            style={{ backgroundImage: `url(./bg.jpg)` }}
         >
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 items-center gap-10">
                 {/* Left Section */}
@@ -48,7 +44,7 @@ const Hero = () => {
                         </div>
                         <div className="flex -space-x-2">
                             <img
-                                src={Avatar}
+                                src="./Avtar.jpg"
                                 alt="student"
                                 className="w-40 h-10 rounded-full border border-none"
                             />
@@ -59,7 +55,7 @@ const Hero = () => {
                     <div className="flex gap-6">
                         <div className="p-1 w-55 h-90 rounded-full border-2 border-orange-500 overflow-hidden">
                             <img
-                                src={hero_image1}
+                                src="./Heroimg1.jpg"
                                 alt="student1"
                                 className="w-full h-full object-cover object-top translate-y-4"
                             />
@@ -67,7 +63,7 @@ const Hero = () => {
 
                         <div className="p-1 w-55 h-90 rounded-full border-2 border-orange-500 overflow-hidden">
                             <img
-                                src={hero_image2}
+                                src="./hero2.jpg"
                                 alt="student2"
                                 className="w-full h-full object-cover"
                             />

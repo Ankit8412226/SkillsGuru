@@ -24,8 +24,9 @@ function App() {
         <BrouseCourses />
         <StatusSection />
         <SuhFeatures/>
-        <Footer />
+
         <Exam_prep />
+          <Footer />
       </div>
 
     </>
