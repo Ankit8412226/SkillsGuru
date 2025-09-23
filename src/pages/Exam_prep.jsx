@@ -1,12 +1,6 @@
 
 import React from "react";
-import globe from "../assets/globe.png";     
-import flower from "../assets/flower.png";    
-import girl from "../assets/girl.png";        
-import boy from "../assets/boy.png";          
-import left_cardImg from "../assets/left_card.jpeg";   
-import right_cardImg from "../assets/right_card.jpeg"; 
-import icon from "../assets/icon.svg";
+
 import { ArrowRight } from "lucide-react";
 
 const Exam_prep = () => {
@@ -15,14 +9,14 @@ const Exam_prep = () => {
 
             {/* Globe Image*/}
             <img
-                src={globe}
+                src="./globe.png"
                 alt="globe"
                 className="absolute top-15 left-8 w-30 opacity-80"
             />
 
             {/* Flower Image */}
             <img
-                src={flower}
+                src="./flower.png"
                 alt="flower"
                 className="absolute top-15 right-20 w-15"
             />
@@ -30,9 +24,9 @@ const Exam_prep = () => {
             {/* Title Section */}
             <div className="text-center mb-12">
                 <div className="flex items-center justify-center gap-2">
-                    <img src={icon} alt="icon" className="w-5 h-5" />
+                    <img src="./icon.svg" alt="icon" className="w-5 h-5" />
                     <p className="text-[#FE543D] text-sm leading-8">EXAM PREPARATION</p>
-                    <img src={icon} alt="icon" className="w-5 h-5" />
+                    <img src="./icon.svg" alt="icon" className="w-5 h-5" />
                 </div>
                 <h2 className="text-[#0E2A46] text-[45px] font-bold leading-12 ">
                     Annual Exam Preparation
@@ -45,7 +39,7 @@ const Exam_prep = () => {
                 {/* Left Card */}
                 <div
                     className="rounded-xl p-8 flex flex-col md:flex-row items-center justify-between bg-no-repeat bg-cover h-full"
-                    style={{ backgroundImage: `url(${left_cardImg})` }}
+                    style={{ backgroundImage: `url(${"./left_card.jpeg"})` }}
                 >
                     <div className="max-w-sm text-white">
                         <p className="mb-3">Start From Today</p>
@@ -63,7 +57,7 @@ const Exam_prep = () => {
                         </button>
                     </div>
                     <img
-                        src={girl}
+                        src="./girl.png"
                         alt="girl"
                         className="mt-6 md:mt-0 md:ml-2 w-48 md:w-56 transform scale-150 -translate-x-9 object-contain"
                     />
@@ -72,7 +66,7 @@ const Exam_prep = () => {
                 {/* Right Card */}
                 <div
                     className="rounded-xl p-8 flex flex-col md:flex-row items-center justify-between bg-no-repeat bg-cover h-full"
-                    style={{ backgroundImage: `url(${right_cardImg})` }}
+                    style={{ backgroundImage: `url(${"./right_card.jpeg"})` }}
                 >
                     <div className="max-w-sm text-white">
                         <p className="mb-3">Start From Today</p>
@@ -90,7 +84,7 @@ const Exam_prep = () => {
                         </button>
                     </div>
                     <img
-                        src={boy}
+                        src="./girl.png"
                         alt="boy"
                         className="mt-6 md:mt-0 md:ml-6 w-44 md:w-52 transform scale-125 object-contain"
                     />
