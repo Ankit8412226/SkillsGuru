@@ -5,6 +5,7 @@ import Nav from "./assets/components/nav.jsx";
 import About from './pages/About.jsx';
 import BrouseCourses from './pages/Browsecourses.jsx';
 import SuhFeatures from "./pages/Features.jsx";
+import Footer from './pages/Footer.jsx';
 import StatusSection from './pages/StatusSection.jsx';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <BrouseCourses />
         <StatusSection />
         <SuhFeatures/>
+        <Footer />
       </div>
 
     </>
