@@ -11,107 +11,113 @@ export default function Footer() {
             }}
         >
             {/* Optional overlay for readability */}
-            <div className="absolute inset-0 bg-black/50"></div>
+            <div className="absolute inset-0 bg-black/60"></div>
 
             {/* Footer content */}
             <div className="relative z-10">
                 {/* Top contact info row */}
-                <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-700 border-b border-gray-700">
+                <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-gray-700 border-b border-gray-700">
                     {/* Address */}
-                    <div className="flex items-center justify-center gap-3 p-6">
-                        <MapPin className="text-white" size={36} />
-                        <div>
-                            <p className="text-[#2FC7A1]">Address:</p>
-                            <p className="font-semibold">Lorem ipsum dolor sit amet.</p>
+                    <div className="flex items-center justify-center gap-3 p-4 sm:p-6">
+                        <MapPin className="text-white flex-shrink-0" size={24} />
+                        <div className="text-center sm:text-left">
+                            <p className="text-[#2FC7A1] text-sm sm:text-base font-medium">Address:</p>
+                            <p className="font-semibold text-sm sm:text-base">Lorem ipsum dolor sit amet.</p>
                         </div>
                     </div>
 
                     {/* Phone */}
-                    <div className="flex items-center justify-center gap-3 p-6">
-                        <Phone className="text-white" size={36} />
-                        <div>
-                            <p className="text-[#2FC7A1]">Phone:</p>
-                            <p className="font-semibold">(00) 875 784 568</p>
+                    <div className="flex items-center justify-center gap-3 p-4 sm:p-6">
+                        <Phone className="text-white flex-shrink-0" size={24} />
+                        <div className="text-center sm:text-left">
+                            <p className="text-[#2FC7A1] text-sm sm:text-base font-medium">Phone:</p>
+                            <p className="font-semibold text-sm sm:text-base">(00) 875 784 568</p>
                         </div>
                     </div>
 
                     {/* Email */}
-                    <div className="flex items-center justify-center gap-3 p-6">
-                        <Mail className="text-white" size={36} />
-                        <div>
-                            <p className="text-[#2FC7A1]">Email:</p>
-                            <p className="font-semibold">suhtech@gmail.com</p>
+                    <div className="flex items-center justify-center gap-3 p-4 sm:p-6">
+                        <Mail className="text-white flex-shrink-0" size={24} />
+                        <div className="text-center sm:text-left">
+                            <p className="text-[#2FC7A1] text-sm sm:text-base font-medium">Email:</p>
+                            <p className="font-semibold text-sm sm:text-base">suhtech@gmail.com</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Main footer content */}
-                <div className="container mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-10">
-                    {/* Logo */}
-                    <div>
-                        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                            <img src="/logo_suh.jpg" alt="Suh Tech Logo" className="w-8 h-8 object-contain" />
-                            Suh Tech
-                        </h2>
-                        <p className="text-gray-400 mb-4">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas ad amet earum magnam aliquid repellendus rem accusantium laborum cupiditate vel asperiores, at facere, quidem ipsa odio culpa quos, provident ea.
-                        </p>
-                        <div className="flex gap-3">
-                            <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition">
-                                <Facebook size={20} />
-                            </a>
-                            <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition">
-                                <Instagram size={20} />
-                            </a>
-                            <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition">
-                                <Twitter size={20} />
-                            </a>
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+                        {/* Logo */}
+                        <div className="sm:col-span-2 lg:col-span-1">
+                            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 flex items-center justify-center sm:justify-start gap-2">
+                                <img src="/logo_suh.jpg" alt="Suh Tech Logo" className="w-6 h-6 sm:w-8 sm:h-8 object-contain" />
+                                Suh Tech
+                            </h2>
+                            <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed text-center sm:text-left">
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas ad amet earum magnam aliquid repellendus rem accusantium laborum cupiditate vel asperiores.
+                            </p>
+                            <div className="flex gap-3 justify-center sm:justify-start">
+                                <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300" aria-label="Facebook">
+                                    <Facebook size={18} />
+                                </a>
+                                <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300" aria-label="Instagram">
+                                    <Instagram size={18} />
+                                </a>
+                                <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300" aria-label="Twitter">
+                                    <Twitter size={18} />
+                                </a>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Services */}
-                    <div>
-                        <h3 className="font-semibold text-lg mb-4">Our Services:</h3>
-                        <ul className="space-y-2 text-gray-400">
-                            <li>› Lorem ipsum dolor sit amet.</li>
-                            <li>› Lorem ipsum dolor sit amet.</li>
-                            <li>› Lorem ipsum dolor sit amet.</li>
-                            <li>› Lorem ipsum dolor sit amet.</li>
-                            <li>› Lorem ipsum dolor sit amet.</li>
-                        </ul>
-                    </div>
-
-                    {/* Gallery */}
-                    <div>
-                        <h3 className="font-semibold text-lg mb-4">Gallery</h3>
-                        <div className="grid grid-cols-3 gap-2">
-                            <img src="/gallery1.png" alt="gallery1" className="w-full h-20 object-cover rounded-md" />
-                            <img src="/gallery2.png" alt="gallery2" className="w-full h-20 object-cover rounded-md" />
-                            <img src="/gallery3.png" alt="gallery3" className="w-full h-20 object-cover rounded-md" />
-                            <img src="/gallery4.png" alt="gallery4" className="w-full h-20 object-cover rounded-md" />
-                            <img src="/gallery5.png" alt="gallery5" className="w-full h-20 object-cover rounded-md" />
-                            <img src="/gallery6.png" alt="gallery6" className="w-full h-20 object-cover rounded-md" />
+                        {/* Services */}
+                        <div className="text-center sm:text-left">
+                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Our Services:</h3>
+                            <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
+                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Web Development</li>
+                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Mobile Apps</li>
+                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› UI/UX Design</li>
+                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Digital Marketing</li>
+                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Consulting</li>
+                            </ul>
                         </div>
-                    </div>
 
-                    {/* Subscribe */}
-                    <div>
-                        <h3 className="font-semibold text-lg mb-4">Subscribe</h3>
-                        <input
-                            type="email"
-                            placeholder="Enter your email:"
-                            className=" bg-white border-white w-full px-3 py-2 rounded-md text-black mb-3"
-                        />
-                        <button className="w-full bg-[#2FC7A1] hover:bg-[#2FC7A1] text-white font-semibold py-2 rounded-md">
-                            SUBSCRIBE NOW
-                        </button>
+                        {/* Gallery */}
+                        <div className="text-center sm:text-left">
+                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Gallery</h3>
+                            <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto sm:mx-0">
+                                <img src="/gallery1.png" alt="Gallery image 1" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
+                                <img src="/gallery2.png" alt="Gallery image 2" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
+                                <img src="/gallery3.png" alt="Gallery image 3" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
+                                <img src="/gallery4.png" alt="Gallery image 4" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
+                                <img src="/gallery5.png" alt="Gallery image 5" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
+                                <img src="/gallery6.png" alt="Gallery image 6" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
+                            </div>
+                        </div>
+
+                        {/* Subscribe */}
+                        <div className="text-center sm:text-left">
+                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Subscribe</h3>
+                            <div className="max-w-xs mx-auto sm:mx-0">
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    className="bg-white border-2 border-gray-300 w-full px-3 py-2 sm:py-3 rounded-md text-black text-sm sm:text-base mb-3 focus:outline-none focus:border-[#2FC7A1] transition-colors"
+                                />
+                                <button className="w-full bg-[#2FC7A1] hover:bg-[#26A085] text-white font-semibold py-2 sm:py-3 rounded-md text-sm sm:text-base transition-colors duration-300 transform hover:scale-105">
+                                    SUBSCRIBE NOW
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-10 bg-[#222222] border-t border-white/20 text-center text-gray-300 text-sm py-4">
-                    Copyright ©️ {new Date().getFullYear()}{" "}
-                    <span className="text-[#2FC7A1] font-semibold">SuhTech</span> || All rights reserved.
+                <div className="bg-[#222222] border-t border-white/20 text-center text-gray-300 text-xs sm:text-sm py-3 sm:py-4 px-4">
+                    <p>
+                        Copyright ©️ {new Date().getFullYear()}{" "}
+                        <span className="text-[#2FC7A1] font-semibold">SuhTech</span> || All rights reserved.
+                    </p>
                 </div>
             </div>
         </footer>

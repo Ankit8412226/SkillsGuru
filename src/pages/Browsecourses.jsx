@@ -17,7 +17,7 @@ const BrowseCourses = () => {
       instructorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
       originalPrice: 199,
       currentPrice: 99,
-      categoryColor: "bg-red-500" // Red for Development
+      categoryColor: "bg-red-500"
     },
     {
       id: 2,
@@ -32,7 +32,7 @@ const BrowseCourses = () => {
       instructorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
       originalPrice: 149,
       currentPrice: 79,
-      categoryColor: "bg-[#2FC7A1]" // Teal green for Data Science
+      categoryColor: "bg-[#2FC7A1]"
     },
     {
       id: 3,
@@ -47,7 +47,7 @@ const BrowseCourses = () => {
       instructorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
       originalPrice: 179,
       currentPrice: 89,
-      categoryColor: "bg-purple-500" // Purple for Design
+      categoryColor: "bg-purple-500"
     }
   ];
 
@@ -55,64 +55,73 @@ const BrowseCourses = () => {
     <div className="min-h-screen bg-gray-100">
       {/* Hero section with background image */}
       <div
-        className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center py-12 flex-col gap-6"
+        className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center py-6 sm:py-8 md:py-12 flex-col gap-4 sm:gap-6"
         style={{
           backgroundImage: 'url(./frame1.png)',
         }}
       >
         {/* Header Section */}
-        <div className="container mx-auto px-4 max-w-7xl mb-8">
-          {/* Top Popular Course - Left aligned */}
-          <div className='flex items-start justify-start gap-2 mb-6'>
-            <img src="./icon.svg" alt="icon" />
-            <p>Top Popular Course</p>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-4 sm:mb-6 md:mb-8">
+          {/* Top Popular Course - Responsive alignment */}
+          <div className='flex items-center justify-center sm:justify-start gap-2 mb-4 sm:mb-6'>
+            <img
+              src="./icon.svg"
+              alt="icon"
+              className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
+            />
+            <p className="text-sm sm:text-base md:text-lg text-gray-700">Top Popular Course</p>
           </div>
 
-          {/* Title and Button Row */}
-          <div className="flex items-center justify-between w-full">
-            {/* Left side - Main heading */}
-            <h1 className='text-[#0E2A46] text-[45px] font-bold leading-12 text-left'>
-              Check out educate features<br />
-              win any exam
-            </h1>
+          {/* Title and Button Row - Responsive Layout */}
+          <div className="flex flex-col lg:flex-row items-center lg:items-center lg:justify-between w-full gap-4 lg:gap-8">
+            {/* Main heading - Responsive typography and alignment */}
+            <div className="flex-1 text-center lg:text-left">
+              <h1 className='text-[#0E2A46] text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[45px] font-bold leading-tight sm:leading-snug md:leading-normal lg:leading-12 max-w-none lg:max-w-2xl'>
+                Check out educate features<br className="hidden sm:block" />
+                <span className="sm:hidden"> </span>win any exam
+              </h1>
+            </div>
 
-            {/* Right side - Button */}
-       <div>
-  <button className="flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-12 pl-8 pr-0 overflow-hidden gap-4">
-    <span className="text-sm leading-8 font-medium text-white">
-      Admission open
-    </span>
-    <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full">
-      <ArrowRight size={20} />
-    </span>
-  </button>
-</div>
-
+            {/* Button - Responsive sizing and positioning */}
+            <div className="flex-shrink-0">
+              <button className="flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 sm:h-11 md:h-12 pl-4 sm:pl-6 md:pl-8 pr-0 overflow-hidden gap-2 sm:gap-3 md:gap-4 hover:bg-[#28B895] transition-colors duration-200 shadow-md">
+                <span className="text-xs sm:text-sm leading-6 sm:leading-8 font-medium text-white whitespace-nowrap">
+                  Admission open
+                </span>
+                <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full">
+                  <ArrowRight size={16} className="sm:w-5 sm:h-5" />
+                </span>
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Course Cards Container */}
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Course Cards Container - Responsive Grid */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-7xl mx-auto">
             {coursesData.map(course => (
-              <CourseCard
-                key={course.id}
-                imageUrl={course.imageUrl}
-                category={course.category}
-                rating={course.rating}
-                title={course.title}
-                lessonCount={course.lessonCount}
-                duration={course.duration}
-                studentsCount={course.studentsCount}
-                instructor={course.instructor}
-                instructorImage={course.instructorImage}
-                originalPrice={course.originalPrice}
-                currentPrice={course.currentPrice}
-                categoryColor={course.categoryColor}
-              />
+              <div key={course.id} className="w-full">
+                <CourseCard
+                  imageUrl={course.imageUrl}
+                  category={course.category}
+                  rating={course.rating}
+                  title={course.title}
+                  lessonCount={course.lessonCount}
+                  duration={course.duration}
+                  studentsCount={course.studentsCount}
+                  instructor={course.instructor}
+                  instructorImage={course.instructorImage}
+                  originalPrice={course.originalPrice}
+                  currentPrice={course.currentPrice}
+                  categoryColor={course.categoryColor}
+                />
+              </div>
             ))}
           </div>
         </div>
+
+        {/* Optional: Add some bottom spacing */}
+        <div className="h-8 sm:h-12 md:h-16"></div>
       </div>
     </div>
   );
