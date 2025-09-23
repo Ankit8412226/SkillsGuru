@@ -4,6 +4,7 @@ import Hero from "./assets/components/hero.jsx";
 import Nav from "./assets/components/nav.jsx";
 import About from './pages/About.jsx';
 import BrouseCourses from './pages/Browsecourses.jsx';
+import Exam_prep from './pages/Exam_prep.jsx';
 import SuhFeatures from "./pages/Features.jsx";
 import Footer from './pages/Footer.jsx';
 import StatusSection from './pages/StatusSection.jsx';
@@ -24,6 +25,7 @@ function App() {
         <StatusSection />
         <SuhFeatures/>
         <Footer />
+        <Exam_prep />
       </div>
 
     </>
