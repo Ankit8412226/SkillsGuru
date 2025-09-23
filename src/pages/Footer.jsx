@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Facebook, Instagram, Twitter, Pinterest } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from "lucide-react";
 
 export default function Footer() {
     return (
@@ -62,9 +62,6 @@ export default function Footer() {
                             </a>
                             <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition">
                                 <Instagram size={20} />
-                            </a>
-                            <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition">
-                                <Pinterest size={20} />
                             </a>
                             <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition">
                                 <Twitter size={20} />
