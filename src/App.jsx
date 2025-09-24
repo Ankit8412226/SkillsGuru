@@ -27,25 +27,71 @@ function App() {
         <Route
           path="/"
           element={
-            <div>
+            <div className="min-h-screen">
+              {/* Header and Navigation */}
               <Header />
               <Nav />
-              <Hero />
-              <About />
-              <BrouseCourses />
-              <StatusSection />
-              <SuhFeatures />
-              <New_sesion />
-              <Exam_prep />
-              <TestimonialSection />
-              <Explore_event />
-              <Instructors />
+
+              {/* Main Content Sections */}
+              <main className="w-full">
+                {/* Hero Section */}
+                <section className="w-full">
+                  <Hero />
+                </section>
+
+                {/* About Section */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <About />
+                </section>
+
+                {/* Browse Courses */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <BrouseCourses />
+                </section>
+
+                {/* Status Section */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <StatusSection />
+                </section>
+
+                {/* Features */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <SuhFeatures />
+                </section>
+
+                {/* New Session */}
+                <section className="w-full">
+                  <New_sesion />
+                </section>
+
+                {/* Exam Prep */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <Exam_prep />
+                </section>
+
+                {/* Testimonial */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <TestimonialSection />
+                </section>
+
+                {/* Explore Event */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <Explore_event />
+                </section>
+
+                {/* Instructors */}
+                <section className="w-full">
+                  <Instructors />
+                </section>
+              </main>
+
+              {/* Footer */}
               <Footer />
             </div>
           }
         />
 
-        {/* Auth Pages */}
+        {/* Authentication Pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
