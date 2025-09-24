@@ -8,6 +8,10 @@ import Exam_prep from './pages/Exam_prep.jsx';
 import SuhFeatures from "./pages/Features.jsx";
 import Footer from './pages/Footer.jsx';
 import StatusSection from './pages/StatusSection.jsx';
+import New_sesion from './pages/New_sesion.jsx';
+import TestimonialSection from './pages/TestimonialSection.jsx';
+import Explore_event from './pages/Explore_event.jsx';
+import Instructors from './pages/Instructors.jsx';
 
 function App() {
 
@@ -24,9 +28,12 @@ function App() {
         <BrouseCourses />
         <StatusSection />
         <SuhFeatures/>
-
+        <New_sesion />
         <Exam_prep />
-          <Footer />
+        <TestimonialSection />
+        <Explore_event />
+        <Instructors />
+        <Footer />
       </div>
 
     </>
