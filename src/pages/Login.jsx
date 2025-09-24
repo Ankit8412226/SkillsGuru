@@ -1,13 +1,18 @@
+// Login Component
 import React, { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    rememberMe: false,
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleSubmit = (e) => {
@@ -16,46 +21,111 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-50 to-green-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-[400px]">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          Login to <span className="text-[#2FC7A1]">Suh Tech</span>
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
-            required
-          />
-          <button
-            type="submit"
-            className="w-full bg-[#2FC7A1] text-white py-3 rounded-xl font-semibold hover:bg-green-600 transition"
-          >
-            Login
-          </button>
-        </form>
-        <p className="text-sm text-center mt-4">
-          Don’t have an account?{" "}
-          <a href="/register" className="text-[#2FC7A1] hover:underline">
-            Register
-          </a>
-        </p>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="max-w-6xl w-full bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div className="flex flex-col lg:flex-row">
+          {/* Left Side - Form */}
+          <div className="lg:w-1/2 p-8 lg:p-12">
+            <div className="max-w-md mx-auto">
+
+              {/* Header */}
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">Login</h2>
+                <p className="text-gray-600">Login to access your travelwise account</p>
+              </div>
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="john.doe@gmail.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="••••••••••••••••"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="rememberMe"
+                      checked={formData.rememberMe}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">Remember me</span>
+                  </label>
+                  <a href="/forgot-password" className="text-sm text-red-500 hover:text-red-600">
+                    Forgot Password?
+                  </a>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  Login
+                </button>
+              </form>
+
+              <p className="text-center text-gray-600 mt-6">
+                Don't have an account?{" "}
+                <a href="/register" className="text-red-500 hover:text-red-600 font-medium">
+                  Sign up
+                </a>
+              </p>
+            </div>
+          </div>
+
+          {/* Right Side - Illustration */}
+          <div className="lg:w-1/2 bg-gray-100 p-8 lg:p-12 flex items-center justify-center">
+            <div className="text-center">
+              <div className="w-64 h-80 mx-auto mb-4 rounded-3xl flex items-center justify-center overflow-hidden">
+                <img 
+                  src="login.png" 
+                  alt="Login illustration" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
+
+
 
 export default Login;
