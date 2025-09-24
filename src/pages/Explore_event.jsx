@@ -1,47 +1,41 @@
-// src/components/Explore_event.jsx
-import React from "react";
 import { ArrowRight } from "lucide-react";
-
-
-
+import React from "react";
 
 const ExploreEvent = () => {
     return (
-        <section className="relative flex flex-col md:flex-row items-center justify-between px-8 md:px-20 py-16 bg-white">
+        <section className="relative flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16 lg:py-20 bg-white overflow-hidden">
             {/* Left Side */}
-            <div className="md:w-1/2 space-y-6">
-            
-                <div className="text-left mb-6">
-                
+            <div className="w-full lg:w-1/2 space-y-4 sm:space-y-6">
+                <div className="text-left mb-4 sm:mb-6 relative">
+                    {/* Explore Arrow - Responsive positioning */}
                     <img
                         src={"./Explore_arrow.png"}
                         alt="Explore Arrow"
-                        className="w-45 mb-4 translate-x-96 translate-y-10"
+                        className="w-32 sm:w-36 md:w-40 lg:w-45 mb-4 absolute -top-8 sm:-top-12 right-0 sm:right-8 md:right-16 lg:right-24 xl:right-32 opacity-80 hidden sm:block"
                     />
 
                     {/* Icon */}
-                    <div className="flex items-center gap-2">
-                        <img src={"./icon.svg"} alt="icon" className="w-5 h-5" />
-                        <p className="text-[#2FC7A1] text-sm leading-8">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                        <img src={"./icon.svg"} alt="icon" className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <p className="text-[#2FC7A1] text-xs sm:text-sm font-medium leading-6 sm:leading-8">
                             EXPLORE EVENT
                         </p>
-
                     </div>
 
                     {/* Title */}
-                    <h2 className="text-[#0E2A46] text-[45px] font-bold leading-[55px] mt-2">
+                    <h2 className="text-[#0E2A46] text-2xl sm:text-3xl md:text-4xl lg:text-[45px] font-bold leading-tight sm:leading-relaxed lg:leading-[55px] mt-2">
                         Lorem ipsum dolor sit amet consectetur.
                     </h2>
                 </div>
 
                 {/* Sub-heading */}
-                <p className="text-[#0E2A46] font-semibold">
+                <p className="text-[#0E2A46] font-semibold text-sm sm:text-base leading-relaxed">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                     eiusmod tempor incididunt ut labore.
                 </p>
 
                 {/* Paragraph */}
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                     eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
                     minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -50,43 +44,57 @@ const ExploreEvent = () => {
                 </p>
 
                 {/* Button */}
-                <button className="flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-12 pl-8 pr-0 overflow-hidden gap-4">
-                    <span className="text-sm leading-8 font-medium text-white">
-                        Admission open
-                    </span>
-                    <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full">
-                        <ArrowRight size={20} />
-                    </span>
-                </button>
+                <div className="pt-2 sm:pt-4">
+                    <button className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 md:h-14 pl-4 sm:pl-6 md:pl-8 pr-0 overflow-hidden gap-2 sm:gap-4 hover:bg-[#28B898] transition-colors duration-300 group">
+                        <span className="text-xs sm:text-sm md:text-base font-medium text-white">
+                            Admission open
+                        </span>
+                        <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full group-hover:bg-[#2FC7A1] transition-colors duration-300">
+                            <ArrowRight size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                        </span>
+                    </button>
+                </div>
             </div>
 
             {/* Right Side - Image */}
-            <div className="relative md:w-1/2 flex justify-center mt-10 md:mt-0">
-                <img
-                    src={"./eventImg.png"}
-                    alt="Upcoming Event"
-                    className="rounded-xl  w-[400px] h-auto object-cover"
-                />
-
-
+            <div className="relative w-full lg:w-1/2 flex justify-center mt-8 sm:mt-10 lg:mt-0">
+                <div className="relative">
+                    <img
+                        src={"./eventImg.png"}
+                        alt="Upcoming Event"
+                        className="rounded-xl w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[400px] h-auto object-cover shadow-lg hover:shadow-xl transition-shadow duration-300"
+                    />
+                </div>
             </div>
 
-            {/* Decorative Images */}
+            {/* Decorative Images - Responsive positioning */}
+            {/* Orange Semi Circle - Top Left */}
             <img
                 src={"./org_semicircle.png"}
                 alt="semi_circle"
-                className="absolute top-20 left-8 w-10 h-10 z-10"
+                className="absolute top-8 sm:top-12 md:top-16 lg:top-20 left-2 sm:left-4 md:left-6 lg:left-8 w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 z-10 opacity-70 hidden sm:block"
             />
+
+            {/* Flower - Top Right */}
             <img
                 src="./flower.png"
                 alt="flower"
-                className="absolute top-15 right-20 w-15"
+                className="absolute top-4 sm:top-8 md:top-12 lg:top-15 right-4 sm:right-8 md:right-12 lg:right-20 w-8 sm:w-10 md:w-12 lg:w-15 h-auto z-10 opacity-80 hidden md:block"
             />
+
+            {/* Topi - Bottom Center */}
             <img
                 src={"./topi.png"}
                 alt="topi"
-                className="absolute bottom-12 left-1/3 w-25 h-25 z-10"
+                className="absolute bottom-4 sm:bottom-8 md:bottom-12 left-1/4 sm:left-1/3 w-16 h-16 sm:w-20 sm:h-20 md:w-25 md:h-25 z-10 opacity-70 hidden sm:block"
             />
+
+            {/* Additional decorative elements for mobile */}
+            <div className="absolute inset-0 pointer-events-none z-0">
+                {/* Subtle gradient for depth */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#2FC7A1]/5 to-transparent rounded-full opacity-50"></div>
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-[#0E2A46]/5 to-transparent rounded-full opacity-50"></div>
+            </div>
         </section>
     );
 };
