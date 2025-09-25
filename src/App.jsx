@@ -77,7 +77,7 @@ function App() {
         <Nav />
 
         {/* Main content area with top spacing for header/nav */}
-        <div className="pt-20 md:pt-24 lg:pt-28">
+  <div className={window.location.pathname === '/' ? '' : 'pt-20 md:pt-24 lg:pt-28'}>
           <Routes>
             {/* Main Website */}
             <Route
