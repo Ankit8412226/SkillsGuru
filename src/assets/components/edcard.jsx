@@ -1,4 +1,4 @@
-import { BookOpen, Clock, ShoppingCart, Star, Users } from 'lucide-react';
+import { BookOpen, Clock, Eye, ShoppingCart, Star, Users } from 'lucide-react';
 import React from 'react';
 
 const CourseCard = ({
@@ -36,8 +36,20 @@ const CourseCard = ({
     return stars;
   };
 
+  const handleViewDetails = () => {
+    // Navigate to course-description page
+    console.log('Navigating to course details for:', title);
+    // You can implement your navigation logic here
+    // For example: navigate('/course-description/' + courseId)
+  };
+
+  // Extract color from categoryColor prop
+  const getBgColor = () => {
+    return categoryColor.replace('bg-[', '').replace(']', '');
+  };
+
   return (
-    <div id='/Popularcourses' className="max-w-[424px] bg-white rounded-xl shadow-lg overflow-hidden  transition-shadow duration-300 p-4">
+    <div id='/Popularcourses' className="max-w-[424px] bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-4">
 
       <div className="relative">
         <img
@@ -45,9 +57,18 @@ const CourseCard = ({
           alt={title}
           className="w-full h-48 object-cover"
         />
-        <div className={`absolute top-4 left-4 ${categoryColor} text-[15px] text-[#fff] px-3 py-1 rounded-md  font-normal`}>
+        <div className={`absolute top-4 left-4 ${categoryColor} text-[15px] text-[#fff] px-3 py-1 rounded-md font-normal`}>
           {category}
         </div>
+
+        {/* View Details Button */}
+        <button
+          onClick={handleViewDetails}
+          className="absolute top-4 right-4 flex items-center justify-center w-10 h-10 rounded-full text-white hover:scale-110 transition-transform duration-200"
+          style={{ backgroundColor: getBgColor() }}
+        >
+          <Eye className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Content Section */}
@@ -80,10 +101,10 @@ const CourseCard = ({
         </div>
 
         {/* Divider */}
-      <hr
-  className="mb-4"
-  style={{ borderBottom: "1px dashed #4D5756", borderTop: "none" }}
-/>
+        <hr
+          className="mb-4"
+          style={{ borderBottom: "1px dashed #4D5756", borderTop: "none" }}
+        />
 
         {/* Instructor Section */}
         <div className="flex items-center gap-4 mb-4 w-full">
@@ -93,8 +114,8 @@ const CourseCard = ({
             className="w-10 h-10 rounded-full object-cover"
           />
           <div className='flex items-center justify-center'>
-            <p className="text-[#4D5756;] font-normal text-sm">By {instructor}</p>
-            <p className="text-[#0E2A46] font-normal text-sm">in {category}</p>
+            <p className="text-[#4D5756] font-normal text-sm">By {instructor}</p>
+            <p className="text-[#0E2A46] font-normal text-sm ml-1">in {category}</p>
           </div>
         </div>
 

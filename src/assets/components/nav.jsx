@@ -1,4 +1,4 @@
-import { ArrowRight, Menu, User, X } from "lucide-react";
+import { ArrowRight, Menu, ShoppingCart, User, X } from "lucide-react";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Contact from "./Contact"; // Import the Contact component
@@ -6,7 +6,6 @@ import Contact from "./Contact"; // Import the Contact component
 const navLinks = [
   { name: "Home", href: "/", key: "home", isRoute: true },
   { name: "About", href: "#about", key: "about", isRoute: false },
-  { name: "Popular Courses", href: "/Popularcourses", key: "Popularcourses", isRoute: true },
   { name: "Success Stories", href: "#testimonials", key: "testimonials", isRoute: false },
   { name: "Courses", href: '/courses', key: "courses", isRoute: true },
 ];
@@ -23,6 +22,7 @@ const Nav = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [cartItemsCount, setCartItemsCount] = useState(3); // Demo cart count
 
   const handleLinkClick = (link) => {
     setActive(link.key);
@@ -67,9 +67,14 @@ const Nav = () => {
     setIsMenuOpen(false);
   };
 
+  const handleCartClick = () => {
+    navigate('/cart');
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
-      <div className="bg-white shadow-sm  py-2 sm:py-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex justify-between items-center fixed top-0 left-0 w-full z-40">
+      <div className="bg-[#F0FDF9] shadow-sm py-2 sm:py-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex justify-between items-center fixed top-0 left-0 w-full z-40">
         {/* Logo */}
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
           <img
@@ -88,19 +93,35 @@ const Nav = () => {
             <button
               key={link.key}
               onClick={() => handleLinkClick(link)}
-              className={`pb-1 transition-all duration-300 text-sm xl:text-base whitespace-nowrap ${
+              className={`nav-link relative px-2 py-2 transition-all duration-300 text-sm xl:text-base whitespace-nowrap ${
                 active === link.key
-                  ? "border-b-2 border-[#2FC7A1] text-[#2FC7A1]"
-                  : "border-b-2 border-transparent hover:text-[#2FC7A1] hover:border-[#2FC7A1]"
+                  ? "text-[#2FC7A1] active"
+                  : "text-gray-700"
               }`}
             >
               {link.name}
+              {/* Animated underline */}
+              <span className="nav-underline"></span>
             </button>
           ))}
         </div>
 
-        {/* Right side: Auth Buttons & Contact Button (Desktop) */}
+        {/* Right side: Auth Buttons, Cart & Contact Button (Desktop) */}
         <div className="hidden sm:flex items-center space-x-3 md:space-x-4 lg:space-x-6">
+          {/* Cart Button - Udemy Style */}
+          <button
+            onClick={handleCartClick}
+            className="relative flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 text-gray-700 hover:text-[#2FC7A1] transition-colors duration-200"
+            aria-label="Shopping Cart"
+          >
+            <ShoppingCart size={20} className="lg:w-6 lg:h-6" />
+            {cartItemsCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-[#2FC7A1] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center min-w-[20px] text-[10px] lg:text-xs">
+                {cartItemsCount > 99 ? '99+' : cartItemsCount}
+              </span>
+            )}
+          </button>
+
           {/* Login Button */}
           <button
             onClick={handleLoginClick}
@@ -142,6 +163,19 @@ const Nav = () => {
 
         {/* Mobile Menu Button & Auth Buttons */}
         <div className="flex sm:hidden items-center space-x-2">
+          {/* Mobile Cart Button */}
+          <button
+            onClick={handleCartClick}
+            className="relative flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors duration-200"
+          >
+            <ShoppingCart size={16} color="black" />
+            {cartItemsCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-[#2FC7A1] text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center min-w-[16px]">
+                {cartItemsCount > 9 ? '9+' : cartItemsCount}
+              </span>
+            )}
+          </button>
+
           {/* Mobile Login Button */}
           <button
             onClick={handleLoginClick}
@@ -180,17 +214,17 @@ const Nav = () => {
 
       {/* Mobile/Tablet Overlay Menu - Right Side Full Screen */}
       {isMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50">
+        <div className="lg:hidden fixed inset-0 z-9999">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black bg-opacity-50"
             onClick={() => setIsMenuOpen(false)}
           ></div>
 
-          {/* Menu Panel - Full Width/Height from Right */}
-          <div className="absolute top-0 right-0 w-full h-full bg-white shadow-lg slide-in-from-right">
-            {/* Menu Header */}
-            <div className="flex justify-between items-center p-4 sm:p-6 border-b bg-gray-50">
+          {/* Menu Panel - Full Width/Height from Right - Fixed scrolling issue */}
+          <div className="absolute top-0 right-0 w-full h-full bg-white shadow-lg slide-in-from-right flex flex-col">
+            {/* Menu Header - Fixed */}
+            <div className="flex justify-between items-center p-4 sm:p-6 border-b bg-gray-50 flex-shrink-0">
               <div className="flex items-center space-x-2 cursor-pointer" onClick={() => { navigate('/'); setIsMenuOpen(false); }}>
                 <img
                   src="./logo_suh.jpg"
@@ -211,9 +245,9 @@ const Nav = () => {
             </div>
 
             {/* Menu Content - Scrollable */}
-            <div className="flex flex-col h-full overflow-y-auto">
-              {/* Menu Links */}
-              <div className="flex-1 py-6">
+            <div className="flex-1 overflow-y-auto">
+              <div className="py-6">
+                {/* Menu Links */}
                 {navLinks.map((link, index) => (
                   <button
                     key={link.key}
@@ -232,8 +266,22 @@ const Nav = () => {
                   </button>
                 ))}
 
-                {/* Mobile Auth Links */}
+                {/* Mobile Auth Links & Cart */}
                 <div className="px-6 sm:px-8 py-4 space-y-2">
+                  <button
+                    onClick={handleCartClick}
+                    className="flex items-center space-x-3 w-full text-left py-3 text-lg sm:text-xl font-medium text-gray-700 hover:text-[#2FC7A1] transition-colors duration-200"
+                  >
+                    <div className="relative">
+                      <ShoppingCart size={20} />
+                      {cartItemsCount > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-[#2FC7A1] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center min-w-[20px] text-[10px]">
+                          {cartItemsCount > 9 ? '9+' : cartItemsCount}
+                        </span>
+                      )}
+                    </div>
+                    <span>My Cart</span>
+                  </button>
                   <button
                     onClick={handleLoginClick}
                     className="flex items-center space-x-3 w-full text-left py-3 text-lg sm:text-xl font-medium text-gray-700 hover:text-[#2FC7A1] transition-colors duration-200"
@@ -249,21 +297,21 @@ const Nav = () => {
                   </button>
                 </div>
               </div>
+            </div>
 
-              {/* Mobile Contact Button - Fixed at Bottom with Better Padding */}
-              <div className="p-6 sm:p-8 border-t bg-gray-50 mt-auto">
-                <button
-                  onClick={handleContactClick}
-                  className="w-full flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-14 sm:h-16 shadow-lg hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
-                >
-                  <span className="flex-1 px-6 sm:px-8 text-base sm:text-lg font-medium text-center">
-                    Contact Us
-                  </span>
-                  <div className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[#35D7AE] rounded-full">
-                    <ArrowRight size={20} className="sm:w-6 sm:h-6" />
-                  </div>
-                </button>
-              </div>
+            {/* Mobile Contact Button - Fixed at Bottom */}
+            <div className="p-6 sm:p-8 border-t bg-gray-50 flex-shrink-0">
+              <button
+                onClick={handleContactClick}
+                className="w-full flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-14 sm:h-16 shadow-lg hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
+              >
+                <span className="flex-1 px-6 sm:px-8 text-base sm:text-lg font-medium text-center">
+                  Contact Us
+                </span>
+                <div className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[#35D7AE] rounded-full">
+                  <ArrowRight size={20} className="sm:w-6 sm:h-6" />
+                </div>
+              </button>
             </div>
           </div>
         </div>
@@ -299,6 +347,47 @@ const Nav = () => {
           to {
             transform: translateX(0);
           }
+        }
+
+        /* Navigation Link Styles */
+        .nav-link {
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* Underline animation */
+        .nav-underline {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: #2FC7A1;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease-out;
+        }
+
+        /* Hover effects */
+        .nav-link:hover {
+          color: #2FC7A1;
+          background-color: rgba(47, 199, 161, 0.05);
+          border-radius: 4px;
+        }
+
+        .nav-link:hover .nav-underline {
+          transform: scaleX(1);
+        }
+
+        /* Active state */
+        .nav-link.active {
+          color: #2FC7A1;
+          background-color: rgba(47, 199, 161, 0.08);
+          border-radius: 4px;
+        }
+
+        .nav-link.active .nav-underline {
+          transform: scaleX(1);
         }
       `}</style>
     </>
