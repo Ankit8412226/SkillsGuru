@@ -1,25 +1,46 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
 
-import Header from './assets/components/Header.jsx';
+import Header from "./assets/components/Header.jsx";
 import Hero from "./assets/components/hero.jsx";
 import Nav from "./assets/components/nav.jsx";
-import About from './pages/About.jsx';
-import BrouseCourses from './pages/Browsecourses.jsx';
-import Exam_prep from './pages/Exam_prep.jsx';
+import About from "./pages/About.jsx";
+import BrouseCourses from "./pages/Browsecourses.jsx";
+import Exam_prep from "./pages/Exam_prep.jsx";
 import SuhFeatures from "./pages/Features.jsx";
-import Footer from './pages/Footer.jsx';
-import StatusSection from './pages/StatusSection.jsx';
+import Footer from "./pages/Footer.jsx";
+import StatusSection from "./pages/StatusSection.jsx";
 
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
 
-import Explore_event from './pages/Explore_event.jsx';
-import Instructors from './pages/Instructors.jsx';
-import New_sesion from './pages/New_sesion.jsx';
-import TestimonialSection from './pages/TestimonialSection.jsx';
+import Explore_event from "./pages/Explore_event.jsx";
+import Instructors from "./pages/Instructors.jsx";
+import New_sesion from "./pages/New_sesion.jsx";
+import TestimonialSection from "./pages/TestimonialSection.jsx";
+import Loading from "./assets/components/loading.jsx";
+import FloatingActions from "./assets/components/FloatingAction.jsx";
 
 function App() {
+  const [scrollY, setScrollY] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // (window as any).scrollToSection = scrollToSection;
+    const timer = setTimeout(() => setIsLoaded(true), 2000); 
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isLoaded) {
+    return <Loading />;
+  }
   return (
     <Router>
       <Routes>
@@ -84,6 +105,7 @@ function App() {
                   <Instructors />
                 </section>
               </main>
+              <FloatingActions/>
 
               {/* Footer */}
               <Footer />

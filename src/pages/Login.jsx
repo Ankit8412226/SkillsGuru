@@ -1,6 +1,6 @@
 // Login Component
 import React, { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowRight } from "lucide-react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +11,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
   };
 
@@ -27,11 +28,12 @@ const Login = () => {
           {/* Left Side - Form */}
           <div className="lg:w-1/2 p-8 lg:p-12">
             <div className="max-w-md mx-auto">
-
               {/* Header */}
               <div className="mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Login</h2>
-                <p className="text-gray-600">Login to access your travelwise account</p>
+                <p className="text-gray-600">
+                  Login to access your travelwise account
+                </p>
               </div>
 
               {/* Form */}
@@ -43,7 +45,7 @@ const Login = () => {
                   <input
                     type="email"
                     name="email"
-                    placeholder="john.doe@gmail.com"
+                    placeholder="example@gmail.com"
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -84,24 +86,37 @@ const Login = () => {
                       onChange={handleChange}
                       className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                     />
-                    <span className="ml-2 text-sm text-gray-700">Remember me</span>
+                    <span className="ml-2 text-sm text-gray-700">
+                      Remember me
+                    </span>
                   </label>
-                  <a href="/forgot-password" className="text-sm text-red-500 hover:text-red-600">
+                  {/* <a
+                    href="/forgot-password"
+                    className="text-sm text-red-500 hover:text-red-600"
+                  >
                     Forgot Password?
-                  </a>
+                  </a> */}
                 </div>
 
                 <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  // onClick={handleContactClick}
+                  className="hidden w-full md:flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
                 >
-                  Login
+                  <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
+                    Login
+                  </span>
+                  <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1">
+                    <ArrowRight size={16} className="lg:w-5 lg:h-5" />
+                  </div>
                 </button>
               </form>
 
               <p className="text-center text-gray-600 mt-6">
                 Don't have an account?{" "}
-                <a href="/register" className="text-red-500 hover:text-red-600 font-medium">
+                <a
+                  href="/register"
+                  className="text-[#35D7AE] hover:text-green-600 font-medium"
+                >
                   Sign up
                 </a>
               </p>
@@ -112,9 +127,9 @@ const Login = () => {
           <div className="lg:w-1/2 bg-gray-100 p-8 lg:p-12 flex items-center justify-center">
             <div className="text-center">
               <div className="w-64 h-80 mx-auto mb-4 rounded-3xl flex items-center justify-center overflow-hidden">
-                <img 
-                  src="login.png" 
-                  alt="Login illustration" 
+                <img
+                  src="login.png"
+                  alt="Login illustration"
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -125,7 +140,5 @@ const Login = () => {
     </div>
   );
 };
-
-
 
 export default Login;
