@@ -1,4 +1,6 @@
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import './App.css';
+
 import Header from './assets/components/Header.jsx';
 import Hero from "./assets/components/hero.jsx";
 import Nav from "./assets/components/nav.jsx";
@@ -8,36 +10,93 @@ import Exam_prep from './pages/Exam_prep.jsx';
 import SuhFeatures from "./pages/Features.jsx";
 import Footer from './pages/Footer.jsx';
 import StatusSection from './pages/StatusSection.jsx';
-import New_sesion from './pages/New_sesion.jsx';
-import TestimonialSection from './pages/TestimonialSection.jsx';
+
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+
 import Explore_event from './pages/Explore_event.jsx';
 import Instructors from './pages/Instructors.jsx';
+import New_sesion from './pages/New_sesion.jsx';
+import TestimonialSection from './pages/TestimonialSection.jsx';
 
 function App() {
-
-
   return (
-    <>
-      {/* <p className='text-orange-700'>Training And Placement</p> */}
+    <Router>
+      <Routes>
+        {/* Main Website */}
+        <Route
+          path="/"
+          element={
+            <div className="min-h-screen">
+              {/* Header and Navigation */}
+              <Header />
+              <Nav />
 
-      <div>
-        <Header />
-        <Nav />
-        <Hero />
-        <About />
-        <BrouseCourses />
-        <StatusSection />
-        <SuhFeatures/>
-        <New_sesion />
-        <Exam_prep />
-        <TestimonialSection />
-        <Explore_event />
-        <Instructors />
-        <Footer />
-      </div>
+              {/* Main Content Sections */}
+              <main className="w-full">
+                {/* Hero Section */}
+                <section className="w-full">
+                  <Hero />
+                </section>
 
-    </>
-  )
+                {/* About Section */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <About />
+                </section>
+
+                {/* Browse Courses */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <BrouseCourses />
+                </section>
+
+                {/* Status Section */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <StatusSection />
+                </section>
+
+                {/* Features */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <SuhFeatures />
+                </section>
+
+                {/* New Session */}
+                <section className="w-full">
+                  <New_sesion />
+                </section>
+
+                {/* Exam Prep */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <Exam_prep />
+                </section>
+
+                {/* Testimonial */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <TestimonialSection />
+                </section>
+
+                {/* Explore Event */}
+                <section className="w-full py-8 sm:py-12 lg:py-16">
+                  <Explore_event />
+                </section>
+
+                {/* Instructors */}
+                <section className="w-full">
+                  <Instructors />
+                </section>
+              </main>
+
+              {/* Footer */}
+              <Footer />
+            </div>
+          }
+        />
+
+        {/* Authentication Pages */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

@@ -1,7 +1,7 @@
 export default function TestimonialSection() {
   return (
     <div
-      className="relative flex flex-col lg:flex-row items-center justify-center min-h-screen px-6 lg:px-20"
+      className="relative flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 px-4 sm:px-6 lg:px-20 py-12 sm:py-16 lg:py-20"
       style={{
         backgroundImage: "url('./online_school_bg.png')",
         backgroundSize: "cover",
@@ -9,18 +9,17 @@ export default function TestimonialSection() {
       }}
     >
       {/* Left Side - Girl Image */}
-      <div className="w-full lg:w-1/2 flex justify-center mb-10 lg:mb-0">
+      <div className="w-full lg:w-1/2 flex justify-center">
         <img
           src="./online_schoolgirl.jpg"
           alt="Girl working"
-          className="rounded-2xl shadow-lg max-w-md"
+          className="rounded-2xl shadow-lg w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-md h-auto object-cover"
         />
       </div>
 
       {/* Right Side - Testimonial Card */}
-      <div className="w-full lg:w-1/2 flex justify-center relative">
-        {/* Apply shift to the whole card */}
-        <div className="relative max-w-xl w-full rounded-2xl overflow-hidden -translate-x-62">
+      <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
+        <div className="relative max-w-xl w-full rounded-2xl overflow-hidden">
           {/* Card Background */}
           <img
             src="./online_right card.png"
@@ -28,16 +27,16 @@ export default function TestimonialSection() {
             className="absolute inset-0 w-full h-full object-cover z-0"
           />
 
-          {/* Overlay Green Shape */}
+          {/* Triangle positioned at bottom-right corner */}
           <img
             src="./triangle.png"
             alt="Green shape"
-            className="absolute bottom-0 right-0 w-50 h-50 z-[-1]"
+            className="absolute bottom-0 right-0 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 z-[-1]"
           />
 
           {/* Content */}
-          <div className="relative z-10 p-8 text-white">
-            <p className="mb-6 text-sm md:text-base leading-relaxed">
+          <div className="relative z-10 p-6 sm:p-8 md:p-10 text-white">
+            <p className="mb-6 sm:mb-8 text-sm sm:text-base md:text-lg leading-relaxed">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -45,24 +44,24 @@ export default function TestimonialSection() {
             </p>
 
             {/* Profile */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3 sm:space-x-4 mb-6">
               <img
                 src="./AkImg.png"
                 alt="Akriti Nanda"
-                className="w-[90px] h-[90px] object-cover"
+                className="w-16 h-16 sm:w-20 sm:h-20 md:w-[90px] md:h-[90px] object-cover"
               />
               <div>
-                <h4 className="font-semibold">Akriti Nanda</h4>
-                <p className="text-gray-300 text-sm">Software Developer</p>
+                <h4 className="font-semibold text-base sm:text-lg">Akriti Nanda</h4>
+                <p className="text-gray-300 text-xs sm:text-sm">Software Developer</p>
               </div>
             </div>
-          </div>
 
-          {/* Dots */}
-          <div className="relative z-10 flex justify-center mt-6 pb-4 left-60">
-            <span className="w-2 h-2 bg-white rounded-full mx-1"></span>
-            <span className="w-2 h-2 bg-gray-500 rounded-full mx-1"></span>
-            <span className="w-2 h-2 bg-gray-500 rounded-full mx-1"></span>
+            {/* Dots */}
+            <div className="flex justify-center space-x-2">
+              <span className="w-2 h-2 bg-white rounded-full"></span>
+              <span className="w-2 h-2 bg-gray-500 rounded-full"></span>
+              <span className="w-2 h-2 bg-gray-500 rounded-full"></span>
+            </div>
           </div>
         </div>
       </div>
