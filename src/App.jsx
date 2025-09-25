@@ -20,19 +20,20 @@ import Explore_event from "./pages/Explore_event.jsx";
 import Instructors from "./pages/Instructors.jsx";
 import New_sesion from "./pages/New_sesion.jsx";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
+import CoursesPage from "./pages/Courses.jsx";
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
 
   // Initialize states to prevent white flash
   const [isLoaded, setIsLoaded] = useState(() => {
-    const hasLoadedBefore = sessionStorage.getItem('hasLoadedBefore');
-    return hasLoadedBefore === 'true';
+    const hasLoadedBefore = sessionStorage.getItem("hasLoadedBefore");
+    return hasLoadedBefore === "true";
   });
 
   const [showInitialLoading, setShowInitialLoading] = useState(() => {
-    const hasLoadedBefore = sessionStorage.getItem('hasLoadedBefore');
-    return hasLoadedBefore !== 'true';
+    const hasLoadedBefore = sessionStorage.getItem("hasLoadedBefore");
+    return hasLoadedBefore !== "true";
   });
 
   // Add a state to ensure smooth transition
@@ -57,7 +58,7 @@ function App() {
     // Always show loading for 3 seconds on first visit
     const loadingTimer = setTimeout(() => {
       setIsLoaded(true);
-      sessionStorage.setItem('hasLoadedBefore', 'true');
+      sessionStorage.setItem("hasLoadedBefore", "true");
     }, 3000);
 
     return () => clearTimeout(loadingTimer);
@@ -134,8 +135,18 @@ function App() {
                       <Instructors />
                     </section>
                   </div>
-                  <FloatingActions/>
+                  <FloatingActions />
                 </>
+              }
+            />
+
+            {/* Courses Page Route */}
+            <Route
+              path="/courses"
+              element={
+                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                  <CoursesPage />
+                </div>
               }
             />
 
