@@ -1,5 +1,5 @@
+import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import React, { useState } from "react";
-import { Eye, EyeOff, ArrowRight } from "lucide-react";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -26,8 +26,8 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="max-w-6xl w-full bg-white rounded-3xl shadow-xl overflow-hidden">
+    <div  style={{ backgroundImage: `url(./bg.jpg)` }}className=" flex items-center w-full justify-center p-4">
+      <div className="max-w-6xl w-full bg-white rounded-3xl  overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Left Side - Illustration */}
           <div className="lg:w-1/2 bg-gray-100 p-8 lg:p-12 flex items-center justify-center">

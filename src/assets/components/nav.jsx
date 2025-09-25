@@ -1,4 +1,4 @@
-import { ArrowRight, Menu, Search, X } from "lucide-react";
+import { ArrowRight, Menu, User, X } from "lucide-react";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Contact from "./Contact"; // Import the Contact component
@@ -56,9 +56,19 @@ const Nav = () => {
     setIsMenuOpen(false); // Close mobile menu if open
   };
 
+  const handleLoginClick = () => {
+    navigate('/login');
+    setIsMenuOpen(false);
+  };
+
+  const handleRegisterClick = () => {
+    navigate('/register');
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
-      <div className="bg-white shadow-md py-3 sm:py-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex justify-between items-center fixed top-[36px] sm:top-[44px] left-0 w-full z-40">
+      <div className="bg-white shadow-sm  py-2 sm:py-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex justify-between items-center fixed top-0 left-0 w-full z-40">
         {/* Logo */}
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
           <img
@@ -88,16 +98,24 @@ const Nav = () => {
           ))}
         </div>
 
-        {/* Right side: Search & Contact Button (Desktop) */}
+        {/* Right side: Auth Buttons & Contact Button (Desktop) */}
         <div className="hidden sm:flex items-center space-x-3 md:space-x-4 lg:space-x-6">
-          {/* Search Icon */}
-          <span className="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 lg:w-11 lg:h-11 rounded-full cursor-pointer hover:bg-gray-100 transition-colors duration-200">
-            <Search
-              size={16}
-              className="sm:w-5 sm:h-5 md:w-5 md:h-5"
-              color="black"
-            />
-          </span>
+          {/* Login Button */}
+          <button
+            onClick={handleLoginClick}
+            className="flex items-center space-x-2 px-4 py-2 text-sm lg:text-base text-gray-700 hover:text-[#2FC7A1] transition-colors duration-200 font-medium"
+          >
+            <User size={16} className="lg:w-5 lg:h-5" />
+            <span>Login</span>
+          </button>
+
+          {/* Register Button */}
+          <button
+            onClick={handleRegisterClick}
+            className="px-4 lg:px-6 py-2 text-sm lg:text-base bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200"
+          >
+            Register
+          </button>
 
           {/* Contact Us Button - Fixed Padding */}
           <button
@@ -121,12 +139,15 @@ const Nav = () => {
           </button>
         </div>
 
-        {/* Mobile Menu Button & Search */}
-        <div className="flex sm:hidden items-center space-x-3">
-          {/* Mobile Search Icon */}
-          <span className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer hover:bg-gray-100 transition-colors duration-200">
-            <Search size={16} color="black" />
-          </span>
+        {/* Mobile Menu Button & Auth Buttons */}
+        <div className="flex sm:hidden items-center space-x-2">
+          {/* Mobile Login Button */}
+          <button
+            onClick={handleLoginClick}
+            className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors duration-200"
+          >
+            <User size={16} color="black" />
+          </button>
 
           {/* Hamburger Menu Button */}
           <button
@@ -209,6 +230,23 @@ const Nav = () => {
                     {link.name}
                   </button>
                 ))}
+
+                {/* Mobile Auth Links */}
+                <div className="px-6 sm:px-8 py-4 space-y-2">
+                  <button
+                    onClick={handleLoginClick}
+                    className="flex items-center space-x-3 w-full text-left py-3 text-lg sm:text-xl font-medium text-gray-700 hover:text-[#2FC7A1] transition-colors duration-200"
+                  >
+                    <User size={20} />
+                    <span>Login</span>
+                  </button>
+                  <button
+                    onClick={handleRegisterClick}
+                    className="w-full text-left py-3 px-4 text-lg sm:text-xl font-medium bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200"
+                  >
+                    Register
+                  </button>
+                </div>
               </div>
 
               {/* Mobile Contact Button - Fixed at Bottom with Better Padding */}

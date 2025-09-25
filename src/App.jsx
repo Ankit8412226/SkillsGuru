@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 
-import Header from "./assets/components/Header.jsx";
 import Hero from "./assets/components/hero.jsx";
 import Nav from "./assets/components/nav.jsx";
 import About from "./pages/About.jsx";
@@ -72,7 +71,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        <Header />
+
         <Nav />
 
         {/* Main content area that grows to fill space */}
@@ -144,7 +143,7 @@ function App() {
             <Route
               path="/login"
               element={
-                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                <div className=" mt-10 pt-20 pb-8 flex items-center justify-center">
                   <Login />
                 </div>
               }
@@ -152,7 +151,7 @@ function App() {
             <Route
               path="/register"
               element={
-                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                <div className=" mt-10 pt-20 pb-8 flex items-center justify-center">
                   <Register />
                 </div>
               }

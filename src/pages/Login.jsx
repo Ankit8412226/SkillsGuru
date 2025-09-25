@@ -1,6 +1,6 @@
 // Login Component
+import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import React, { useState } from "react";
-import { Eye, EyeOff, ArrowRight } from "lucide-react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -22,8 +22,8 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="max-w-6xl w-full bg-white rounded-3xl shadow-xl overflow-hidden">
+    <div  style={{ backgroundImage: `url(./bg.jpg)` }} className=" w-full flex items-center justify-center p-4 bg-gray">
+      <div className="max-w-6xl w-full bg-white rounded-3xl  overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Left Side - Form */}
           <div className="lg:w-1/2 p-8 lg:p-12">
@@ -90,12 +90,7 @@ const Login = () => {
                       Remember me
                     </span>
                   </label>
-                  {/* <a
-                    href="/forgot-password"
-                    className="text-sm text-red-500 hover:text-red-600"
-                  >
-                    Forgot Password?
-                  </a> */}
+
                 </div>
 
                 <button
