@@ -243,7 +243,7 @@ const Nav = () => {
                     <input
                       type="text"
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2FC7A1] focus:border-transparent transition-all duration-200"
-                      placeholder="John"
+                      // placeholder="John"
                     />
                   </div>
                   <div>
@@ -253,7 +253,7 @@ const Nav = () => {
                     <input
                       type="text"
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2FC7A1] focus:border-transparent transition-all duration-200"
-                      placeholder="Doe"
+                      // placeholder="Doe"
                     />
                   </div>
                 </div>
@@ -265,7 +265,7 @@ const Nav = () => {
                   <input
                     type="email"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2FC7A1] focus:border-transparent transition-all duration-200"
-                    placeholder="john.doe@example.com"
+                    // placeholder="john.doe@example.com"
                   />
                 </div>
 
@@ -276,7 +276,7 @@ const Nav = () => {
                   <input
                     type="tel"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2FC7A1] focus:border-transparent transition-all duration-200"
-                    placeholder="+91 8298252909"
+                    // placeholder="+91 8298252909"
                   />
                 </div>
 
@@ -307,13 +307,15 @@ const Nav = () => {
 
                 {/* Submit Button */}
                 <button
-                  type="submit"
-                  className="w-full flex items-center justify-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-12 sm:h-14 shadow-lg hover:bg-[#28B895] transition-colors duration-200"
+                  // onClick={handleContactClick}
+                  className="hidden w-full md:flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
                 >
-                  <span className="text-base sm:text-lg font-medium">
-                    Send Message
+                  <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
+                    Send message
                   </span>
-                  <ArrowRight size={20} className="ml-2" />
+                  <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1">
+                    <ArrowRight size={16} className="lg:w-5 lg:h-5" />
+                  </div>
                 </button>
               </form>
 
