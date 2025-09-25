@@ -1,7 +1,17 @@
-import { ArrowRight } from 'lucide-react';
-import React from 'react';
+import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import React from "react";
 
-const About = () => {
+const About = ({ onLearnMore }) => {
+  const navigate = useNavigate();
+  const handleLearnMoreClick = () => {
+    // if (onLearnMore) {
+    //   // onLearnMore();
+      
+    // }
+    navigate("/learnmore")
+  };
+
   return (
     <>
       <div className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
@@ -55,23 +65,25 @@ const About = () => {
 
             {/* Main Heading - Responsive */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[45px] leading-tight text-[#0E2A46] font-bold text-center lg:text-left">
-              Benefit from our online learning expertise earn{' '}
+              Benefit from our online learning expertise earn{" "}
               <span className="text-[#FE543D]">professional</span>
             </h2>
 
             {/* Description */}
             <p className="text-base sm:text-lg leading-6 sm:leading-7 lg:leading-8 font-normal text-[#4D5756] text-center lg:text-left px-2 sm:px-0">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore.
             </p>
 
-            {/* Mission & Vision Grid */}
+            {/* Mission & Vision Grid - Brief versions */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 mt-6 lg:mt-8">
               <div className="space-y-2 text-center sm:text-left">
                 <p className="text-base sm:text-lg leading-6 sm:leading-7 lg:leading-8 text-[#0E2A46] font-bold">
                   OUR MISSION:
                 </p>
                 <p className="text-sm sm:text-base lg:text-lg leading-6 sm:leading-7 lg:leading-8 font-normal text-[#333931]">
-                  Suspendisse ultrice gravida dictum fusce placerat ultricies integer quis auctor elit sed vulputate mi sit.
+                  Empowering learners worldwide through innovative online
+                  education and professional development.
                 </p>
               </div>
               <div className="space-y-2 text-center sm:text-left">
@@ -79,16 +91,20 @@ const About = () => {
                   OUR VISION:
                 </p>
                 <p className="text-sm sm:text-base lg:text-lg leading-6 sm:leading-7 lg:leading-8 font-normal text-[#333931]">
-                  Suspendisse ultrice gravida dictum fusce placerat ultricies integer quis auctor elit sed vulputate mi sit.
+                  To be the leading platform for accessible, quality education
+                  that transforms careers.
                 </p>
               </div>
             </div>
 
             {/* Button - Responsive with better padding */}
             <div className="flex justify-center lg:justify-start mt-6 lg:mt-8">
-              <button className="flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden">
+              <button
+                onClick={handleLearnMoreClick}
+                className="flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden cursor-pointer"
+              >
                 <span className="px-4 sm:px-6 py-2 text-xs sm:text-sm font-medium">
-                  Admission open
+                  Learn more
                 </span>
                 <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-[#35D7AE] rounded-full ml-1">
                   <ArrowRight size={16} className="sm:w-5 sm:h-5" />

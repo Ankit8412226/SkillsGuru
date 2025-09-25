@@ -6,6 +6,7 @@ import Contact from "./Contact"; // Import the Contact component
 const navLinks = [
   { name: "Home", href: "/", key: "home", isRoute: true },
   { name: "About", href: "#about", key: "about", isRoute: false },
+  { name: "Popular Courses", href: "/Popularcourses", key: "Popularcourses", isRoute: true },
   { name: "Success Stories", href: "#testimonials", key: "testimonials", isRoute: false },
   { name: "Courses", href: '/courses', key: "courses", isRoute: true },
 ];
@@ -16,7 +17,7 @@ const Nav = () => {
 
   // Set active based on current route
   const [active, setActive] = useState(() => {
-    if (location.pathname === '/') return "home";
+    if (location.pathname === "/") return "home";
     return "home"; // default
   });
 
@@ -33,20 +34,20 @@ const Nav = () => {
       navigate(link.href);
     } else {
       // Handle hash navigation (scroll to section)
-      if (location.pathname !== '/') {
+      if (location.pathname !== "/") {
         // If not on home page, go to home first then scroll
-        navigate('/');
+        navigate("/");
         setTimeout(() => {
           const element = document.querySelector(link.href);
           if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            element.scrollIntoView({ behavior: "smooth" });
           }
         }, 100);
       } else {
         // Already on home page, just scroll
         const element = document.querySelector(link.href);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }
     }
@@ -58,12 +59,12 @@ const Nav = () => {
   };
 
   const handleLoginClick = () => {
-    navigate('/login');
+    navigate("/login");
     setIsMenuOpen(false);
   };
 
   const handleRegisterClick = () => {
-    navigate('/register');
+    navigate("/register");
     setIsMenuOpen(false);
   };
 
@@ -76,7 +77,10 @@ const Nav = () => {
     <>
       <div className="bg-[#F0FDF9] shadow-sm py-2 sm:py-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex justify-between items-center fixed top-0 left-0 w-full z-40">
         {/* Logo */}
-        <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
+        <div
+          className="flex items-center space-x-2 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           <img
             src="./logo_suh.jpg"
             alt="Suh Tech Logo"
@@ -221,10 +225,10 @@ const Nav = () => {
             onClick={() => setIsMenuOpen(false)}
           ></div>
 
-          {/* Menu Panel - Full Width/Height from Right - Fixed scrolling issue */}
-          <div className="absolute top-0 right-0 w-full h-full bg-white shadow-lg slide-in-from-right flex flex-col">
-            {/* Menu Header - Fixed */}
-            <div className="flex justify-between items-center p-4 sm:p-6 border-b bg-gray-50 flex-shrink-0">
+          {/* Menu Panel - Full Width/Height from Right */}
+          <div className="absolute top-0 right-0 w-full h-full bg-white shadow-lg slide-in-from-right">
+            {/* Menu Header */}
+            <div className="flex justify-between items-center p-4 sm:p-6 border-b bg-gray-50">
               <div className="flex items-center space-x-2 cursor-pointer" onClick={() => { navigate('/'); setIsMenuOpen(false); }}>
                 <img
                   src="./logo_suh.jpg"
