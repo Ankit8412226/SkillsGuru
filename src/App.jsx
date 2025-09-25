@@ -71,13 +71,12 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen">
-        {/* Header and Navigation - Present on all routes */}
+      <div className="min-h-screen flex flex-col">
         <Header />
         <Nav />
 
-        {/* Main content area with top spacing for header/nav */}
-  <div className={window.location.pathname === '/' ? '' : 'pt-20 md:pt-24 lg:pt-28'}>
+        {/* Main content area that grows to fill space */}
+        <main className="flex-grow">
           <Routes>
             {/* Main Website */}
             <Route
@@ -85,7 +84,7 @@ function App() {
               element={
                 <>
                   {/* Main Content Sections */}
-                  <main className="w-full">
+                  <div className="w-full">
                     {/* Hero Section */}
                     <section className="w-full">
                       <Hero />
@@ -135,20 +134,34 @@ function App() {
                     <section className="w-full">
                       <Instructors />
                     </section>
-                  </main>
+                  </div>
                   <FloatingActions/>
-
-                  {/* Footer */}
-                  <Footer />
                 </>
               }
             />
 
             {/* Authentication Pages */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route
+              path="/login"
+              element={
+                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                  <Login />
+                </div>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                  <Register />
+                </div>
+              }
+            />
           </Routes>
-        </div>
+        </main>
+
+        {/* Footer - always at bottom */}
+        <Footer />
       </div>
     </Router>
   );
