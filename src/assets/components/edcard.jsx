@@ -37,7 +37,7 @@ const CourseCard = ({
   };
 
   return (
-    <div className="max-w-[424px] bg-white rounded-xl shadow-lg overflow-hidden  transition-shadow duration-300 p-4">
+    <div id='/Popularcourses' className="max-w-[424px] bg-white rounded-xl shadow-lg overflow-hidden  transition-shadow duration-300 p-4">
 
       <div className="relative">
         <img
