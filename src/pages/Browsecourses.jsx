@@ -3,52 +3,56 @@ import React from 'react';
 import CourseCard from "../assets/components/edcard";
 
 const BrowseCourses = () => {
-  const coursesData = [
+ const coursesData = [
     {
-      id: 1,
-      imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
       category: "Development",
       rating: 4.8,
       title: "Complete React Developer Course",
       lessonCount: 25,
       duration: "40h 15m",
       studentsCount: "150+",
-      instructor: "John Doe",
-      instructorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      originalPrice: 199,
-      currentPrice: 99,
-      categoryColor: "bg-red-500"
+      instructor: "Angela",
+      instructorImage:
+        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      originalPrice: 150,
+      currentPrice: 75,
+      categoryColor: "bg-[#FE543D]",
     },
     {
-      id: 2,
-      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       category: "Data Science",
       rating: 4.6,
       title: "Python for Data Analysis & Machine Learning",
       lessonCount: 18,
-      duration: "25h 45m",
-      studentsCount: "89+",
-      instructor: "Jane Smith",
-      instructorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      originalPrice: 149,
-      currentPrice: 79,
-      categoryColor: "bg-[#2FC7A1]"
+      duration: "35h 20m",
+      studentsCount: "220+",
+      instructor: "Sarah",
+      instructorImage:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      originalPrice: 180,
+      currentPrice: 90,
+      categoryColor: "bg-[#10B981]",
     },
     {
-      id: 3,
-      imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1558655146-364adaf1fcc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1564&q=80",
       category: "Design",
       rating: 4.9,
       title: "UI/UX Design Masterclass & Figma Complete Guide",
-      lessonCount: 30,
-      duration: "35h 20m",
-      studentsCount: "200+",
-      instructor: "Mike Johnson",
-      instructorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      originalPrice: 179,
-      currentPrice: 89,
-      categoryColor: "bg-purple-500"
-    }
+      lessonCount: 22,
+      duration: "28h 45m",
+      studentsCount: "180+",
+      instructor: "Michael",
+      instructorImage:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+      originalPrice: 140,
+      currentPrice: 70,
+      categoryColor: "bg-[#8B5CF6]",
+    },
+
   ];
 
   return (

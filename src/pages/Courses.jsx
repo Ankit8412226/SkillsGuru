@@ -1,128 +1,10 @@
 import {
-  BookOpen,
-  Clock,
-  ShoppingCart,
-  Star,
-  Users,
-  Search,
   ArrowRight,
-  Filter,
+  BookOpen,
+  Search,
 } from "lucide-react";
 import React, { useState } from "react";
-
-const CourseCard = ({
-  imageUrl,
-  category,
-  rating,
-  title,
-  lessonCount,
-  duration,
-  studentsCount,
-  instructor,
-  instructorImage,
-  originalPrice,
-  currentPrice,
-  categoryColor,
-}) => {
-  const renderStars = (rating) => {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-    const stars = [];
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-      );
-    }
-
-    if (hasHalfStar) {
-      stars.push(
-        <Star key="half" className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-      );
-    }
-
-    const remainingStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < remainingStars; i++) {
-      stars.push(<Star key={`empty-${i}`} className="w-4 h-4 text-gray-300" />);
-    }
-
-    return stars;
-  };
-
-  return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-4">
-      <div className="relative">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="w-full h-48 object-cover rounded-lg"
-        />
-        <div
-          className={`absolute top-4 left-4 ${categoryColor} text-[15px] text-white px-3 py-1 rounded-md font-normal`}
-        >
-          {category}
-        </div>
-      </div>
-
-      <div className="p-6">
-        <div className="flex items-center gap-1 mb-3">
-          {renderStars(rating)}
-          <span className="text-gray-600 text-sm ml-1">({rating})</span>
-        </div>
-
-        <h3 className="text-xl font-semibold text-[#0E2A46] mb-4 leading-7 line-clamp-2">
-          {title}
-        </h3>
-
-        <div className="flex items-center justify-between text-[#4D5756] text-sm mb-4 font-normal">
-          <div className="flex items-center gap-1">
-            <BookOpen className="w-4 h-4" />
-            <span>Lesson {lessonCount}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Clock className="w-4 h-4" />
-            <span>{duration}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Users className="w-4 h-4" />
-            <span>Students {studentsCount}</span>
-          </div>
-        </div>
-
-        <hr
-          className="mb-4"
-          style={{ borderBottom: "1px dashed #4D5756", borderTop: "none" }}
-        />
-
-        <div className="flex items-center gap-3 mb-4">
-          <img
-            src={instructorImage}
-            alt={instructor}
-            className="w-10 h-10 rounded-full object-cover"
-          />
-          <div className="flex items-center gap-1 text-sm">
-            <p className="text-[#4D5756] font-normal">By {instructor}</p>
-            <p className="text-[#0E2A46] font-normal">in {category}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-gray-900">
-              ${currentPrice}
-            </span>
-            <span className="text-gray-500 line-through">${originalPrice}</span>
-          </div>
-
-          <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-[#4D5756] px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-            <ShoppingCart className="w-4 h-4" />
-            Add To Cart
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+import CourseCard from '../assets/components/edcard'; // Import your existing CourseCard component
 
 const CoursesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -246,7 +128,7 @@ const CoursesPage = () => {
   });
 
   return (
-    <div className=" mt-10 mb-10 bg-white">
+    <div className="mt-10 mb-10 bg-white">
       {/* Header Section */}
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -331,17 +213,14 @@ const CoursesPage = () => {
             our courses.
           </p>
           <div className="flex justify-center">
-          <button
-            // onClick={handleContactClick}
-            className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
-          >
-            <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
-              Get Admission
-            </span>
-            <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1">
-              <ArrowRight size={16} className="lg:w-5 lg:h-5" />
-            </div>
-          </button>
+            <button className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden">
+              <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
+                Get Admission
+              </span>
+              <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1">
+                <ArrowRight size={16} className="lg:w-5 lg:h-5" />
+              </div>
+            </button>
           </div>
         </div>
       </div>
