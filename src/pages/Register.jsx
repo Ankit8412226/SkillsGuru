@@ -1,5 +1,5 @@
+import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import React, { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -26,8 +26,8 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="max-w-6xl w-full bg-white rounded-3xl shadow-xl overflow-hidden">
+    <div  style={{ backgroundImage: `url(./bg.jpg)` }}className=" flex items-center w-full justify-center p-4">
+      <div className="max-w-6xl w-full bg-white rounded-3xl  overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Left Side - Illustration */}
           <div className="lg:w-1/2 bg-gray-100 p-8 lg:p-12 flex items-center justify-center">
@@ -66,7 +66,7 @@ const Register = () => {
                     <input
                       type="text"
                       name="firstName"
-                      placeholder="john.doe@gmail.com"
+                      // placeholder="john.doe@gmail.com"
                       value={formData.firstName}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -80,7 +80,7 @@ const Register = () => {
                     <input
                       type="text"
                       name="lastName"
-                      placeholder="john.doe@gmail.com"
+                      // placeholder="john.doe@gmail.com"
                       value={formData.lastName}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -97,7 +97,7 @@ const Register = () => {
                     <input
                       type="email"
                       name="email"
-                      placeholder="john.doe@gmail.com"
+                      // placeholder="example@gmail.com"
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -111,7 +111,7 @@ const Register = () => {
                     <input
                       type="tel"
                       name="phoneNumber"
-                      placeholder="john.doe@gmail.com"
+                      // placeholder="john.doe@gmail.com"
                       value={formData.phoneNumber}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -187,14 +187,14 @@ const Register = () => {
                     I agree to all the{" "}
                     <a
                       href="/terms"
-                      className="text-red-500 hover:text-red-600"
+                      className="text-[#2FC7A1] hover:text-[#28B895]"
                     >
                       Terms
                     </a>{" "}
                     and{" "}
                     <a
                       href="/privacy"
-                      className="text-red-500 hover:text-red-600"
+                      className="text-[#2FC7A1] hover:text-[#28B895]"
                     >
                       Privacy Policies
                     </a>
@@ -202,10 +202,15 @@ const Register = () => {
                 </div>
 
                 <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  // onClick={handleContactClick}
+                  className="hidden w-full md:flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
                 >
-                  Create account
+                  <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
+                    Create account
+                  </span>
+                  <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1">
+                    <ArrowRight size={16} className="lg:w-5 lg:h-5" />
+                  </div>
                 </button>
               </form>
 
@@ -213,7 +218,7 @@ const Register = () => {
                 Already have an account?{" "}
                 <a
                   href="/login"
-                  className="text-red-500 hover:text-red-600 font-medium"
+                  className="text-[#2FC7A1] hover:text-[#28B895] font-medium"
                 >
                   Login
                 </a>
