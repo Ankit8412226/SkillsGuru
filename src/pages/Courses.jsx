@@ -1,5 +1,14 @@
-import { BookOpen, Clock, ShoppingCart, Star, Users, Search, Filter } from 'lucide-react';
-import React, { useState } from 'react';
+import {
+  BookOpen,
+  Clock,
+  ShoppingCart,
+  Star,
+  Users,
+  Search,
+  ArrowRight,
+  Filter,
+} from "lucide-react";
+import React, { useState } from "react";
 
 const CourseCard = ({
   imageUrl,
@@ -13,7 +22,7 @@ const CourseCard = ({
   instructorImage,
   originalPrice,
   currentPrice,
-  categoryColor
+  categoryColor,
 }) => {
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
@@ -21,11 +30,15 @@ const CourseCard = ({
     const stars = [];
 
     for (let i = 0; i < fullStars; i++) {
-      stars.push(<Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />);
+      stars.push(
+        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+      );
     }
 
     if (hasHalfStar) {
-      stars.push(<Star key="half" className="w-4 h-4 fill-yellow-400 text-yellow-400" />);
+      stars.push(
+        <Star key="half" className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+      );
     }
 
     const remainingStars = 5 - Math.ceil(rating);
@@ -44,7 +57,9 @@ const CourseCard = ({
           alt={title}
           className="w-full h-48 object-cover rounded-lg"
         />
-        <div className={`absolute top-4 left-4 ${categoryColor} text-[15px] text-white px-3 py-1 rounded-md font-normal`}>
+        <div
+          className={`absolute top-4 left-4 ${categoryColor} text-[15px] text-white px-3 py-1 rounded-md font-normal`}
+        >
           {category}
         </div>
       </div>
@@ -74,7 +89,10 @@ const CourseCard = ({
           </div>
         </div>
 
-        <hr className="mb-4" style={{ borderBottom: "1px dashed #4D5756", borderTop: "none" }} />
+        <hr
+          className="mb-4"
+          style={{ borderBottom: "1px dashed #4D5756", borderTop: "none" }}
+        />
 
         <div className="flex items-center gap-3 mb-4">
           <img
@@ -90,7 +108,9 @@ const CourseCard = ({
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-gray-900">${currentPrice}</span>
+            <span className="text-2xl font-bold text-gray-900">
+              ${currentPrice}
+            </span>
             <span className="text-gray-500 line-through">${originalPrice}</span>
           </div>
 
@@ -105,12 +125,13 @@ const CourseCard = ({
 };
 
 const CoursesPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const coursesData = [
     {
-      imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
       category: "Development",
       rating: 4.8,
       title: "Complete React Developer Course",
@@ -118,13 +139,15 @@ const CoursesPage = () => {
       duration: "40h 15m",
       studentsCount: "150+",
       instructor: "Angela",
-      instructorImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      instructorImage:
+        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       originalPrice: 150,
       currentPrice: 75,
-      categoryColor: "bg-[#FE543D]"
+      categoryColor: "bg-[#FE543D]",
     },
     {
-      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       category: "Data Science",
       rating: 4.6,
       title: "Python for Data Analysis & Machine Learning",
@@ -132,13 +155,15 @@ const CoursesPage = () => {
       duration: "35h 20m",
       studentsCount: "220+",
       instructor: "Sarah",
-      instructorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      instructorImage:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       originalPrice: 180,
       currentPrice: 90,
-      categoryColor: "bg-[#10B981]"
+      categoryColor: "bg-[#10B981]",
     },
     {
-      imageUrl: "https://images.unsplash.com/photo-1558655146-364adaf1fcc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1564&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1558655146-364adaf1fcc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1564&q=80",
       category: "Design",
       rating: 4.9,
       title: "UI/UX Design Masterclass & Figma Complete Guide",
@@ -146,13 +171,15 @@ const CoursesPage = () => {
       duration: "28h 45m",
       studentsCount: "180+",
       instructor: "Michael",
-      instructorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+      instructorImage:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
       originalPrice: 140,
       currentPrice: 70,
-      categoryColor: "bg-[#8B5CF6]"
+      categoryColor: "bg-[#8B5CF6]",
     },
     {
-      imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       category: "Development",
       rating: 4.7,
       title: "Full Stack JavaScript Development Bootcamp",
@@ -160,13 +187,15 @@ const CoursesPage = () => {
       duration: "45h 30m",
       studentsCount: "300+",
       instructor: "David",
-      instructorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      instructorImage:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       originalPrice: 200,
       currentPrice: 100,
-      categoryColor: "bg-[#FE543D]"
+      categoryColor: "bg-[#FE543D]",
     },
     {
-      imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       category: "Marketing",
       rating: 4.5,
       title: "Digital Marketing Strategy & Social Media",
@@ -174,13 +203,15 @@ const CoursesPage = () => {
       duration: "24h 15m",
       studentsCount: "250+",
       instructor: "Emma",
-      instructorImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      instructorImage:
+        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       originalPrice: 120,
       currentPrice: 60,
-      categoryColor: "bg-[#F59E0B]"
+      categoryColor: "bg-[#F59E0B]",
     },
     {
-      imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      imageUrl:
+        "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       category: "Business",
       rating: 4.8,
       title: "Project Management Professional Certification",
@@ -188,24 +219,34 @@ const CoursesPage = () => {
       duration: "32h 40m",
       studentsCount: "190+",
       instructor: "James",
-      instructorImage: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+      instructorImage:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
       originalPrice: 160,
       currentPrice: 80,
-      categoryColor: "bg-[#EF4444]"
-    }
+      categoryColor: "bg-[#EF4444]",
+    },
   ];
 
-  const categories = ['All', 'Development', 'Data Science', 'Design', 'Marketing', 'Business'];
+  const categories = [
+    "All",
+    "Development",
+    "Data Science",
+    "Design",
+    "Marketing",
+    "Business",
+  ];
 
-  const filteredCourses = coursesData.filter(course => {
-    const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         course.instructor.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory;
+  const filteredCourses = coursesData.filter((course) => {
+    const matchesSearch =
+      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.instructor.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "All" || course.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   return (
-    <div className="min-h-screen mt-10 bg-gray-50">
+    <div className=" mt-10 mb-10 bg-white">
       {/* Header Section */}
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -219,7 +260,8 @@ const CoursesPage = () => {
               Explore Our Best Courses
             </h1>
             <p className="text-lg text-[#4D5756] max-w-2xl mx-auto">
-              Discover a wide range of courses designed to help you master new skills and advance your career with expert-led instruction.
+              Discover a wide range of courses designed to help you master new
+              skills and advance your career with expert-led instruction.
             </p>
           </div>
 
@@ -237,14 +279,14 @@ const CoursesPage = () => {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {categories.map(category => (
+              {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                     selectedCategory === category
-                      ? 'bg-[#2FC7A1] text-white'
-                      : 'bg-white text-[#4D5756] border border-gray-300 hover:bg-gray-50'
+                      ? "bg-[#2FC7A1] text-white"
+                      : "bg-white text-[#4D5756] border border-gray-300 hover:bg-gray-50"
                   }`}
                 >
                   {category}
@@ -268,8 +310,12 @@ const CoursesPage = () => {
             <div className="text-gray-400 mb-4">
               <BookOpen className="w-16 h-16 mx-auto" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">No courses found</h3>
-            <p className="text-gray-500">Try adjusting your search terms or filters</p>
+            <h3 className="text-xl font-semibold text-gray-600 mb-2">
+              No courses found
+            </h3>
+            <p className="text-gray-500">
+              Try adjusting your search terms or filters
+            </p>
           </div>
         )}
       </div>
@@ -281,11 +327,22 @@ const CoursesPage = () => {
             Ready to Start Learning?
           </h2>
           <p className="text-xl text-gray-300 mb-8">
-            Join thousands of students who have transformed their careers with our courses.
+            Join thousands of students who have transformed their careers with
+            our courses.
           </p>
-          <button className="bg-[#FE543D] hover:bg-[#e64832] text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-200">
-            Browse All Courses
+          <div className="flex justify-center">
+          <button
+            // onClick={handleContactClick}
+            className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
+          >
+            <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
+              Get Admission
+            </span>
+            <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1">
+              <ArrowRight size={16} className="lg:w-5 lg:h-5" />
+            </div>
           </button>
+          </div>
         </div>
       </div>
     </div>
