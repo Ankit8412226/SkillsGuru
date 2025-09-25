@@ -7,11 +7,14 @@ const Header = () => {
   return (
     <div className="bg-[#2FC7A1] text-black text-sm py-2 sm:py-3 px-3 sm:px-6 md:px-12 lg:px-24 xl:px-48 2xl:px-60 fixed top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto">
-        {/* Mobile Layout - Only Login/Register */}
+
         <div className="flex justify-center cursor-pointer sm:hidden">
           <div className="flex items-center space-x-2">
             <User className="text-red-500 w-4 h-4" />
-            <span className="text-sm">Login / Register</span>
+            <span className="text-sm">
+              <button onClick={() => navigate("/login")} className="underline mr-1">Login</button> /
+              <button onClick={() => navigate("/register")} className="underline ml-1">Register</button>
+            </span>
           </div>
         </div>
 
@@ -35,15 +38,11 @@ const Header = () => {
 
           {/* Right Side */}
           <div className="flex items-center space-x-4 ml-4">
-            <div
-              onClick={() => {
-                navigate("/login");
-              }}
-              className="flex cursor-pointer items-center space-x-1"
-            >
+            <div className="flex cursor-pointer items-center space-x-1">
               <User className="text-red-500 w-4 h-4" />
               <span className="text-xs md:text-sm whitespace-nowrap">
-                Login / Register
+                <button onClick={() => navigate("/login")} className="underline mr-1">Login</button> /
+                <button onClick={() => navigate("/register")} className="underline ml-1">Register</button>
               </span>
             </div>
 
@@ -53,14 +52,12 @@ const Header = () => {
               <a href="https://www.facebook.com/share/1733kBs2Le/">
                 <Facebook className="hover:text-red-600 cursor-pointer w-4 h-4 transition-colors duration-200" />
               </a>
-
               <a href="https://x.com/suhtechpvt?t=ts0tMtGlnbzZT4MEBSohsQ&s=08">
                 <Twitter className="hover:text-red-600 cursor-pointer w-4 h-4 transition-colors duration-200" />
               </a>
               <a href="https://www.instagram.com/suhtechpvtltd?igsh=M3cwM2Vkb2Y4eDI5">
                 <Instagram className="hover:text-red-600 cursor-pointer w-4 h-4 transition-colors duration-200" />
               </a>
-
               <a href="https://www.linkedin.com/company/suh-tech/">
                 <Linkedin className="hover:text-red-600 cursor-pointer w-4 h-4 transition-colors duration-200" />
               </a>
