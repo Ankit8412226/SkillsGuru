@@ -13,11 +13,11 @@ const BrowseCourses = () => {
       lessonCount: 25,
       duration: "40h 15m",
       studentsCount: "150+",
-      instructor: "Angela",
+      instructor: "Ankit Kumar",
       instructorImage:
         "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      originalPrice: 150,
-      currentPrice: 75,
+      originalPrice: 80,
+      currentPrice: 50,
       categoryColor: "bg-[#FE543D]",
     },
     {
@@ -29,11 +29,11 @@ const BrowseCourses = () => {
       lessonCount: 18,
       duration: "35h 20m",
       studentsCount: "220+",
-      instructor: "Sarah",
+      instructor: "Akriti Nanda",
       instructorImage:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-      originalPrice: 180,
-      currentPrice: 90,
+      originalPrice: 90,
+      currentPrice: 60,
       categoryColor: "bg-[#10B981]",
     },
     {
@@ -45,11 +45,11 @@ const BrowseCourses = () => {
       lessonCount: 22,
       duration: "28h 45m",
       studentsCount: "180+",
-      instructor: "Michael",
+      instructor: "Pulkit Pandey",
       instructorImage:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-      originalPrice: 140,
-      currentPrice: 70,
+      originalPrice: 70,
+      currentPrice: 50,
       categoryColor: "bg-[#8B5CF6]",
     },
 
@@ -73,7 +73,7 @@ const BrowseCourses = () => {
               alt="icon"
               className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
             />
-            <p className="text-sm sm:text-base md:text-lg text-gray-700">Top Popular Course</p>
+            <p className="text-sm sm:text-base md:text-lg text-gray-700">Job-Ready Training Program</p>
           </div>
 
           {/* Title and Button Row - Responsive Layout */}
@@ -81,8 +81,8 @@ const BrowseCourses = () => {
             {/* Main heading - Responsive typography and alignment */}
             <div className="flex-1 text-center lg:text-left">
               <h1 className='text-[#0E2A46] text-2xl sm:text-3xl md:text-4xl lg:text-[40px] xl:text-[45px] font-bold leading-tight sm:leading-snug md:leading-normal lg:leading-12 max-w-none lg:max-w-2xl'>
-                Check out educate features<br className="hidden sm:block" />
-                <span className="sm:hidden"> </span>win any exam
+                Professional Development with Guaranteed Career Support <br className="hidden sm:block" />
+                <span className="sm:hidden"> </span>
               </h1>
             </div>
 
@@ -90,7 +90,7 @@ const BrowseCourses = () => {
             <div className="flex-shrink-0">
               <button className="flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 sm:h-11 md:h-12 pl-4 sm:pl-6 md:pl-8 pr-0 overflow-hidden gap-2 sm:gap-3 md:gap-4 hover:bg-[#28B895] transition-colors duration-200 shadow-md">
                 <span className="text-xs sm:text-sm leading-6 sm:leading-8 font-medium text-white whitespace-nowrap">
-                  Admission open
+                 Learn More
                 </span>
                 <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full">
                   <ArrowRight size={16} className="sm:w-5 sm:h-5" />

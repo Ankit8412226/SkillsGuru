@@ -2,10 +2,10 @@ import React from 'react';
 
 const StatusSection = () => {
   const stats = [
-    { label: 'Case study success', percentage: 90, color: 'bg-emerald-400' },
-    { label: 'Happy student', percentage: 75, color: 'bg-emerald-400' },
-    { label: 'Engaging', percentage: 93, color: 'bg-emerald-400' },
-    { label: 'Student Community', percentage: 63, color: 'bg-emerald-400' }
+    { label: 'Top tech placements', percentage: 95, color: 'bg-emerald-400' },
+    { label: 'Student-endorsed training', percentage: 92, color: 'bg-emerald-400' },
+    { label: 'High program completion', percentage: 88, color: 'bg-emerald-400' },
+    { label: 'Industry Network', percentage: 83, color: 'bg-emerald-400' }
   ];
 
   return (
@@ -21,17 +21,22 @@ const StatusSection = () => {
                 alt="Graduation Cap"
                 className="w-6 h-6 sm:w-8 sm:h-8 object-contain flex-shrink-0"
               />
+              <img
+              src="./icon.svg"
+              alt="icon"
+              className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
+            />
               <span className="text-emerald-500 text-xs sm:text-sm font-medium uppercase tracking-wider">
-                OUR STATUS VALUES
+                SMART EDUCATION SOLUTIONS
               </span>
             </div>
 
             {/* Main Heading */}
             <div className="relative">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight relative z-10">
-                Our Classroom Is A Very{' '}
-                <span className="text-red-500">Different School</span>{' '}
-                Than All The Others
+                Empower Your Future with{' '}
+                <span className="text-red-500"> India's Most Innovative</span>{' '}
+                Learning Platform
               </h2>
               {/* Decorative Dots */}
               <img
@@ -43,8 +48,7 @@ const StatusSection = () => {
 
             {/* Description */}
             <p className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-none lg:max-w-lg">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore.
+              Transform your career with cutting-edge technology courses, expert-led training programs, and industry-recognized certifications designed for the digital age.
             </p>
 
             {/* Statistics */}
