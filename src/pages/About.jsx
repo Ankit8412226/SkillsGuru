@@ -7,13 +7,17 @@ const About = ({ onLearnMore }) => {
   const handleLearnMoreClick = () => {
     // if (onLearnMore) {
     //   // onLearnMore();
-      
+
     // }
     navigate("/learnmore")
   };
 
   return (
     <>
+      <div
+        id="about"   // 👈 This makes the section scroll target
+        className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto"
+      ></div>
       <div className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
           {/* Left side - Images */}
@@ -65,14 +69,13 @@ const About = ({ onLearnMore }) => {
 
             {/* Main Heading - Responsive */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[45px] leading-tight text-[#0E2A46] font-bold text-center lg:text-left">
-              Benefit from our online learning expertise earn{" "}
-              <span className="text-[#FE543D]">professional</span>
+              Your Career Journey Starts at{" "}
+              <span className="text-[#FE543D]">Suh Tech</span>
             </h2>
 
             {/* Description */}
             <p className="text-base sm:text-lg leading-6 sm:leading-7 lg:leading-8 font-normal text-[#4D5756] text-center lg:text-left px-2 sm:px-0">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore.
+              Suh Tech delivers job-ready training with 200+ industry partners, placing 1200+ students in top organizations.
             </p>
 
             {/* Mission & Vision Grid - Brief versions */}
@@ -82,8 +85,7 @@ const About = ({ onLearnMore }) => {
                   OUR MISSION:
                 </p>
                 <p className="text-sm sm:text-base lg:text-lg leading-6 sm:leading-7 lg:leading-8 font-normal text-[#333931]">
-                  Empowering learners worldwide through innovative online
-                  education and professional development.
+                  Achieve 100% job placement success through industry-aligned training and comprehensive skill development.
                 </p>
               </div>
               <div className="space-y-2 text-center sm:text-left">
@@ -91,8 +93,7 @@ const About = ({ onLearnMore }) => {
                   OUR VISION:
                 </p>
                 <p className="text-sm sm:text-base lg:text-lg leading-6 sm:leading-7 lg:leading-8 font-normal text-[#333931]">
-                  To be the leading platform for accessible, quality education
-                  that transforms careers.
+                  Leading training institute delivering industry-ready skills and guaranteed placement success for career transformation.
                 </p>
               </div>
             </div>

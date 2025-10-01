@@ -1,8 +1,11 @@
 import { ArrowRight, Award, BookOpen, GraduationCap, Users } from 'lucide-react';
 import React from 'react';
 import CoachingCard from "../assets/components/CoachingCard";
+import { useNavigate } from "react-router-dom";
 
 const Features = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Hero section with background image */}
@@ -15,26 +18,23 @@ const Features = () => {
         {/* Header Section */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-4 sm:mb-8">
           {/* Top Popular Course - Left aligned */}
-          <div className='flex items-start justify-start gap-2 mb-4 sm:mb-6'>
-            <img src="./icon.svg" alt="icon" className="w-4 h-4 sm:w-5 sm:h-5" />
-            <p className="text-sm sm:text-base">Top Popular Course</p>
-          </div>
+
 
           {/* SubTech Features Heading with icons */}
           <div className="flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
             <img src="./icon.svg" alt="icon" className="w-6 h-6 sm:w-8 sm:h-8" />
-            <h2 className='text-[#0E2A46] text-xl sm:text-2xl lg:text-[32px] font-bold text-center'>
-              SuHTech Features
-            </h2>
+            <p className="text-[#2FC7A1] text-xs sm:text-sm font-medium leading-6 sm:leading-8">
+              SuH Tech Features
+            </p>
             <img src="./icon.svg" alt="icon" className="w-6 h-6 sm:w-8 sm:h-8" />
           </div>
 
           {/* Title and Button Row */}
           <div className="flex flex-col lg:flex-row items-center lg:justify-between w-full mb-8 sm:mb-12 gap-6 lg:gap-0">
             {/* Main heading */}
-            <h1 className='text-[#0E2A46] text-2xl sm:text-3xl md:text-4xl lg:text-[45px] font-bold leading-tight text-center lg:text-left max-w-none lg:max-w-2xl'>
-              Check out educate features<br className="hidden sm:block" />
-              <span className="sm:hidden"> </span>win any exam
+            <h1 className='text-[#0E2A46] text-2xl sm:text-3xl md:text-4xl lg:text-[45px] font-bold leading-tight text-center lg:max-w-2xl lg:ml-90'>
+              Success-Driven Features<br className="hidden sm:block" />
+              <span className="sm:hidden"> </span>
             </h1>
 
             {/* Button */}
@@ -57,24 +57,25 @@ const Features = () => {
             {/* Card 1 - Best Coaching */}
             <CoachingCard
               icon={GraduationCap}
-              title="Best Coaching"
-              description="In pellentesque massa vida placerat duis. Cursus sit amet dictum sit amet."
+              title="Best Courses"
+              description="One-on-one mentoring designed to maximize your learning potential."
               buttonText="View Details"
             />
 
             {/* Card 2 - Expert Teachers */}
             <CoachingCard
               icon={Users}
-              title="Expert Teachers"
+              title="Expert Faculties"
               description="Professional educators with years of experience in their respective fields."
-              buttonText="Meet Teachers"
+              buttonText="Meet Faculties"
+              onClick={() => navigate("/best-mentors")}
             />
 
             {/* Card 3 - Course Materials */}
             <CoachingCard
               icon={BookOpen}
               title="Course Materials"
-              description="Comprehensive study materials and resources for effective learning."
+              description="Complete learning resources including video lectures and digital practice materials."
               buttonText="Browse Materials"
             />
 
@@ -82,8 +83,9 @@ const Features = () => {
             <CoachingCard
               icon={Award}
               title="Certification"
-              description="Get certified upon course completion with industry-recognized credentials."
+              description="Professional certifications boosting career growth and opportunities."
               buttonText="Get Certified"
+              onClick={() => navigate("/certification")}
             />
           </div>
         </div>
