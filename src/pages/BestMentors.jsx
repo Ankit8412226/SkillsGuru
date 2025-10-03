@@ -1,9 +1,15 @@
 import { ArrowRight, Search, Star } from "lucide-react";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BestMentors = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
+    const navigate = useNavigate();
+    // navigate to Admission form page
+    const handleAdmissionClick = () => {
+        navigate("/admission");
+    };
 
     const mentorsData = [
         {
@@ -12,7 +18,7 @@ const BestMentors = () => {
             experience: "2+ years",
             rating: 4.9,
             imageUrl:
-                "",
+                "https://images.unsplash.com/flagged/photo-1596479042555-9265a7fa7983?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             category: "Development",
             description: "B.Tech in Computer Science with expertise in Full Stack Development. Skilled in React, Node.js, and modern web technologies, with 2+ years of teaching experience in guiding students toward building real-world projects and strong coding skills."
         },
@@ -22,7 +28,7 @@ const BestMentors = () => {
             experience: "1+ years",
             rating: 4.8,
             imageUrl:
-                "",
+                "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             category: "Data Science",
             description: "Specialist in Big Data, Python, and Cloud Computing. Loves mentoring students."
         },
@@ -32,7 +38,7 @@ const BestMentors = () => {
             experience: "2+ years",
             rating: 4.9,
             imageUrl:
-                "",
+                "https://plus.unsplash.com/premium_photo-1682098022877-593355cd975a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             category: "Development",
             description: "Full Stack specialist in MERN stack & Java Spring Boot with real-world industry experience."
         },
@@ -42,18 +48,18 @@ const BestMentors = () => {
             experience: "1+ years",
             rating: 4.7,
             imageUrl:
-                "",
+                "https://images.unsplash.com/photo-1553514029-1318c9127859?q=80&w=464&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             category: "Design",
             description: "Creative designer with expertise in Figma, Adobe XD, and user experience research."
         },
-        
+
         {
             name: "Mr.Aryan",
             subject: "Marketing",
             experience: "6+ Months",
             rating: 4.6,
             imageUrl:
-                "",
+                "https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             category: "Marketing",
             description: "Digital marketing strategist skilled in SEO, SEM, and branding."
         },
@@ -195,7 +201,11 @@ const BestMentors = () => {
                         Join thousands of students guided by our top mentors.
                     </p>
                     <div className="flex justify-center">
-                        <button className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden">
+                        <button
+                            onClick={handleAdmissionClick}
+
+                            className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden">
+
                             <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
                                 Get Admission
                             </span>

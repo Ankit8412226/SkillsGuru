@@ -6,7 +6,7 @@ import Contact from "./Contact"; // Import the Contact component
 const navLinks = [
   { name: "Home", href: "#home", key: "home", isRoute: false },
   { name: "About", href: "#about", key: "about", isRoute: false },
-  { name: "Popular Courses", href: "/Popularcourses", key: "Popularcourses", isRoute: true },
+  { name: "Popular Courses", href: "#Popularcourses", key: "Popularcourses", isRoute: false },
   { name: "Success Stories", href: "#testimonials", key: "testimonials", isRoute: false },
   { name: "Courses", href: '/courses', key: "courses", isRoute: true },
 ];
