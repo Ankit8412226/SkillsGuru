@@ -23,7 +23,7 @@ const Certification = () => {
       duration: "Duration: 8 Months",
       rating: 4.8,
       description:
-        "Learn Python, Machine Learning, and AI concepts with real projects. Ideal for careers in Data Science, AI, and Analytics.",
+        "Learn Python, Machine Learning, and AI concepts with practical real-world projects and mentorship. Ideal for rewarding careers in Data Science, AI, and Analytics.",
       imageUrl:
         "https://as1.ftcdn.net/v2/jpg/01/03/37/66/1000_F_103376621_qsfcQCz9cfDys6NPhytatk2JQeDfm8FS.jpg",
     },
@@ -33,7 +33,7 @@ const Certification = () => {
       duration: "Duration: 4 Months",
       rating: 4.7,
       description:
-        "Master UI/UX design with Figma, Adobe XD, and usability research. Get certified to start your career as a professional designer.",
+        "Master UI/UX design with Figma, Adobe XD, and usability research through hands-on training. Get certified to start your career as a professional designer.",
       imageUrl:
         "https://as1.ftcdn.net/v2/jpg/01/03/37/66/1000_F_103376621_qsfcQCz9cfDys6NPhytatk2JQeDfm8FS.jpg",
     },
