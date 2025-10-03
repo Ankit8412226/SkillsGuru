@@ -18,7 +18,7 @@ const CoachingCard = ({
   onClick,
 }) => {
   return (
-    <div
+    <div id="popularcourses"
       className={`${cardBg} rounded-2xl p-8 shadow-lg max-w-sm mx-auto text-center hover:shadow-2xl transition-shadow duration-300`}
     >
       {/* Icon Section */}

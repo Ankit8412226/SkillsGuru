@@ -1,6 +1,39 @@
+import axios from "axios";
 import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from "lucide-react";
+import { useState } from "react";
 
 export default function Footer() {
+
+    const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+
+    const handleSubscribe = async () => {
+      if (!email) {
+        setMessage("Please enter your email.");
+        return;
+      }
+
+      setLoading(true);
+      setMessage("");
+
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/newsletter`,
+          { email }
+        );
+
+        setMessage(response.data.message || "Subscribed successfully!");
+        setEmail("");
+      } catch (error) {
+        console.error(error);
+        setMessage(
+          error.response?.data?.message || "Something went wrong. Please try again."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
     return (
         <footer
             className="bg-gray-900 text-white relative"
@@ -103,11 +136,14 @@ export default function Footer() {
                                 <input
                                     type="email"
                                     placeholder="Enter your email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className="bg-white border-2 border-gray-300 w-full px-3 py-2 sm:py-3 rounded-md text-black text-sm sm:text-base mb-3 focus:outline-none focus:border-[#2FC7A1] transition-colors"
                                 />
-                                <button className="w-full bg-[#2FC7A1] hover:bg-[#26A085] text-white font-semibold py-2 sm:py-3 rounded-md text-sm sm:text-base transition-colors duration-300 transform hover:scale-105">
-                                    SUBSCRIBE NOW
+                                <button className="w-full bg-[#2FC7A1] hover:bg-[#26A085] text-white font-semibold py-2 sm:py-3 rounded-md text-sm sm:text-base transition-colors duration-300 transform hover:scale-105"  onClick={handleSubscribe}>
+                                {loading ? "SUBSCRIBING..." : "SUBSCRIBE NOW"}
                                 </button>
+
                             </div>
                         </div>
                     </div>

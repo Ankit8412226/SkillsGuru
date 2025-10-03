@@ -38,10 +38,14 @@ const Features = () => {
             </h1>
 
             {/* Button */}
+            {/* Button */}
             <div className="flex-shrink-0">
-              <button className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 pl-4 sm:pl-8 pr-0 overflow-hidden gap-2 sm:gap-4 hover:bg-[#26A085] transition-colors">
+              <button
+                onClick={() => navigate("/admission")}
+                className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 pl-4 sm:pl-8 pr-0 overflow-hidden gap-2 sm:gap-4 hover:bg-[#26A085] transition-colors"
+              >
                 <span className="text-xs sm:text-sm leading-6 sm:leading-8 font-medium text-white whitespace-nowrap">
-                  Admission open
+                  Admission Open
                 </span>
                 <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full">
                   <ArrowRight size={16} className="sm:w-5 sm:h-5" />
@@ -53,13 +57,15 @@ const Features = () => {
 
         {/* Course Cards Container */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+          <div id="popularcourses" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {/* Card 1 - Best Coaching */}
             <CoachingCard
               icon={GraduationCap}
               title="Best Courses"
               description="One-on-one mentoring designed to maximize your learning potential."
               buttonText="View Details"
+              onClick={() => ("/popularcourses")}
+
             />
 
             {/* Card 2 - Expert Teachers */}

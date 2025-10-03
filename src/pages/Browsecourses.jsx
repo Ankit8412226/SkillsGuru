@@ -56,7 +56,8 @@ const BrowseCourses = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div id="Popularcourses"
+        className="min-h-screen bg-gray-100">
       {/* Hero section with background image */}
       <div
         className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center py-6 sm:py-8 md:py-12 flex-col gap-4 sm:gap-6"
