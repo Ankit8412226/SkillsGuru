@@ -24,12 +24,12 @@ const Exam_prep = () => {
                 <div className="flex items-center justify-center gap-2">
                     <img src="./icon.svg" alt="icon" className="w-4 h-4 sm:w-5 sm:h-5" />
                     <p className="text-[#FE543D] text-xs sm:text-sm font-medium tracking-wide leading-6 sm:leading-8">
-                        EXAM PREPARATION
+                        INTERVIEW PREPARATION
                     </p>
                     <img src="./icon.svg" alt="icon" className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <h2 className="text-[#0E2A46] text-2xl sm:text-3xl md:text-4xl lg:text-[45px] font-bold leading-tight sm:leading-tight lg:leading-12 mt-2 sm:mt-3">
-                    Annual Exam Preparation
+                    Your Gateway to Dream Jobs
                 </h2>
             </div>
 
@@ -45,10 +45,11 @@ const Exam_prep = () => {
                     <div className="flex flex-col sm:flex-row items-center justify-between w-full h-full relative z-10">
                         <div className="max-w-xs text-white text-center sm:text-left mb-4 sm:mb-0">
                             <p className="mb-2 sm:mb-3 text-sm sm:text-base opacity-90">
-                                Start From Today
+                                Start Your Prep From Today
                             </p>
                             <h3 className="text-base sm:text-lg font-semibold leading-snug mb-4 sm:mb-6">
-                                Lorem ipsum dolor sit amet consectetur adipiscing.
+                                Get expert guidance, structured study plans, and practice Mock tests designed to boost your confidence for interview.
+
                             </h3>
 
                             <button className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 pl-4 sm:pl-6 pr-0 overflow-hidden hover:bg-[#26A085] transition-colors w-full sm:w-auto">
@@ -84,10 +85,10 @@ const Exam_prep = () => {
                     <div className="flex flex-col sm:flex-row items-center justify-between w-full h-full relative z-10">
                         <div className="max-w-xs text-white text-center sm:text-left mb-4 sm:mb-0">
                             <p className="mb-2 sm:mb-3 text-sm sm:text-base opacity-90">
-                                Start From Today
+                                Get Job-Ready Today 
                             </p>
                             <h3 className="text-base sm:text-lg font-semibold leading-snug mb-4 sm:mb-6">
-                                Lorem ipsum dolor sit amet consectetur adipiscing.
+                                Practice with mock interviews, industry-specific questions, and expert feedback to boost your confidence and secure offers.
                             </h3>
 
                             <button className="flex items-center justify-between rounded-full bg-[#17254E] text-white font-medium h-10 sm:h-12 pl-4 sm:pl-6 pr-0 overflow-hidden hover:bg-[#0F1A38] transition-colors w-full sm:w-auto">

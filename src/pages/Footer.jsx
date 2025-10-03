@@ -22,7 +22,8 @@ export default function Footer() {
                         <MapPin className="text-white flex-shrink-0" size={24} />
                         <div className="text-center sm:text-left">
                             <p className="text-[#2FC7A1] text-sm sm:text-base font-medium">Address:</p>
-                            <p className="font-semibold text-sm sm:text-base">Lorem ipsum dolor sit amet.</p>
+                            <p className="font-semibold text-sm sm:text-base">Office No. D-8, 4th Floor, Habitech Crystal Mall,
+                                Knowledge Park III, Greater Noida, Uttar Pradesh – 201306</p>
                         </div>
                     </div>
 
@@ -31,7 +32,7 @@ export default function Footer() {
                         <Phone className="text-white flex-shrink-0" size={24} />
                         <div className="text-center sm:text-left">
                             <p className="text-[#2FC7A1] text-sm sm:text-base font-medium">Phone:</p>
-                            <p className="font-semibold text-sm sm:text-base">(00) 875 784 568</p>
+                            <p className="font-semibold text-sm sm:text-base">(+91) 8298252909</p>
                         </div>
                     </div>
 
@@ -40,7 +41,7 @@ export default function Footer() {
                         <Mail className="text-white flex-shrink-0" size={24} />
                         <div className="text-center sm:text-left">
                             <p className="text-[#2FC7A1] text-sm sm:text-base font-medium">Email:</p>
-                            <p className="font-semibold text-sm sm:text-base">suhtech@gmail.com</p>
+                            <p className="font-semibold text-sm sm:text-base">Hr@suhtech.top</p>
                         </div>
                     </div>
                 </div>
@@ -55,7 +56,7 @@ export default function Footer() {
                                 Suh Tech
                             </h2>
                             <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed text-center sm:text-left">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas ad amet earum magnam aliquid repellendus rem accusantium laborum cupiditate vel asperiores.
+                                From learning to earning – Suh Tech helps you build skills that get you hired.
                             </p>
                             <div className="flex gap-3 justify-center sm:justify-start">
                                 <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300" aria-label="Facebook">

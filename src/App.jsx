@@ -8,6 +8,8 @@ import About from "./pages/About.jsx";
 import BrouseCourses from "./pages/Browsecourses.jsx";
 import Exam_prep from "./pages/Exam_prep.jsx";
 import SuhFeatures from "./pages/Features.jsx";
+import BestMentor from "./pages/BestMentors.jsx";  
+import Certification from "./pages/Certification.jsx";  // ✅ Added Certification page
 import Footer from "./pages/Footer.jsx";
 import StatusSection from "./pages/StatusSection.jsx";
 
@@ -21,12 +23,11 @@ import Instructors from "./pages/Instructors.jsx";
 import New_sesion from "./pages/New_sesion.jsx";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import CoursesPage from "./pages/Courses.jsx";
-import LearnMore from "./pages/LearnMore.jsx"; // ✅ new page
+import LearnMore from "./pages/LearnMore.jsx"; 
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
 
-  // Initialize states to prevent white flash
   const [isLoaded, setIsLoaded] = useState(() => {
     const hasLoadedBefore = sessionStorage.getItem("hasLoadedBefore");
     return hasLoadedBefore === "true";
@@ -37,7 +38,6 @@ function App() {
     return hasLoadedBefore !== "true";
   });
 
-  // Add a state to ensure smooth transition
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
@@ -47,16 +47,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Mark as initialized immediately
     setIsInitialized(true);
 
-    // Only run loading logic if this is the first time
     if (!showInitialLoading) {
       setIsLoaded(true);
       return;
     }
 
-    // Always show loading for 3 seconds on first visit
     const loadingTimer = setTimeout(() => {
       setIsLoaded(true);
       sessionStorage.setItem("hasLoadedBefore", "true");
@@ -65,7 +62,6 @@ function App() {
     return () => clearTimeout(loadingTimer);
   }, [showInitialLoading]);
 
-  // Show loading if not initialized or if it's first time and not loaded
   if (!isInitialized || (!isLoaded && showInitialLoading)) {
     return <Loading />;
   }
@@ -79,61 +75,22 @@ function App() {
         {/* Main content area */}
         <main className="flex-grow">
           <Routes>
-            {/* Main Website */}
+            {/* Home Page */}
             <Route
               path="/"
               element={
                 <>
                   <div className="w-full">
-                    {/* Hero Section */}
-                    <section className="w-full">
-                      <Hero />
-                    </section>
-
-                    {/* About Section */}
-                    <section className="w-full py-8 sm:py-12 lg:py-16">
-                      <About />
-                    </section>
-
-                    {/* Browse Courses */}
-                    <section className="w-full py-8 sm:py-12 lg:py-16">
-                      <BrouseCourses />
-                    </section>
-
-                    {/* Status Section */}
-                    <section className="w-full py-8 sm:py-12 lg:py-16">
-                      <StatusSection />
-                    </section>
-
-                    {/* Features */}
-                    <section className="w-full py-8 sm:py-12 lg:py-16">
-                      <SuhFeatures />
-                    </section>
-
-                    {/* New Session */}
-                    <section className="w-full">
-                      <New_sesion />
-                    </section>
-
-                    {/* Exam Prep */}
-                    <section className="w-full py-8 sm:py-12 lg:py-16">
-                      <Exam_prep />
-                    </section>
-
-                    {/* Testimonial */}
-                    <section className="w-full py-8 sm:py-12 lg:py-16">
-                      <TestimonialSection />
-                    </section>
-
-                    {/* Explore Event */}
-                    <section className="w-full py-8 sm:py-12 lg:py-16">
-                      <Explore_event />
-                    </section>
-
-                    {/* Instructors */}
-                    <section className="w-full">
-                      <Instructors />
-                    </section>
+                    <section className="w-full"><Hero /></section>
+                    <section className="w-full py-8 sm:py-12 lg:py-16"><About /></section>
+                    <section className="w-full py-8 sm:py-12 lg:py-16"><BrouseCourses /></section>
+                    <section className="w-full py-8 sm:py-12 lg:py-16"><StatusSection /></section>
+                    <section className="w-full py-8 sm:py-12 lg:py-16"><SuhFeatures /></section>
+                    <section className="w-full"><New_sesion /></section>
+                    <section className="w-full py-8 sm:py-12 lg:py-16"><Exam_prep /></section>
+                    <section className="w-full py-8 sm:py-12 lg:py-16"><TestimonialSection /></section>
+                    <section className="w-full py-8 sm:py-12 lg:py-16"><Explore_event /></section>
+                    <section className="w-full"><Instructors /></section>
                   </div>
                   <FloatingActions />
                 </>
@@ -150,12 +107,32 @@ function App() {
               }
             />
 
-            {/* Learn More Page ✅ */}
+            {/* Learn More Page */}
             <Route
               path="/learnmore"
               element={
                 <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
                   <LearnMore />
+                </div>
+              }
+            />
+
+            {/* ✅ Best Mentors Page */}
+            <Route
+              path="/best-mentors"
+              element={
+                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                  <BestMentor />
+                </div>
+              }
+            />
+
+            {/* ✅ Certification Page */}
+            <Route
+              path="/certification"
+              element={
+                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                  <Certification />
                 </div>
               }
             />

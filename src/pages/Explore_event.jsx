@@ -24,30 +24,25 @@ const ExploreEvent = () => {
 
                     {/* Title */}
                     <h2 className="text-[#0E2A46] text-2xl sm:text-3xl md:text-4xl lg:text-[45px] font-bold leading-tight sm:leading-relaxed lg:leading-[55px] mt-2">
-                        Lorem ipsum dolor sit amet consectetur.
+                        Launch Your Dream Career
                     </h2>
                 </div>
 
                 {/* Sub-heading */}
                 <p className="text-[#0E2A46] font-semibold text-sm sm:text-base leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore.
+                    From classroom to corporate — we prepare you for every step.
                 </p>
 
                 {/* Paragraph */}
                 <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate.
+                   Our programs are designed for students who want to transition smoothly from campus to corporate life. From resume building and aptitude training to mock interviews and real-world projects, we help you stand out in the job market. Join us and unlock your pathway to success.
                 </p>
 
                 {/* Button */}
                 <div className="pt-2 sm:pt-4">
                     <button className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 md:h-14 pl-4 sm:pl-6 md:pl-8 pr-0 overflow-hidden gap-2 sm:gap-4 hover:bg-[#28B898] transition-colors duration-300 group">
                         <span className="text-xs sm:text-sm md:text-base font-medium text-white">
-                            Admission open
+                            Learn More
                         </span>
                         <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full group-hover:bg-[#2FC7A1] transition-colors duration-300">
                             <ArrowRight size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />

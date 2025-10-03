@@ -37,10 +37,7 @@ export default function TestimonialSection() {
           {/* Content */}
           <div className="relative z-10 p-6 sm:p-8 md:p-10 text-white">
             <p className="mb-6 sm:mb-8 text-sm sm:text-base md:text-lg leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip.
+              The interview prep program completely changed my confidence level. From mock sessions to real-world questions, I felt ready for every challenge. I landed my first job within weeks.
             </p>
 
             {/* Profile */}
