@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 
 import Hero from "./assets/components/hero.jsx";
 import Nav from "./assets/components/nav.jsx";
 import About from "./pages/About.jsx";
+import BestMentor from "./pages/BestMentors.jsx";
 import BrouseCourses from "./pages/Browsecourses.jsx";
+import Certification from "./pages/Certification.jsx";
 import Exam_prep from "./pages/Exam_prep.jsx";
 import SuhFeatures from "./pages/Features.jsx";
-import BestMentor from "./pages/BestMentors.jsx";  
-import Certification from "./pages/Certification.jsx";  
 import Footer from "./pages/Footer.jsx";
 import StatusSection from "./pages/StatusSection.jsx";
 
@@ -17,14 +17,13 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 
 import FloatingActions from "./assets/components/FloatingAction.jsx";
-import Loading from "./assets/components/loading.jsx";
+import AdmissionForm from "./pages/AdmissionForm.jsx";
+import CoursesPage from "./pages/Courses.jsx";
 import Explore_event from "./pages/Explore_event.jsx";
 import Instructors from "./pages/Instructors.jsx";
+import LearnMore from "./pages/LearnMore.jsx";
 import New_sesion from "./pages/New_sesion.jsx";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
-import CoursesPage from "./pages/Courses.jsx";
-import LearnMore from "./pages/LearnMore.jsx"; 
-import AdmissionForm from "./pages/AdmissionForm.jsx";
 
 
 const ScrollToTop = () => {
@@ -39,45 +38,8 @@ const ScrollToTop = () => {
 
 
 function App() {
-  const [scrollY, setScrollY] = useState(0);
 
-  const [isLoaded, setIsLoaded] = useState(() => {
-    const hasLoadedBefore = sessionStorage.getItem("hasLoadedBefore");
-    return hasLoadedBefore === "true";
-  });
 
-  const [showInitialLoading, setShowInitialLoading] = useState(() => {
-    const hasLoadedBefore = sessionStorage.getItem("hasLoadedBefore");
-    return hasLoadedBefore !== "true";
-  });
-
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    setIsInitialized(true);
-
-    if (!showInitialLoading) {
-      setIsLoaded(true);
-      return;
-    }
-
-    const loadingTimer = setTimeout(() => {
-      setIsLoaded(true);
-      sessionStorage.setItem("hasLoadedBefore", "true");
-    }, 3000);
-
-    return () => clearTimeout(loadingTimer);
-  }, [showInitialLoading]);
-
-  if (!isInitialized || (!isLoaded && showInitialLoading)) {
-    return <Loading />;
-  }
 
   return (
     <Router>
@@ -180,7 +142,7 @@ function App() {
               }
             />
           </Routes>
-          
+
         </main>
 
         {/* Footer */}
