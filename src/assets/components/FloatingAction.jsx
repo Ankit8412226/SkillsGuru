@@ -1,4 +1,3 @@
-import { ChevronUp } from "lucide-react";
 import { useEffect } from "react";
 
 // WhatsApp SVG Icon
@@ -49,21 +48,14 @@ const FloatingActions = () => {
       {/* WhatsApp Button - Always visible */}
       <button
         onClick={openWhatsApp}
-        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] text-white shadow-lg ring-2 ring-white 
+        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] text-white shadow-lg ring-2 ring-white
         hover:scale-110 hover:shadow-xl hover:bg-green-700 transition-all duration-300 flex items-center justify-center"
         title="Chat on WhatsApp"
       >
         <WhatsAppIcon className="w-6 h-6" />
       </button>
 
-      {/* Scroll to Top Button */}
-      <button
-        onClick={scrollToTop}
-        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white shadow-lg transition-all duration-300 hover:scale-110 flex items-center justify-center"
-        title="Scroll to Top"
-      >
-        <ChevronUp className="w-6 h-6" />
-      </button>
+
     </div>
   );
 };
