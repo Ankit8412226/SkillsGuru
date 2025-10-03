@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 
 import Hero from "./assets/components/hero.jsx";
@@ -9,7 +9,7 @@ import BrouseCourses from "./pages/Browsecourses.jsx";
 import Exam_prep from "./pages/Exam_prep.jsx";
 import SuhFeatures from "./pages/Features.jsx";
 import BestMentor from "./pages/BestMentors.jsx";  
-import Certification from "./pages/Certification.jsx";  // ✅ Added Certification page
+import Certification from "./pages/Certification.jsx";  
 import Footer from "./pages/Footer.jsx";
 import StatusSection from "./pages/StatusSection.jsx";
 
@@ -24,6 +24,19 @@ import New_sesion from "./pages/New_sesion.jsx";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import CoursesPage from "./pages/Courses.jsx";
 import LearnMore from "./pages/LearnMore.jsx"; 
+import AdmissionForm from "./pages/AdmissionForm.jsx";
+
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -68,6 +81,9 @@ function App() {
 
   return (
     <Router>
+      {/* ScrollToTop inside Router */}
+      <ScrollToTop />
+
       <div className="min-h-screen flex flex-col">
         {/* Header */}
         <Nav />
@@ -117,7 +133,7 @@ function App() {
               }
             />
 
-            {/* ✅ Best Mentors Page */}
+            {/* Best Mentors Page */}
             <Route
               path="/best-mentors"
               element={
@@ -127,12 +143,21 @@ function App() {
               }
             />
 
-            {/* ✅ Certification Page */}
+            {/* Certification Page */}
             <Route
               path="/certification"
               element={
                 <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
                   <Certification />
+                </div>
+              }
+            />
+
+            <Route
+              path="/admission"
+              element={
+                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                  <AdmissionForm />
                 </div>
               }
             />
@@ -155,6 +180,7 @@ function App() {
               }
             />
           </Routes>
+          
         </main>
 
         {/* Footer */}
