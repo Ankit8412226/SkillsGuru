@@ -24,6 +24,7 @@ import Instructors from "./pages/Instructors.jsx";
 import LearnMore from "./pages/LearnMore.jsx";
 import New_sesion from "./pages/New_sesion.jsx";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
+import VerifyEmail from "./pages/verifyEmail.jsx";
 
 
 const ScrollToTop = () => {
@@ -69,6 +70,7 @@ function App() {
                     <section className="w-full py-8 sm:py-12 lg:py-16"><TestimonialSection /></section>
                     <section className="w-full py-8 sm:py-12 lg:py-16"><Explore_event /></section>
                     <section className="w-full"><Instructors /></section>
+
                   </div>
                   <FloatingActions />
                 </>
@@ -141,6 +143,17 @@ function App() {
                 </div>
               }
             />
+
+<Route
+              path="/verify-email"
+              element={
+                <div className="mt-10 pt-20 pb-8 flex items-center justify-center">
+                  <VerifyEmail />
+                </div>
+              }
+            />
+
+
           </Routes>
 
         </main>
