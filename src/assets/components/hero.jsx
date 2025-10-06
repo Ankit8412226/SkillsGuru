@@ -1,7 +1,19 @@
 import { Search } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+    const [query, setQuery] = useState("");
+    const navigate = useNavigate();
+
+    const handleSearch = () => {
+        if (query.trim()) {
+            navigate(`/courses?search=${encodeURIComponent(query)}`);
+        } else {
+            navigate(`/courses`);
+        }
+    };
+
     return (
         <section id="home"
             className="w-full bg-cover bg-center py-32 sm:py-40 md:py-48 lg:py-60 px-4 sm:px-6 md:px-16 lg:px-24 relative"
@@ -16,7 +28,6 @@ const Hero = () => {
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight px-2">
                         Launch Your Career with Industry-Ready Skills <br />
                         & Guaranteed Placement Support <br />
-                       
                     </h1>
                     <p className="text-gray-600 text-base sm:text-lg px-4">
                         Transform your future through comprehensive training programs designed with industry partners and backed by dedicated placement assistance
@@ -28,8 +39,14 @@ const Hero = () => {
                             type="text"
                             placeholder="Which career path interests you?"
                             className="w-full pl-4 pr-12 py-3 outline-none text-gray-700 text-sm placeholder:text-sm bg-transparent rounded-full"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                         />
-                        <button className="absolute right-1 top-1 flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 bg-[#35D7AE] hover:bg-[#2FC7A1] rounded-full transition-colors duration-200">
+                        <button
+                            onClick={handleSearch}
+                            className="absolute right-1 top-1 flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 bg-[#35D7AE] hover:bg-[#2FC7A1] rounded-full transition-colors duration-200"
+                        >
                             <Search size={18} className="sm:w-[20px] sm:h-[20px]" color="white" />
                         </button>
                     </div>
@@ -45,7 +62,6 @@ const Hero = () => {
                         <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 leading-snug">
                             Launch Your Career with Industry-Ready Skills <br />
                             & Guaranteed Placement Support<br />
-                            
                         </h1>
                         <p className="text-gray-600 text-base lg:text-lg">
                            Professional training with industry collaboration and job placement.
@@ -57,8 +73,14 @@ const Hero = () => {
                                 type="text"
                                 placeholder="Which career path interests you?"
                                 className="w-full pl-5 pr-16 py-3.5 outline-none text-gray-700 bg-transparent rounded-full placeholder:text-gray-500"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                             />
-                            <button className="absolute right-1.5 top-1.5 flex items-center justify-center w-12 h-12 lg:w-13 lg:h-13 bg-[#35D7AE] hover:bg-[#2FC7A1] rounded-full transition-colors duration-200">
+                            <button
+                                onClick={handleSearch}
+                                className="absolute right-1.5 top-1.5 flex items-center justify-center w-12 h-12 lg:w-13 lg:h-13 bg-[#35D7AE] hover:bg-[#2FC7A1] rounded-full transition-colors duration-200"
+                            >
                                 <Search size={22} color="white" />
                             </button>
                         </div>
