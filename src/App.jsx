@@ -18,6 +18,7 @@ import Register from "./pages/Register.jsx";
 
 import FloatingActions from "./assets/components/FloatingAction.jsx";
 import AdmissionForm from "./pages/AdmissionForm.jsx";
+import CourseDescriptionPage from "./pages/CourseDescriptionPage.jsx";
 import CoursesPage from "./pages/Courses.jsx";
 import Explore_event from "./pages/Explore_event.jsx";
 import Instructors from "./pages/Instructors.jsx";
@@ -152,6 +153,15 @@ function App() {
                 </div>
               }
             />
+<Route
+              path="/Course-DescriptionPage"
+              element={
+                <div className="mt-10 pt-20 pb-8 flex items-center justify-center">
+                  <CourseDescriptionPage />
+                </div>
+              }
+            />
+
 
 
           </Routes>
