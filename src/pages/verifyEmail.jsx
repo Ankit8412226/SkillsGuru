@@ -1,0 +1,131 @@
+import axios from "axios";
+import { ArrowRight, CheckCircle, Loader2, XCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const VerifyEmail = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [status, setStatus] = useState("verifying"); // verifying, success, error
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const verifyEmail = async () => {
+      // Get token and email from URL query parameters
+      const token = searchParams.get("token");
+      const email = searchParams.get("email");
+
+      if (!token || !email) {
+        setStatus("error");
+        setMessage("Invalid verification link. Missing token or email.");
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/auth/verify-email?token=${token}&email=${email}`
+        );
+
+        if (response.data.success) {
+          setStatus("success");
+          setMessage(response.data.message);
+        }
+      } catch (err) {
+        console.error("Verification error:", err);
+        setStatus("error");
+        setMessage(
+          err.response?.data?.message || "Verification failed. Please try again."
+        );
+      }
+    };
+
+    verifyEmail();
+  }, [searchParams]);
+
+  const handleLoginRedirect = () => {
+    navigate("/login");
+  };
+
+  const handleRegisterRedirect = () => {
+    navigate("/register");
+  };
+
+  return (
+    <div
+      style={{ backgroundImage: `url(./bg.jpg)` }}
+      className="min-h-screen w-full flex items-center justify-center p-4 bg-gray-50"
+    >
+      <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 lg:p-12 text-center">
+        {status === "verifying" && (
+          <>
+            <div className="flex justify-center mb-6">
+              <Loader2 size={64} className="text-[#2FC7A1] animate-spin" />
+            </div>
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
+              Verifying your email...
+            </h2>
+            <p className="text-gray-600">
+              Please wait while we verify your account
+            </p>
+          </>
+        )}
+
+        {status === "success" && (
+          <>
+            <div className="flex justify-center mb-6">
+              <CheckCircle size={64} className="text-green-500" />
+            </div>
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
+              Email Verified!
+            </h2>
+            <p className="text-gray-600 mb-8">{message}</p>
+            <button
+              onClick={handleLoginRedirect}
+              className="w-full flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
+            >
+              <span className="px-6 py-2 text-sm font-medium">Go to Login</span>
+              <div className="flex items-center justify-center w-12 h-12 bg-[#35D7AE] rounded-full">
+                <ArrowRight size={20} />
+              </div>
+            </button>
+          </>
+        )}
+
+        {status === "error" && (
+          <>
+            <div className="flex justify-center mb-6">
+              <XCircle size={64} className="text-red-500" />
+            </div>
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
+              Verification Failed
+            </h2>
+            <p className="text-gray-600 mb-8">{message}</p>
+            <div className="space-y-3">
+              <button
+                onClick={handleRegisterRedirect}
+                className="w-full flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
+              >
+                <span className="px-6 py-2 text-sm font-medium">
+                  Back to Register
+                </span>
+                <div className="flex items-center justify-center w-12 h-12 bg-[#35D7AE] rounded-full">
+                  <ArrowRight size={20} />
+                </div>
+              </button>
+              <button
+                onClick={handleLoginRedirect}
+                className="w-full px-6 py-3 border-2 border-[#2FC7A1] text-[#2FC7A1] rounded-full font-medium hover:bg-[#2FC7A1] hover:text-white transition-colors duration-200"
+              >
+                Try Login Instead
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default VerifyEmail;
