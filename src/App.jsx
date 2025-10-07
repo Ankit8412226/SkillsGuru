@@ -8,7 +8,7 @@ import About from "./pages/About.jsx";
 import BestMentor from "./pages/BestMentors.jsx";
 import BrouseCourses from "./pages/Browsecourses.jsx";
 import Certification from "./pages/Certification.jsx";
-import Exam_prep from "./pages/Exam_prep.jsx";
+import Exam_prep from "./pages/Exam_prep.jsx"; // ✅ already imported
 import SuhFeatures from "./pages/Features.jsx";
 import Footer from "./pages/Footer.jsx";
 import StatusSection from "./pages/StatusSection.jsx";
@@ -17,7 +17,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 
 import FloatingActions from "./assets/components/FloatingAction.jsx";
-import AdmissionForm from "./pages/AdmissionForm.jsx";
+import AdmissionForm from "./pages/AdmissionForm.jsx"; 
 import CourseDescriptionPage from "./pages/CourseDescriptionPage.jsx";
 import CoursesPage from "./pages/Courses.jsx";
 import Explore_event from "./pages/Explore_event.jsx";
@@ -26,7 +26,7 @@ import LearnMore from "./pages/LearnMore.jsx";
 import New_sesion from "./pages/New_sesion.jsx";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
-
+import Explore_Learn_more from "./pages/Explore_Learn_more.jsx";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -38,11 +38,7 @@ const ScrollToTop = () => {
   return null;
 };
 
-
 function App() {
-
-
-
   return (
     <Router>
       {/* ScrollToTop inside Router */}
@@ -71,7 +67,6 @@ function App() {
                     <section className="w-full py-8 sm:py-12 lg:py-16"><TestimonialSection /></section>
                     <section className="w-full py-8 sm:py-12 lg:py-16"><Explore_event /></section>
                     <section className="w-full"><Instructors /></section>
-
                   </div>
                   <FloatingActions />
                 </>
@@ -97,6 +92,15 @@ function App() {
                 </div>
               }
             />
+            <Route
+              path="/explore-learn-more"
+              element={
+                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                  <Explore_Learn_more />
+                </div>
+              }
+            />
+
 
             {/* Best Mentors Page */}
             <Route
@@ -118,11 +122,22 @@ function App() {
               }
             />
 
+            {/* Admission Form Page */}
             <Route
               path="/admission"
               element={
                 <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
                   <AdmissionForm />
+                </div>
+              }
+            />
+
+
+            <Route
+              path="/exam-prep"
+              element={
+                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                  <Exam_prep />
                 </div>
               }
             />
@@ -145,7 +160,7 @@ function App() {
               }
             />
 
-<Route
+            <Route
               path="/verify-email"
               element={
                 <div className="mt-10 pt-20 pb-8 flex items-center justify-center">
@@ -153,7 +168,7 @@ function App() {
                 </div>
               }
             />
-<Route
+          <Route
              path="/Course-DescriptionPage/:id"
               element={
                 <div className="mt-10 pt-20 pb-8 flex items-center justify-center">
@@ -161,11 +176,7 @@ function App() {
                 </div>
               }
             />
-
-
-
           </Routes>
-
         </main>
 
         {/* Footer */}

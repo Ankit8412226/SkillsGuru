@@ -1,9 +1,9 @@
 import React from "react";
 
 const instructors = [
-  { id: 1, name: "Akriti", role: "Teacher", img: "./teacher1.jpg" },
-  { id: 2, name: "Akriti", role: "Teacher", img: "./teacher2.jpg" },
-  { id: 3, name: "Akriti", role: "Teacher", img: "./teacher3.png" },
+  { id: 1, name: "Ankit", role: "Teacher", img: "./teacher1.jpg" },
+  { id: 2, name: "Soumya", role: "Teacher", img: "./teacher2.jpg" },
+  { id: 3, name: "Pulkit", role: "Teacher", img: "./teacher3.png" },
   { id: 4, name: "Akriti", role: "Teacher", img: "./teacher4.jpg" },
 ];
 

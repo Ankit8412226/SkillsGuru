@@ -1,7 +1,7 @@
 import { ArrowRight, Menu, ShoppingCart, User, X } from "lucide-react";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Contact from "./Contact"; // Import the Contact component
+import Contact from "./Contact"; 
 
 const navLinks = [
   { name: "Home", href: "#home", key: "home", isRoute: false },
@@ -82,13 +82,11 @@ const Nav = () => {
           onClick={() => navigate("/")}
         >
           <img
-            src="./logo_suh.jpg"
-            alt="Suh Tech Logo"
-            className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain"
+            src="./Skill Guru Logo Teal.svg"
+            alt="Skill Guru Logo"
+            className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain scale-165"
           />
-          <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">
-            Suh Tech
-          </span>
+          
         </div>
 
         {/* Desktop Nav Links - Hidden on mobile/tablet */}
