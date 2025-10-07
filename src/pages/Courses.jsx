@@ -1,139 +1,36 @@
-import {
-  ArrowRight,
-  BookOpen,
-  Search,
-} from "lucide-react";
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { ArrowRight, BookOpen, Search } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import CourseCard from "../assets/components/edcard";
-import axios from "axios";
-
 
 const CoursesPage = () => {
-
   const [selectedCategory, setSelectedCategory] = useState("All");
-
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams(); // <-- destructure setter
   const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
-  console.log("Search Term:", searchParams.get("search"));
-  const [coursesData, setCoursesData] = useState([]); // State to hold fetched course
-  const [loading, setLoading] = useState(false); // State to manage loading state
+  const [coursesData, setCoursesData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const getCourses = async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/courses`);
-      console.log(response.data.data);
-      setCoursesData(response.data.data);
-      setLoading(false);
-      console.log("hello Akriti!")
+      setCoursesData(response.data.data || []);
     } catch (error) {
       console.error("Error fetching courses:", error);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getCourses();
   }, []);
 
-  // const coursesData = [
-  //   {
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80",
-  //     category: "Development",
-  //     rating: 4.8,
-  //     title: "Complete React Developer Course",
-  //     lessonCount: 25,
-  //     duration: "40h 15m",
-  //     studentsCount: "150+",
-  //     instructor: "Angela",
-  //     instructorImage:
-  //       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-  //     originalPrice: 150,
-  //     currentPrice: 75,
-  //     categoryColor: "bg-[#FE543D]",
-  //   },
-  //   {
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-  //     category: "Data Science",
-  //     rating: 4.6,
-  //     title: "Python for Data Analysis & Machine Learning",
-  //     lessonCount: 18,
-  //     duration: "35h 20m",
-  //     studentsCount: "220+",
-  //     instructor: "Sarah",
-  //     instructorImage:
-  //       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-  //     originalPrice: 180,
-  //     currentPrice: 90,
-  //     categoryColor: "bg-[#10B981]",
-  //   },
-  //   {
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1558655146-364adaf1fcc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1564&q=80",
-  //     category: "Design",
-  //     rating: 4.9,
-  //     title: "UI/UX Design Masterclass & Figma Complete Guide",
-  //     lessonCount: 22,
-  //     duration: "28h 45m",
-  //     studentsCount: "180+",
-  //     instructor: "Michael",
-  //     instructorImage:
-  //       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
-  //     originalPrice: 140,
-  //     currentPrice: 70,
-  //     categoryColor: "bg-[#8B5CF6]",
-  //   },
-  //   {
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-  //     category: "Development",
-  //     rating: 4.7,
-  //     title: "Full Stack JavaScript Development Bootcamp",
-  //     lessonCount: 30,
-  //     duration: "45h 30m",
-  //     studentsCount: "300+",
-  //     instructor: "David",
-  //     instructorImage:
-  //       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-  //     originalPrice: 200,
-  //     currentPrice: 100,
-  //     categoryColor: "bg-[#FE543D]",
-  //   },
-  //   {
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-  //     category: "Marketing",
-  //     rating: 4.5,
-  //     title: "Digital Marketing Strategy & Social Media",
-  //     lessonCount: 16,
-  //     duration: "24h 15m",
-  //     studentsCount: "250+",
-  //     instructor: "Emma",
-  //     instructorImage:
-  //       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-  //     originalPrice: 120,
-  //     currentPrice: 60,
-  //     categoryColor: "bg-[#F59E0B]",
-  //   },
-  //   {
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-  //     category: "Business",
-  //     rating: 4.8,
-  //     title: "Project Management Professional Certification",
-  //     lessonCount: 20,
-  //     duration: "32h 40m",
-  //     studentsCount: "190+",
-  //     instructor: "James",
-  //     instructorImage:
-  //       "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
-  //     originalPrice: 160,
-  //     currentPrice: 80,
-  //     categoryColor: "bg-[#EF4444]",
-  //   },
-  // ];
+  // keep searchTerm in sync with URL params (useful if user navigates / modifies URL)
+  useEffect(() => {
+    setSearchTerm(searchParams.get("search") || "");
+  }, [searchParams]);
 
   const categories = [
     "All",
@@ -145,21 +42,26 @@ const CoursesPage = () => {
   ];
 
   const filteredCourses = coursesData.filter((course) => {
-    const title = course?.title?.toLowerCase() || "";
-    const instructor = course?.instructor?.toLowerCase() || "";
-    const category = course?.category || "";
+    const title = (course?.title || "").toLowerCase();
 
-    const matchesSearch =
-      searchTerm === "" ||
-      title.includes(searchTerm.toLowerCase()) ||
-      instructor.includes(searchTerm.toLowerCase());
+    // handle both cases: instructor may be a string, or an object with .name
+    const instructorName =
+      typeof course?.instructor === "string"
+        ? course.instructor.toLowerCase()
+        : (course?.instructor?.name || "").toLowerCase();
+
+    const category = (course?.category || "").toLowerCase();
+
+    const q = (searchTerm || "").trim().toLowerCase();
+
+    const matchesSearch = !q || title.includes(q) || instructorName.includes(q);
 
     const matchesCategory =
-      selectedCategory === "All" || category === selectedCategory;
+      selectedCategory === "All" ||
+      category === selectedCategory.toLowerCase();
 
     return matchesSearch && matchesCategory;
   });
-
 
   // Update search param on input change
   const handleSearchChange = (e) => {
@@ -168,11 +70,8 @@ const CoursesPage = () => {
 
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
-      if (value) {
-        params.set("search", value);
-      } else {
-        params.delete("search");
-      }
+      if (value) params.set("search", value);
+      else params.delete("search");
       return params;
     });
   };
@@ -183,24 +82,21 @@ const CoursesPage = () => {
 
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
-      if (searchTerm) {
-        params.set("search", searchTerm);
-      }
-      if (category !== "All") {
-        params.set("category", category);
-      } else {
-        params.delete("category");
-      }
+      if (searchTerm) params.set("search", searchTerm);
+      if (category !== "All") params.set("category", category);
+      else params.delete("category");
       return params;
     });
   };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        Akriti is Loading. wait for her a moment...
+        Loading courses…
       </div>
     );
   }
+
   return (
     <div className="mt-10 mb-10 bg-white">
       {/* Header Section */}
@@ -256,8 +152,8 @@ const CoursesPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {filteredCourses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {filteredCourses.map((course, index) => (
-              <CourseCard key={index} {...course} />
+            {filteredCourses.map((course) => (
+              <CourseCard key={course._id || course.slug} {...course} />
             ))}
           </div>
         ) : (
