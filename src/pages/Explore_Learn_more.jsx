@@ -1,5 +1,4 @@
-import React from "react";
-import { Sparkles, Code, Brain, Users, Award, Rocket } from "lucide-react";
+import { Award, Brain, Code, Rocket, Sparkles, Users } from "lucide-react";
 import AdmissionForm from "./AdmissionForm";
 
 const Explore_Learn_more = () => {
@@ -11,15 +10,14 @@ const Explore_Learn_more = () => {
     ];
 
     return (
-        <div className="flex flex-col lg:flex-row min-h-screen">
-            {/* Left Section - Modern Card Design */}
+        <div  style={{ backgroundImage: `url(./bg.jpg)` }} className="flex flex-col lg:flex-row  p-8 bg-gray-300">
+
             <div className="lg:w-[35%] w-full bg-gradient-to-b from-[#0A1F35] to-[#0E2A46] text-white flex flex-col justify-center px-6 lg:px-10 py-16 relative overflow-hidden">
                 {/* Floating shapes */}
-                <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#2FC7A1] rounded-full opacity-5"></div>
-                <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-[#2FC7A1] rounded-full opacity-5"></div>
+
 
                 <div className="relative z-10 space-y-8">
-                    {/* Header Section */}
+
                     <div>
                         <div className="flex items-center gap-2 mb-4">
                             <Rocket className="w-6 h-6 text-[#2FC7A1]" />
@@ -32,7 +30,7 @@ const Explore_Learn_more = () => {
                         </h1>
                     </div>
 
-                    {/* Description */}
+
                     <p className="text-lg leading-relaxed text-gray-300">
                         Discover a world of learning designed for the future.
                         From coding and AI to design and data science explore
@@ -40,7 +38,7 @@ const Explore_Learn_more = () => {
                         skills and stand out in your career.
                     </p>
 
-                    {/* Feature Pills */}
+
                     <div className="space-y-3">
                         <div className="flex items-center gap-3 text-base">
                             <Sparkles className="text-[#2FC7A1] w-6 h-6 flex-shrink-0" />
@@ -70,12 +68,12 @@ const Explore_Learn_more = () => {
                 </div>
             </div>
 
-            {/* Right Section */}
+
             <div
-                className="lg:w-[65%] w-full flex items-center justify-center bg-cover bg-center bg-no-repeat min-h-screen"
-                style={{ backgroundImage: "url('/bg.jpg')" }}
+                className="lg:w-[65%] w-full flex items-center justify-center bg-cover bg-center bg-no-repeat "
+
             >
-                <div className="mb-90 transform scale-110">
+                <div className="mb-90 ">
                     <AdmissionForm />
                 </div>
             </div>

@@ -1,13 +1,13 @@
 import { ArrowRight, Menu, ShoppingCart, User, X } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Contact from "./Contact"; 
+import Contact from "./Contact";
 
 const navLinks = [
   { name: "Home", href: "#home", key: "home", isRoute: false },
   { name: "About", href: "#about", key: "about", isRoute: false },
   { name: "Popular Courses", href: "#Popularcourses", key: "Popularcourses", isRoute: false },
-  { name: "Success Stories", href: "#testimonials", key: "testimonials", isRoute: false },
+
   { name: "Courses", href: '/courses', key: "courses", isRoute: true },
 ];
 
@@ -86,7 +86,7 @@ const Nav = () => {
             alt="Skill Guru Logo"
             className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain scale-165"
           />
-          
+
         </div>
 
         {/* Desktop Nav Links - Hidden on mobile/tablet */}
