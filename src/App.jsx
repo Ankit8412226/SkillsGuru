@@ -154,7 +154,7 @@ function App() {
               }
             />
 <Route
-              path="/Course-DescriptionPage"
+             path="/Course-DescriptionPage/:id"
               element={
                 <div className="mt-10 pt-20 pb-8 flex items-center justify-center">
                   <CourseDescriptionPage />

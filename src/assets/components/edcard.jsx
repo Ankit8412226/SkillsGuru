@@ -1,132 +1,91 @@
-import { BookOpen, Clock, Eye, ShoppingCart, Star, Users } from 'lucide-react';
-import React from 'react';
+import { BookOpen, Clock, Eye, ShoppingCart, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const CourseCard = ({
-  imageUrl = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
-  category = "Development",
-  rating = 4.7,
-  title = "It Statistics Data Science And Business Analysis",
-  lessonCount = 10,
-  duration = "19h 30m",
-  studentsCount = "20+",
-  instructor = "Angela",
-  instructorImage = "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-  originalPrice = 120,
-  currentPrice = 60,
-  categoryColor = "bg-[#FE543D]"
+  _id,
+  title,
+  slug,
+  description,
+  shortDescription,
+  instructor,
+  category,
+  price,
+  durationHours,
+  level,
+  tags,
+  thumbnailUrl,
 }) => {
-  const renderStars = (rating) => {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-    const stars = [];
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />);
-    }
-
-    if (hasHalfStar) {
-      stars.push(<Star key="half" className="w-4 h-4 fill-yellow-400 text-yellow-400" />);
-    }
-
-    const remainingStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < remainingStars; i++) {
-      stars.push(<Star key={`empty-${i}`} className="w-4 h-4 text-gray-300" />);
-    }
-
-    return stars;
-  };
+  const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    // Navigate to course-description page
-    console.log('Navigating to course details for:', title);
-    // You can implement your navigation logic here
-    // For example: navigate('/course-description/' + courseId)
-  };
-
-  // Extract color from categoryColor prop
-  const getBgColor = () => {
-    return categoryColor.replace('bg-[', '').replace(']', '');
+    navigate(`/Course-DescriptionPage/${_id}`);
   };
 
   return (
-    <div id='/Popularcourses' className="max-w-[424px] bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-4">
-
+    <div className="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 max-w-[400px] border border-gray-100">
+      {/* Thumbnail */}
       <div className="relative">
         <img
-          src={imageUrl}
+          src={thumbnailUrl}
           alt={title}
-          className="w-full h-48 object-cover"
+          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <div className={`absolute top-4 left-4 ${categoryColor} text-[15px] text-[#fff] px-3 py-1 rounded-md font-normal`}>
+        <div className="absolute top-3 left-3 bg-[#2563eb] text-white text-sm px-3 py-1 rounded-md capitalize">
           {category}
         </div>
 
-        {/* View Details Button */}
+        {/* 👁️ View Details Button */}
         <button
           onClick={handleViewDetails}
-          className="absolute top-4 right-4 flex items-center justify-center w-10 h-10 rounded-full text-white hover:scale-110 transition-transform duration-200"
-          style={{ backgroundColor: getBgColor() }}
+          className="absolute top-3 right-3 flex items-center justify-center w-10 h-10 rounded-full bg-black/40 text-white hover:bg-black transition-all duration-300 backdrop-blur-sm"
         >
           <Eye className="w-5 h-5" />
         </button>
       </div>
 
-      {/* Content Section */}
+      {/* Content */}
       <div className="p-6">
-        {/* Rating */}
-        <div className="flex items-center gap-1 mb-3">
-          {renderStars(rating)}
-          <span className="text-gray-600 text-sm ml-1">({rating})</span>
-        </div>
-
-        {/* Title */}
-        <h3 className="text-xl font-semibold text-[#0E2A46] mb-4 leading-7">
+        <h3 className="text-[18px] font-semibold text-[#0E2A46] mb-2 line-clamp-2">
           {title}
         </h3>
+        <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+          {shortDescription || description}
+        </p>
 
-        {/* Course Details */}
-        <div className="flex items-center justify-between text-[#4D5756] text-sm mb-4 font-normal">
-          <div className="flex items-center gap-1">
-            <BookOpen className="w-4 h-4" />
-            <span>Lesson {lessonCount}</span>
-          </div>
+        <div className="flex items-center justify-between text-[#4D5756] text-sm mb-4">
           <div className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
-            <span>{duration}</span>
+            <span>{durationHours}h</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <BookOpen className="w-4 h-4" />
+            <span className="capitalize">{level}</span>
           </div>
           <div className="flex items-center gap-1">
             <Users className="w-4 h-4" />
-            <span>Students {studentsCount}</span>
+            <span>Enrolled: —</span>
           </div>
         </div>
 
-        {/* Divider */}
-        <hr
-          className="mb-4"
-          style={{ borderBottom: "1px dashed #4D5756", borderTop: "none" }}
-        />
+        <hr className="border-dashed border-gray-300 mb-4" />
 
-        {/* Instructor Section */}
-        <div className="flex items-center gap-4 mb-4 w-full">
-          <img
-            src={instructorImage}
-            alt={instructor}
-            className="w-10 h-10 rounded-full object-cover"
-          />
-          <div className='flex items-center justify-center'>
-            <p className="text-[#4D5756] font-normal text-sm">By {instructor}</p>
-            <p className="text-[#0E2A46] font-normal text-sm ml-1">in {category}</p>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-[#0E2A46] font-bold">
+            {instructor?.name?.charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <p className="text-sm text-gray-700 font-medium">
+              {instructor?.name}
+            </p>
+            <p className="text-sm text-[#0E2A46]">{instructor?.email}</p>
           </div>
         </div>
 
-        {/* Price and Add to Cart Section */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-gray-900">${currentPrice}</span>
-            <span className="text-gray-500 line-through">${originalPrice}</span>
-          </div>
-
-          <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-[#4D5756] px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+          <span className="text-xl font-bold text-gray-900">
+            ₹{price?.toLocaleString("en-IN")}
+          </span>
+          <button className="flex items-center gap-2 bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#0E2A46] px-4 py-2 rounded-md text-sm font-medium transition-all duration-300">
             <ShoppingCart className="w-4 h-4" />
             Add To Cart
           </button>
