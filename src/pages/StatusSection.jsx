@@ -16,11 +16,7 @@ const StatusSection = () => {
           <div className="space-y-6 sm:space-y-8 order-2 lg:order-1">
             {/* Section Tag with Cap Icon */}
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <img
-                src="./topi.png"
-                alt="Graduation Cap"
-                className="w-6 h-6 sm:w-8 sm:h-8 object-contain flex-shrink-0"
-              />
+             
               <img
               src="./icon.svg"
               alt="icon"

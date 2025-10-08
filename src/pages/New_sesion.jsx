@@ -47,17 +47,7 @@ const New_session = () => {
                 </div>
             </div>
 
-            {/* Right Side Music Player */}
-            <div className="absolute right-4 sm:right-8 md:right-16 lg:right-28 xl:right-32 top-1/2 sm:top-1/3 transform -translate-y-1/2 sm:translate-y-0 flex flex-col items-center z-10">
-                <img
-                    src={"./music_player.png"}
-                    alt="music player"
-                    className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 hover:scale-105 transition-transform duration-300 cursor-pointer -translate-x-30"
-                />
-                <p className="mt-2 sm:mt-3 text-xs sm:text-sm underline cursor-pointer hover:text-red-400 transition-colors duration-300 -translate-x-30">
-                    watch now
-                </p>
-            </div>
+           
 
            
 

@@ -19,25 +19,25 @@ export default function TestimonialSection() {
 
       {/* Right Side - Testimonial Card */}
       <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
-        <div className="relative max-w-xl w-full rounded-2xl overflow-hidden">
+        <div className="relative max-w-xl w-full overflow-hidden">
           {/* Card Background */}
           <img
-            src="./online_right card.png"
+            src="./Testimonial.svg"
             alt="Card background"
             className="absolute inset-0 w-full h-full object-cover z-0"
           />
 
-          {/* Triangle positioned at bottom-right corner */}
-          <img
-            src="./triangle.png"
-            alt="Green shape"
-            className="absolute bottom-0 right-0 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 z-[-1]"
-          />
+          
 
           {/* Content */}
-          <div className="relative z-10 p-6 sm:p-8 md:p-10 text-white">
+          <div
+            className="relative z-10 text-white"
+            style={{ padding: "48px 40px" }}
+          >
             <p className="mb-6 sm:mb-8 text-sm sm:text-base md:text-lg leading-relaxed">
-              The interview prep program completely changed my confidence level. From mock sessions to real-world questions, I felt ready for every challenge. I landed my first job within weeks.
+              The interview prep program completely changed my confidence level.
+              From mock sessions to real-world questions, I felt ready for every
+              challenge. I landed my first job within weeks.
             </p>
 
             {/* Profile */}
@@ -48,16 +48,13 @@ export default function TestimonialSection() {
                 className="w-16 h-16 sm:w-20 sm:h-20 md:w-[90px] md:h-[90px] object-cover"
               />
               <div>
-                <h4 className="font-semibold text-base sm:text-lg">Akriti Nanda</h4>
-                <p className="text-gray-300 text-xs sm:text-sm">Software Developer</p>
+                <h4 className="font-semibold text-base sm:text-lg">
+                  Akriti Nanda
+                </h4>
+                <p className="text-gray-300 text-xs sm:text-sm">
+                  Software Developer
+                </p>
               </div>
-            </div>
-
-            {/* Dots */}
-            <div className="flex justify-center space-x-2">
-              <span className="w-2 h-2 bg-white rounded-full"></span>
-              <span className="w-2 h-2 bg-gray-500 rounded-full"></span>
-              <span className="w-2 h-2 bg-gray-500 rounded-full"></span>
             </div>
           </div>
         </div>

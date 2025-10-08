@@ -10,7 +10,7 @@ const Features = () => {
     <div className="min-h-screen bg-gray-100">
       {/* Hero section with background image */}
       <div
-        className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center py-8 sm:py-12 flex-col gap-4 sm:gap-6"
+        className="relative min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center py-8 sm:py-12 flex-col gap-4 sm:gap-6 pb-12 sm:pb-16 md:pb-20 lg:pb-24"
         style={{
           backgroundImage: 'url(./frame1.png)',
         }}
@@ -18,7 +18,7 @@ const Features = () => {
         {/* Header Section */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-4 sm:mb-8">
           {/* SubTech Features Heading with icons */}
-          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-2 sm:mb-3">
             <img src="./icon.svg" alt="icon" className="w-6 h-6 sm:w-8 sm:h-8" />
             <p className="text-[#2FC7A1] text-xs sm:text-sm font-medium leading-6 sm:leading-8">
               SuH Tech Features
@@ -27,33 +27,18 @@ const Features = () => {
           </div>
 
           {/* Title and Button Row */}
-          <div className="flex flex-col lg:flex-row items-center lg:justify-between w-full mb-8 sm:mb-12 gap-6 lg:gap-0">
+          <div className="flex flex-col lg:flex-row items-center lg:justify-between w-full mb-2 sm:mb-3 gap-6 lg:gap-0">
             {/* Main heading */}
             <h1 className='text-[#0E2A46] text-2xl sm:text-3xl md:text-4xl lg:text-[45px] font-bold leading-tight text-center lg:max-w-2xl lg:ml-90'>
               Success-Driven Features<br className="hidden sm:block" />
               <span className="sm:hidden"> </span>
             </h1>
-
-            {/* Button */}
-            <div className="flex-shrink-0">
-              <button
-                onClick={() => navigate("/admission")}
-                className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 pl-4 sm:pl-8 pr-0 overflow-hidden gap-2 sm:gap-4 hover:bg-[#26A085] transition-colors"
-              >
-                <span className="text-xs sm:text-sm leading-6 sm:leading-8 font-medium text-white whitespace-nowrap">
-                  Admission Open
-                </span>
-                <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full">
-                  <ArrowRight size={16} className="sm:w-5 sm:h-5" />
-                </span>
-              </button>
-            </div>
           </div>
         </div>
 
         {/* Course Cards Container */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full">
-          <div id="popularcourses" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+          <div id="popularcourses" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8 md:mb-10">
             {/* Card 1 - Best Coaching */}
             <CoachingCard
               icon={GraduationCap}
@@ -89,6 +74,21 @@ const Features = () => {
               onClick={() => navigate("/certification")}
             />
           </div>
+        </div>
+
+        {/* Admission Button */}
+        <div className="flex-shrink-0 mt-2 sm:mt-2">
+          <button
+            onClick={() => navigate("/admission")}
+            className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 pl-4 sm:pl-8 pr-0 overflow-hidden gap-2 sm:gap-4 hover:bg-[#26A085] transition-colors"
+          >
+            <span className="text-xs sm:text-sm leading-6 sm:leading-8 font-medium text-white whitespace-nowrap">
+              Admission Open
+            </span>
+            <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full">
+              <ArrowRight size={16} className="sm:w-5 sm:h-5" />
+            </span>
+          </button>
         </div>
       </div>
     </div>

@@ -9,30 +9,30 @@ export default function Footer() {
     const [message, setMessage] = useState("");
 
     const handleSubscribe = async () => {
-      if (!email) {
-        setMessage("Please enter your email.");
-        return;
-      }
+        if (!email) {
+            setMessage("Please enter your email.");
+            return;
+        }
 
-      setLoading(true);
-      setMessage("");
+        setLoading(true);
+        setMessage("");
 
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/newsletter`,
-          { email }
-        );
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/newsletter`,
+                { email }
+            );
 
-        setMessage(response.data.message || "Subscribed successfully!");
-        setEmail("");
-      } catch (error) {
-        console.error(error);
-        setMessage(
-          error.response?.data?.message || "Something went wrong. Please try again."
-        );
-      } finally {
-        setLoading(false);
-      }
+            setMessage(response.data.message || "Subscribed successfully!");
+            setEmail("");
+        } catch (error) {
+            console.error(error);
+            setMessage(
+                error.response?.data?.message || "Something went wrong. Please try again."
+            );
+        } finally {
+            setLoading(false);
+        }
     };
     return (
         <footer
@@ -83,26 +83,44 @@ export default function Footer() {
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
                         {/* Logo */}
-                        <div className="sm:col-span-2 lg:col-span-1">
-                            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 flex items-center justify-center sm:justify-start gap-2">
-                                <img src="/logo_suh.jpg" alt="Suh Tech Logo" className="w-6 h-6 sm:w-8 sm:h-8 object-contain" />
-                                Suh Tech
+                        <div className="sm:col-span-2 lg:col-span-1 flex flex-col justify-start">
+                            <h2 className="text-xl sm:text-2xl font-bold flex items-center justify-center sm:justify-start gap-2">
+                                <img
+                                    src="/Skill Guru Logo Teal footer.svg"
+                                    alt="Suh Tech Logo"
+                                    className="w-28 h-28 sm:w-28 sm:h-28 object-contain"
+                                />
                             </h2>
+
                             <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed text-center sm:text-left">
                                 From learning to earning – Suh Tech helps you build skills that get you hired.
                             </p>
+
                             <div className="flex gap-3 justify-center sm:justify-start">
-                                <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300" aria-label="Facebook">
+                                <a
+                                    href="#"
+                                    className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300"
+                                    aria-label="Facebook"
+                                >
                                     <Facebook size={18} />
                                 </a>
-                                <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300" aria-label="Instagram">
+                                <a
+                                    href="#"
+                                    className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300"
+                                    aria-label="Instagram"
+                                >
                                     <Instagram size={18} />
                                 </a>
-                                <a href="#" className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300" aria-label="Twitter">
+                                <a
+                                    href="#"
+                                    className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300"
+                                    aria-label="Twitter"
+                                >
                                     <Twitter size={18} />
                                 </a>
                             </div>
                         </div>
+
 
                         {/* Services */}
                         <div className="text-center sm:text-left">
@@ -118,14 +136,17 @@ export default function Footer() {
 
                         {/* Gallery */}
                         <div className="text-center sm:text-left">
-                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Gallery</h3>
+                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Quick Links</h3>
                             <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto sm:mx-0">
-                                <img src="/gallery1.png" alt="Gallery image 1" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
-                                <img src="/gallery2.png" alt="Gallery image 2" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
-                                <img src="/gallery3.png" alt="Gallery image 3" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
-                                <img src="/gallery4.png" alt="Gallery image 4" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
-                                <img src="/gallery5.png" alt="Gallery image 5" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
-                                <img src="/gallery6.png" alt="Gallery image 6" className="w-full aspect-square object-cover rounded-md hover:opacity-80 transition-opacity cursor-pointer" />
+                                <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
+                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Terms & Conditions</li>
+                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Privacy Policy</li>
+                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› About Us</li>
+                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Gallery</li>
+                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Blog</li>
+                                </ul>
+
+
                             </div>
                         </div>
 
@@ -140,8 +161,8 @@ export default function Footer() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="bg-white border-2 border-gray-300 w-full px-3 py-2 sm:py-3 rounded-md text-black text-sm sm:text-base mb-3 focus:outline-none focus:border-[#2FC7A1] transition-colors"
                                 />
-                                <button className="w-full bg-[#2FC7A1] hover:bg-[#26A085] text-white font-semibold py-2 sm:py-3 rounded-md text-sm sm:text-base transition-colors duration-300 transform hover:scale-105"  onClick={handleSubscribe}>
-                                {loading ? "SUBSCRIBING..." : "SUBSCRIBE NOW"}
+                                <button className="w-full bg-[#2FC7A1] hover:bg-[#26A085] text-white font-semibold py-2 sm:py-3 rounded-md text-sm sm:text-base transition-colors duration-300 transform hover:scale-105" onClick={handleSubscribe}>
+                                    {loading ? "SUBSCRIBING..." : "SUBSCRIBE NOW"}
                                 </button>
 
                             </div>
