@@ -2,6 +2,7 @@ import axios from "axios";
 import { ArrowRight, CheckCircle, Loader2, Mail } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Alert from "../assets/components/Alert.jsx";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -94,11 +95,9 @@ const ResendVerification = () => {
                 />
               </div>
 
-              {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
-                  <p className="text-sm text-red-600">{error}</p>
-                </div>
-              )}
+            {error && (
+              <Alert variant="error" title="Failed" message={error} />
+            )}
 
               <button
                 type="submit"

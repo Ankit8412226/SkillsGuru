@@ -1,20 +1,22 @@
 import axios from "axios";
 import {
-  Award,
-  BookOpen,
-  CheckCircle2,
-  ChevronDown,
-  ChevronUp,
-  Clock,
-  FileText,
-  Infinity,
-  Play,
-  Smartphone,
-  Star,
-  Users
+    Award,
+    BookOpen,
+    CheckCircle2,
+    ChevronDown,
+    ChevronUp,
+    Clock,
+    FileText,
+    Infinity,
+    Play,
+    Smartphone,
+    Star,
+    Users
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCart } from "../context/CartContext.jsx";
+import api from "../utils/api";
 
 const CourseDescriptionPage = () => {
   const [courseData, setCourseData] = useState(null);
@@ -23,6 +25,9 @@ const CourseDescriptionPage = () => {
   const [expandedWeek, setExpandedWeek] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const [buying, setBuying] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -204,12 +209,47 @@ const CourseDescriptionPage = () => {
                     🔥 Limited time offer!
                   </p>
 
-                  <button className="w-full rounded-lg bg-[#2FC7A1] text-white font-semibold py-3.5 hover:bg-[#28B895] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mb-3">
-                    Enroll Now
+                  <button
+                    onClick={async () => {
+                      if (!localStorage.getItem("token")) {
+                        navigate("/login");
+                        return;
+                      }
+                      try {
+                        setBuying(true);
+                        const res = await api.post(`/orders`, { courseId: id });
+                        const order = res.data?.data || res.data;
+                        if (order?.paymentLink) {
+                          window.location.href = order.paymentLink;
+                        } else {
+                          navigate("/cart");
+                        }
+                      } catch (e) {
+                        alert(e?.response?.data?.message || "Failed to create order");
+                      } finally {
+                        setBuying(false);
+                      }
+                    }}
+                    disabled={buying}
+                    className="w-full rounded-lg bg-[#2FC7A1] text-white font-semibold py-3.5 hover:bg-[#28B895] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mb-3 disabled:opacity-60"
+                  >
+                    {buying ? "Processing..." : "Buy Now"}
                   </button>
 
-                  <button className="w-full rounded-lg border-2 border-[#0E2A46] text-[#0E2A46] font-semibold py-3 hover:bg-[#0E2A46] hover:text-white transition-all">
-                    Add to Wishlist
+                  <button
+                    onClick={async () => {
+                      if (!localStorage.getItem("token")) {
+                        navigate("/login");
+                        return;
+                      }
+                      const ok = await addToCart(id);
+                      if (ok) {
+                        // optional toast
+                      }
+                    }}
+                    className="w-full rounded-lg border-2 border-[#0E2A46] text-[#0E2A46] font-semibold py-3 hover:bg-[#0E2A46] hover:text-white transition-all"
+                  >
+                    Add to Cart
                   </button>
 
                   <div className="mt-6 pt-6 border-t space-y-3">

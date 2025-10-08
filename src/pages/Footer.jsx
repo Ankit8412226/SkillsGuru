@@ -1,21 +1,25 @@
 import axios from "axios";
 import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from "lucide-react";
 import { useState } from "react";
+import Alert from "../assets/components/Alert.jsx";
 
 export default function Footer() {
 
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [isError, setIsError] = useState(false);
 
     const handleSubscribe = async () => {
         if (!email) {
+            setIsError(true);
             setMessage("Please enter your email.");
             return;
         }
 
         setLoading(true);
         setMessage("");
+        setIsError(false);
 
         try {
             const response = await axios.post(
@@ -23,10 +27,12 @@ export default function Footer() {
                 { email }
             );
 
+            setIsError(false);
             setMessage(response.data.message || "Subscribed successfully!");
             setEmail("");
         } catch (error) {
             console.error(error);
+            setIsError(true);
             setMessage(
                 error.response?.data?.message || "Something went wrong. Please try again."
             );
@@ -164,6 +170,12 @@ export default function Footer() {
                                 <button className="w-full bg-[#2FC7A1] hover:bg-[#26A085] text-white font-semibold py-2 sm:py-3 rounded-md text-sm sm:text-base transition-colors duration-300 transform hover:scale-105" onClick={handleSubscribe}>
                                     {loading ? "SUBSCRIBING..." : "SUBSCRIBE NOW"}
                                 </button>
+
+                                {message && (
+                                    <div className="mt-3">
+                                        <Alert variant={isError ? "error" : "success"} title={isError ? "Subscription failed" : "Success"} message={message} />
+                                    </div>
+                                )}
 
                             </div>
                         </div>

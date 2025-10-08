@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
+import Alert from "../assets/components/Alert.jsx";
 
 const AdmissionForm = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ const AdmissionForm = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const value =
@@ -24,11 +27,13 @@ const AdmissionForm = () => {
     e.preventDefault();
 
     if (!formData.agreeToTerms) {
-      alert("Please agree to the Terms and Policies before submitting.");
+      setErrorMessage("Please agree to the Terms and Policies before submitting.");
       return;
     }
 
     setLoading(true);
+    setSuccessMessage("");
+    setErrorMessage("");
 
     try {
       const response = await axios.post(
@@ -42,7 +47,7 @@ const AdmissionForm = () => {
         }
       );
 
-      alert(`Thank you ${formData.firstName} ${formData.lastName}, your admission request has been submitted!`);
+      setSuccessMessage(`Thank you ${formData.firstName} ${formData.lastName}, your admission request has been submitted!`);
       setFormData({
         firstName: "",
         lastName: "",
@@ -53,7 +58,7 @@ const AdmissionForm = () => {
       });
     } catch (error) {
       console.error("Error submitting admission:", error);
-      alert(error.response?.data?.message || "Something went wrong. Please try again.");
+      setErrorMessage(error.response?.data?.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -73,6 +78,13 @@ const AdmissionForm = () => {
             Please fill in the details below to proceed with admission
           </p>
         </div>
+
+        {successMessage && (
+          <div className="mb-4"><Alert variant="success" title="Submitted" message={successMessage} /></div>
+        )}
+        {errorMessage && (
+          <div className="mb-4"><Alert variant="error" title="Submission failed" message={errorMessage} /></div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Names */}

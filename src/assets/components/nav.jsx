@@ -1,5 +1,6 @@
 import { ArrowRight, Menu, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "../../context/CartContext.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import Contact from "./Contact";
 
@@ -21,7 +22,7 @@ const Nav = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [cartItemsCount, setCartItemsCount] = useState(3);
+  const { count: cartItemsCount } = useCart();
 
   const handleLinkClick = (link) => {
     setActive(link.key);

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ArrowRight, Eye, EyeOff, Loader2, XCircle } from "lucide-react";
 import { useState } from "react";
+import Alert from "../assets/components/Alert.jsx";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -13,12 +14,14 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
     setError("");
+    setSuccess("");
   };
 
   const handleSubmit = async (e) => {
@@ -40,10 +43,10 @@ const Login = () => {
         // Set default authorization header for future requests
         axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
 
-        alert(`Welcome back, ${response.data.user.name}!`);
-
-        // Redirect to dashboard or home page
-        window.location.href = "/dashboard"; // Update with your route
+        setSuccess(`Welcome back, ${response.data.user.name}! Redirecting...`);
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 800);
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -73,11 +76,15 @@ const Login = () => {
                 </p>
               </div>
 
-              {/* Error Message */}
+              {/* Alerts */}
               {error && (
-                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
-                  <XCircle size={18} />
-                  <span className="text-sm">{error}</span>
+                <div className="mb-4">
+                  <Alert variant="error" title="Login failed" message={error} />
+                </div>
+              )}
+              {success && (
+                <div className="mb-4">
+                  <Alert variant="success" title="Success" message={success} />
                 </div>
               )}
 

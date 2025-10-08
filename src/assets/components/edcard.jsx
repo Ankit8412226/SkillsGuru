@@ -1,5 +1,6 @@
 import { BookOpen, Clock, Eye, ShoppingCart, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext.jsx";
 
 const CourseCard = ({
   _id,
@@ -16,6 +17,7 @@ const CourseCard = ({
   thumbnailUrl,
 }) => {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
   const handleViewDetails = () => {
     navigate(`/Course-DescriptionPage/${_id}`);
@@ -85,7 +87,16 @@ const CourseCard = ({
           <span className="text-xl font-bold text-gray-900">
             ₹{price?.toLocaleString("en-IN")}
           </span>
-          <button className="flex items-center gap-2 bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#0E2A46] px-4 py-2 rounded-md text-sm font-medium transition-all duration-300">
+          <button
+            onClick={async () => {
+              if (!localStorage.getItem("token")) {
+                navigate("/login");
+                return;
+              }
+              await addToCart(_id);
+            }}
+            className="flex items-center gap-2 bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#0E2A46] px-4 py-2 rounded-md text-sm font-medium transition-all duration-300"
+          >
             <ShoppingCart className="w-4 h-4" />
             Add To Cart
           </button>

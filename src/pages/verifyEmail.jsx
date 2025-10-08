@@ -2,6 +2,7 @@ import axios from "axios";
 import { ArrowRight, CheckCircle, Loader2, Mail, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Alert from "../assets/components/Alert.jsx";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -120,7 +121,7 @@ const VerifyEmail = () => {
             <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
               Email Verified!
             </h2>
-            <p className="text-gray-600 mb-8">{message}</p>
+            <div className="mb-6"><Alert variant="success" title="Success" message={message} /></div>
             <button
               onClick={handleLoginRedirect}
               className="w-full flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
@@ -141,7 +142,7 @@ const VerifyEmail = () => {
             <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
               {resendSuccess ? "Check Your Email" : "Verification Failed"}
             </h2>
-            <p className="text-gray-600 mb-8">{message}</p>
+            <div className="mb-6"><Alert variant="error" title="Verification failed" message={message} /></div>
 
             <div className="space-y-3">
               {/* Resend Verification Button */}

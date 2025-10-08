@@ -8,7 +8,7 @@ import About from "./pages/About.jsx";
 import BestMentor from "./pages/BestMentors.jsx";
 import BrouseCourses from "./pages/Browsecourses.jsx";
 import Certification from "./pages/Certification.jsx";
-import Exam_prep from "./pages/Exam_prep.jsx"; 
+import Exam_prep from "./pages/Exam_prep.jsx";
 import SuhFeatures from "./pages/Features.jsx";
 import Footer from "./pages/Footer.jsx";
 import StatusSection from "./pages/StatusSection.jsx";
@@ -17,7 +17,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 
 import FloatingActions from "./assets/components/FloatingAction.jsx";
-import AdmissionForm from "./pages/AdmissionForm.jsx"; 
+import AdmissionForm from "./pages/AdmissionForm.jsx";
 import CourseDescriptionPage from "./pages/CourseDescriptionPage.jsx";
 import CoursesPage from "./pages/Courses.jsx";
 import Explore_event from "./pages/Explore_event.jsx";
@@ -27,6 +27,7 @@ import New_sesion from "./pages/New_sesion.jsx";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
 import Explore_Learn_more from "./pages/Explore_Learn_more.jsx";
+import CartPage from "./pages/CartPage.jsx";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -82,8 +83,8 @@ function App() {
                 </div>
               }
             />
-            
-            <Route path="/browsecourses" element={<BrouseCourses />} /> 
+
+            <Route path="/browsecourses" element={<BrouseCourses />} />
 
             {/* Learn More Page */}
             <Route
@@ -168,6 +169,16 @@ function App() {
                 </div>
               }
             />
+            <Route
+              path="/cart"
+              element={
+                <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                  <CartPage />
+                </div>
+              }
+            />
+
+            {/* Course Details */}
             <Route
              path="/Course-DescriptionPage/:id"
               element={

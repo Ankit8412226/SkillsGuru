@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ArrowRight, X } from "lucide-react";
 import { useState } from "react";
+import Alert from "./Alert.jsx";
 
 const Contact = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -37,8 +38,7 @@ const Contact = ({ isOpen, onClose }) => {
         timeout: 10000,
       });
 
-      // Optionally show a quick console log or toast
-      console.log(response.data.message || "Submitted successfully!");
+      setSuccessMessage(response.data.message || "Submitted successfully!");
 
       // Clear form
       setFormData({
@@ -95,15 +95,11 @@ const Contact = ({ isOpen, onClose }) => {
 
         <div className="p-6 space-y-4">
           {successMessage && (
-            <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
-              <p className="text-green-700 text-sm">{successMessage}</p>
-            </div>
+            <Alert variant="success" title="Message sent" message={successMessage} />
           )}
 
           {errorMessage && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
-              <p className="text-red-700 text-sm">{errorMessage}</p>
-            </div>
+            <Alert variant="error" title="Failed to send" message={errorMessage} />
           )}
 
 
