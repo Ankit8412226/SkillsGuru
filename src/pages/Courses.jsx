@@ -1,15 +1,17 @@
 import axios from "axios";
 import { ArrowRight, BookOpen, Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom"; 
 import CourseCard from "../assets/components/edcard";
 
 const CoursesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchParams, setSearchParams] = useSearchParams(); // <-- destructure setter
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
   const [coursesData, setCoursesData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate(); 
 
   const getCourses = async () => {
     try {
@@ -27,7 +29,6 @@ const CoursesPage = () => {
     getCourses();
   }, []);
 
-  // keep searchTerm in sync with URL params (useful if user navigates / modifies URL)
   useEffect(() => {
     setSearchTerm(searchParams.get("search") || "");
   }, [searchParams]);
@@ -43,19 +44,14 @@ const CoursesPage = () => {
 
   const filteredCourses = coursesData.filter((course) => {
     const title = (course?.title || "").toLowerCase();
-
-    // handle both cases: instructor may be a string, or an object with .name
     const instructorName =
       typeof course?.instructor === "string"
         ? course.instructor.toLowerCase()
         : (course?.instructor?.name || "").toLowerCase();
-
     const category = (course?.category || "").toLowerCase();
-
     const q = (searchTerm || "").trim().toLowerCase();
 
     const matchesSearch = !q || title.includes(q) || instructorName.includes(q);
-
     const matchesCategory =
       selectedCategory === "All" ||
       category === selectedCategory.toLowerCase();
@@ -63,11 +59,9 @@ const CoursesPage = () => {
     return matchesSearch && matchesCategory;
   });
 
-  // Update search param on input change
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
       if (value) params.set("search", value);
@@ -76,10 +70,8 @@ const CoursesPage = () => {
     });
   };
 
-  // Update category param
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
-
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
       if (searchTerm) params.set("search", searchTerm);
@@ -135,10 +127,11 @@ const CoursesPage = () => {
                 <button
                   key={category}
                   onClick={() => handleCategoryChange(category)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedCategory === category
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                    selectedCategory === category
                       ? "bg-[#2FC7A1] text-white"
                       : "bg-white text-[#4D5756] border border-gray-300 hover:bg-gray-50"
-                    }`}
+                  }`}
                 >
                   {category}
                 </button>
@@ -182,7 +175,11 @@ const CoursesPage = () => {
             our courses.
           </p>
           <div className="flex justify-center">
-            <button className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden">
+            
+            <button
+              onClick={() => navigate("/admission")}
+              className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
+            >
               <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
                 Get Admission
               </span>

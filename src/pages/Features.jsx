@@ -17,9 +17,6 @@ const Features = () => {
       >
         {/* Header Section */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-4 sm:mb-8">
-          {/* Top Popular Course - Left aligned */}
-
-
           {/* SubTech Features Heading with icons */}
           <div className="flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
             <img src="./icon.svg" alt="icon" className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -37,7 +34,6 @@ const Features = () => {
               <span className="sm:hidden"> </span>
             </h1>
 
-            {/* Button */}
             {/* Button */}
             <div className="flex-shrink-0">
               <button
@@ -64,8 +60,7 @@ const Features = () => {
               title="Best Courses"
               description="One-on-one mentoring designed to maximize your learning potential."
               buttonText="View Details"
-              onClick={() => ("/popularcourses")}
-
+              onClick={() => navigate("/browsecourses")}
             />
 
             {/* Card 2 - Expert Teachers */}

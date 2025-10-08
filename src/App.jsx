@@ -8,7 +8,7 @@ import About from "./pages/About.jsx";
 import BestMentor from "./pages/BestMentors.jsx";
 import BrouseCourses from "./pages/Browsecourses.jsx";
 import Certification from "./pages/Certification.jsx";
-import Exam_prep from "./pages/Exam_prep.jsx"; // ✅ already imported
+import Exam_prep from "./pages/Exam_prep.jsx"; 
 import SuhFeatures from "./pages/Features.jsx";
 import Footer from "./pages/Footer.jsx";
 import StatusSection from "./pages/StatusSection.jsx";
@@ -82,6 +82,8 @@ function App() {
                 </div>
               }
             />
+            
+            <Route path="/browsecourses" element={<BrouseCourses />} /> 
 
             {/* Learn More Page */}
             <Route
@@ -100,7 +102,6 @@ function App() {
                 </div>
               }
             />
-
 
             {/* Best Mentors Page */}
             <Route
@@ -131,7 +132,6 @@ function App() {
                 </div>
               }
             />
-
 
             <Route
               path="/exam-prep"
@@ -168,7 +168,7 @@ function App() {
                 </div>
               }
             />
-          <Route
+            <Route
              path="/Course-DescriptionPage/:id"
               element={
                 <div className="mt-10 pt-20 pb-8 flex items-center justify-center">
