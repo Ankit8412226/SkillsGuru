@@ -146,7 +146,7 @@ function App() {
             <Route
               path="/login"
               element={
-                <div className="mt-10 pt-20 pb-8 flex items-center justify-center">
+                <div className="pt-20 pb-8 flex items-center justify-center">
                   <Login />
                 </div>
               }
@@ -154,7 +154,7 @@ function App() {
             <Route
               path="/register"
               element={
-                <div className="mt-10 pt-20 pb-8 flex items-center justify-center">
+                <div className="pt-20 pb-8 flex items-center justify-center">
                   <Register />
                 </div>
               }

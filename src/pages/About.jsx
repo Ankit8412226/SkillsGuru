@@ -5,24 +5,20 @@ import React from "react";
 const About = ({ onLearnMore }) => {
   const navigate = useNavigate();
   const handleLearnMoreClick = () => {
-    // if (onLearnMore) {
-    //   // onLearnMore();
-
-    // }
-    navigate("/learnmore")
+    navigate("/learnmore");
   };
 
   return (
     <>
+      {/* ABOUT SECTION */}
       <div
-        id="about"   // 👈 This makes the section scroll target
-        className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto"
-      ></div>
-      <div className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
+        id="about"
+        className="pt-10 sm:pt-14 md:pt-16 lg:pt-20 pb-6 sm:pb-8 md:pb-10 lg:pb-12 px-4 sm:px-6 md:px-16 lg:px-24 max-w-7xl mx-auto"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
           {/* Left side - Images */}
           <div className="relative order-2 lg:order-1">
-            {/* Decorative background image - responsive positioning */}
+            {/* Decorative background image */}
             <div className="absolute -top-8 -left-8 sm:-top-12 sm:-left-12 lg:-top-16 lg:-left-16 opacity-80 sm:opacity-100">
               <img
                 src="./image.png"
@@ -55,7 +51,6 @@ const About = ({ onLearnMore }) => {
 
           {/* Right side - Content */}
           <div className="space-y-4 sm:space-y-5 lg:space-y-6 order-1 lg:order-2">
-            {/* About Us Header */}
             <div className="flex items-center gap-2 justify-center lg:justify-start">
               <img
                 src="./icon.svg"
@@ -67,25 +62,24 @@ const About = ({ onLearnMore }) => {
               </p>
             </div>
 
-            {/* Main Heading - Responsive */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[45px] leading-tight text-[#0E2A46] font-bold text-center lg:text-left">
               Your Career Journey Starts at{" "}
               <span className="text-[#FE543D]">Suh Tech</span>
             </h2>
 
-            {/* Description */}
             <p className="text-base sm:text-lg leading-6 sm:leading-7 lg:leading-8 font-normal text-[#4D5756] text-center lg:text-left px-2 sm:px-0">
-              Suh Tech delivers job-ready training with 200+ industry partners, placing 1200+ students in top organizations.
+              Suh Tech delivers job-ready training with 200+ industry partners,
+              placing 1200+ students in top organizations.
             </p>
 
-            {/* Mission & Vision Grid - Brief versions */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6 mt-6 lg:mt-8">
               <div className="space-y-2 text-center sm:text-left">
                 <p className="text-base sm:text-lg leading-6 sm:leading-7 lg:leading-8 text-[#0E2A46] font-bold">
                   OUR MISSION:
                 </p>
                 <p className="text-sm sm:text-base lg:text-lg leading-6 sm:leading-7 lg:leading-8 font-normal text-[#333931]">
-                  Achieve 100% job placement success through industry-aligned training and comprehensive skill development.
+                  Achieve 100% job placement success through industry-aligned
+                  training and comprehensive skill development.
                 </p>
               </div>
               <div className="space-y-2 text-center sm:text-left">
@@ -93,12 +87,12 @@ const About = ({ onLearnMore }) => {
                   OUR VISION:
                 </p>
                 <p className="text-sm sm:text-base lg:text-lg leading-6 sm:leading-7 lg:leading-8 font-normal text-[#333931]">
-                  Leading training institute delivering industry-ready skills and guaranteed placement success for career transformation.
+                  Leading training institute delivering industry-ready skills and
+                  guaranteed placement success for career transformation.
                 </p>
               </div>
             </div>
 
-            {/* Button - Responsive with better padding */}
             <div className="flex justify-center lg:justify-start mt-6 lg:mt-8">
               <button
                 onClick={handleLearnMoreClick}

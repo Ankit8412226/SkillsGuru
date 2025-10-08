@@ -58,10 +58,10 @@ const Login = () => {
   return (
     <div
       style={{ backgroundImage: `url(./bg.jpg)` }}
-      className="min-h-screen w-full flex items-center justify-center p-4 bg-gray-50"
+      className="w-full bg-cover bg-center flex items-center justify-center p-4"
     >
-      <div className="max-w-6xl w-full bg-white rounded-3xl shadow-xl overflow-hidden">
-        <div className="flex flex-col lg:flex-row">
+      <div className="max-w-6xl w-full bg-white rounded-3xl shadow-xl overflow-hidden mt-10">
+        <div className="flex flex-col lg:flex-row ">
           {/* Left Side - Form */}
           <div className="lg:w-1/2 p-8 lg:p-12">
             <div className="max-w-md mx-auto">

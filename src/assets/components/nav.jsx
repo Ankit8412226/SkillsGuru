@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Contact from "./Contact";
 
 const navLinks = [
-  { name: "Home", href: "#home", key: "home", isRoute: false },
+  // { name: "Home", href: "#home", key: "home", isRoute: false },
   { name: "About", href: "#about", key: "about", isRoute: false },
   { name: "Popular Courses", href: "#Popularcourses", key: "Popularcourses", isRoute: false },
   { name: "Courses", href: "/courses", key: "courses", isRoute: true },
@@ -23,29 +23,29 @@ const Nav = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [cartItemsCount, setCartItemsCount] = useState(3);
 
- const handleLinkClick = (link) => {
-  setActive(link.key);
-  setIsMenuOpen(false);
+  const handleLinkClick = (link) => {
+    setActive(link.key);
+    setIsMenuOpen(false);
 
-  if (link.isRoute) {
-    navigate(link.href);
-  } else {
-    if (location.pathname !== "/") {
-      navigate("/", { replace: false });
-      setTimeout(() => {
+    if (link.isRoute) {
+      navigate(link.href);
+    } else {
+      if (location.pathname !== "/") {
+        navigate("/", { replace: false });
+        setTimeout(() => {
+          const element = document.querySelector(link.href);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 200); // Slightly increased delay to ensure DOM is rendered
+      } else {
         const element = document.querySelector(link.href);
         if (element) {
           element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-      }, 200); // Slightly increased delay to ensure DOM is rendered
-    } else {
-      const element = document.querySelector(link.href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
-  }
-};
+  };
 
 
   const handleContactClick = () => {
@@ -83,7 +83,7 @@ const Nav = () => {
           />
         </div>
 
-        
+
         <div className="hidden lg:flex items-center space-x-8 ml-auto mr-2">
           {/* Nav Links */}
           <div className="flex space-x-4 xl:space-x-6 text-gray-700 font-medium">
@@ -91,15 +91,21 @@ const Nav = () => {
               <button
                 key={link.key}
                 onClick={() => handleLinkClick(link)}
-                className={`nav-link relative px-2 py-2 transition-all duration-300 text-sm xl:text-base whitespace-nowrap ${
-                  active === link.key ? "text-[#2FC7A1] active" : "text-gray-700"
-                }`}
+                className={`group relative px-2 py-2 text-sm xl:text-base transition-all duration-300 whitespace-nowrap
+                  ${active === link.key ? "text-[#2FC7A1]" : "text-gray-700"}
+                  `}
               >
                 {link.name}
-                <span className="nav-underline"></span>
+                <span
+                  className={`absolute left-0 bottom-0 h-[2px] bg-[#2FC7A1] transition-all duration-300
+                    ${active === link.key ? "w-full" : "w-0 group-hover:w-full"}
+                    `}
+                ></span>
               </button>
             ))}
           </div>
+
+
 
           {/* Right side: Cart + Login + Register + Contact */}
           <div className="flex items-center space-x-3 md:space-x-4 lg:space-x-6">
@@ -118,21 +124,23 @@ const Nav = () => {
             </button>
 
             {/* Login Button */}
-            <button
-              onClick={handleLoginClick}
-              className="flex items-center space-x-2 px-4 py-2 text-sm lg:text-base text-gray-700 hover:text-[#2FC7A1] transition-colors duration-200 font-medium"
-            >
-              <User size={16} className="lg:w-5 lg:h-5" />
-              <span>Login</span>
-            </button>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={handleLoginClick}
+                className="flex items-center justify-center h-10 lg:h-12 px-4 lg:px-6 text-sm lg:text-base border-2 border-teal-500 text-teal-500 font-medium rounded-[200px] hover:bg-teal-100 transition-colors duration-200 space-x-2"
+              >
+                <User size={16} className="lg:w-5 lg:h-5" />
+                <span>Login</span>
+              </button>
 
-            {/* Register Button */}
-            <button
-              onClick={handleRegisterClick}
-              className="px-4 lg:px-6 py-2 text-sm lg:text-base bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200"
-            >
-              Register
-            </button>
+              {/* Register Button */}
+              <button
+                onClick={handleRegisterClick}
+                className="flex items-center justify-center h-10 lg:h-12 px-4 lg:px-6 text-sm lg:text-base border-2 border-teal-500 text-teal-500 font-medium rounded-[200px] hover:bg-teal-100 transition-colors duration-200"
+              >
+                Register
+              </button>
+            </div>
 
             {/* Contact Button */}
             <button
@@ -167,7 +175,7 @@ const Nav = () => {
           {/* Mobile Login */}
           <button
             onClick={handleLoginClick}
-            className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors duration-200"
+            className="flex items-center justify-center w-8 h-8 rounded-[200px] hover:bg-gray-100 transition-colors duration-200"
           >
             <User size={16} color="black" />
           </button>
