@@ -22,7 +22,7 @@ export default function TestimonialSection() {
         <div className="relative max-w-xl w-full overflow-hidden">
           {/* Card Background */}
           <img
-            src="./Testimonial.svg"
+            src="./Reviews_bg.svg"
             alt="Card background"
             className="absolute inset-0 w-full h-full object-cover z-0"
           />

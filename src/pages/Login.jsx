@@ -172,16 +172,15 @@ const Login = () => {
           </div>
 
           {/* Right Side - Illustration */}
-          <div className="lg:w-1/2 bg-gray-100 p-8 lg:p-12 flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-64 h-80 mx-auto mb-4 rounded-3xl flex items-center justify-center overflow-hidden">
-                <img
-                  src="login.png"
-                  alt="Login illustration"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
+          <div className="lg:w-1/2 bg-gray-100 flex items-center justify-center">
+            <img
+              src="login.png"
+              alt="Login illustration"
+              className="w-full h-full object-contain object-cover "
+            />
+
+
+
           </div>
         </div>
       </div>

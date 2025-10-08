@@ -1,11 +1,7 @@
 <svg width="820" height="428" viewBox="0 0 820 428" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g clip-path="url(#clip0_2528_13224)">
 <rect width="314" height="296" transform="translate(506 132)" fill="url(#pattern0_2528_13224)"/>
-<rect width="790" height="398" rx="5" fill="url(#pattern1_2528_13224)"/>
-<rect x="670" y="332" width="10" height="10" rx="5" fill="white"/>
-<rect x="696" y="332" width="10" height="10" rx="5" fill="white"/>
-<rect x="691.5" y="327.5" width="19" height="19" rx="9.5" stroke="white"/>
-<rect x="722" y="332" width="10" height="10" rx="5" fill="white"/>
+<rect width="790" height="398" rx="16" fill="url(#pattern1_2528_13224)"/>
 </g>
 <defs>
 <pattern id="pattern0_2528_13224" patternContentUnits="objectBoundingBox" width="1" height="1">
