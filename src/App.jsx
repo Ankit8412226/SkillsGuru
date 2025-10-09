@@ -27,6 +27,8 @@ import New_sesion from "./pages/New_sesion.jsx";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
 import Explore_Learn_more from "./pages/Explore_Learn_more.jsx";
+import SkillGuruDashboard from "./pages/SkillGuruDashboard";
+
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -67,6 +69,7 @@ function App() {
                     <section className="w-full py-8 sm:py-12 lg:py-16"><TestimonialSection /></section>
                     <section className="w-full py-8 sm:py-12 lg:py-16"><Explore_event /></section>
                     <section className="w-full"><Instructors /></section>
+                    
                   </div>
                   <FloatingActions />
                 </>
@@ -82,6 +85,7 @@ function App() {
                 </div>
               }
             />
+            <Route path="/dashboard" element={<SkillGuruDashboard />} />
             
             <Route path="/browsecourses" element={<BrouseCourses />} /> 
 
