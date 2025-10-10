@@ -1,28 +1,80 @@
-import { AlertCircle, Award, Bell, BookOpen, Calendar, CheckCircle, ChevronRight, Clock, HelpCircle, MessageSquare, Moon, Play, Search, ShoppingCart, Sun, TrendingUp, Upload } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { AlertCircle, Award, Bell, BookOpen, Calendar, CheckCircle, ChevronRight, Clock, MessageSquare, Moon, Play, Search, ShoppingCart, Sun, TrendingUp, Upload } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
 import api from '../utils/api';
 
 const SkillGuruDashboard = () => {
-
   const [darkMode, setDarkMode] = useState(true);
   const { count } = useCart();
   const isAuthenticated = Boolean(localStorage.getItem('token'));
 
+  // Profile Dropdown
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [profileData, setProfileData] = useState(null);
+  const [username, setUsername] = useState("User");
+  const profileMenuRef = useRef(null);
 
-  const getDashboard = async () =>{
-    try{
-        await api.get(`${import.meta.env.VITE_API_BASE_URL}/dashboard/me`);
+  const navigate = useNavigate();
 
+  // Fetch dashboard data
+  const getDashboard = async () => {
+    try {
+      await api.get(`${import.meta.env.VITE_API_BASE_URL}/dashboard/me`);
     } catch (error) {
       console.error("Error fetching dashboard:", error);
     }
+  };
 
-  }
-  useEffect (() => {
+  // Fetch profile data dynamically
+  const getProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+
+      const res = await api.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      setProfileData(res.data);
+      setUsername(res.data.name || "User");
+      localStorage.setItem('name', res.data.name || "User");
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('name');
+        navigate('/login');
+      }
+    }
+  };
+
+  // Toggle profile menu
+  const toggleProfileMenu = () => {
+    setShowProfileMenu(!showProfileMenu);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
     getDashboard();
-  },[]);
+    getProfile();
+  }, []);
 
   const courses = [
     {
@@ -35,7 +87,6 @@ const SkillGuruDashboard = () => {
       pendingAssignments: 2,
       liveNow: false
     },
-
     {
       id: 2,
       title: "Data Science with Python",
@@ -46,7 +97,6 @@ const SkillGuruDashboard = () => {
       pendingAssignments: 1,
       liveNow: true
     },
-
     {
       id: 3,
       title: "UI/UX Design Masterclass",
@@ -76,10 +126,10 @@ const SkillGuruDashboard = () => {
     { name: "Prof. Michael Chen", expertise: "Data Science & AI", courses: 3, avatar: "MC" },
     { name: "Emily Rodriguez", expertise: "UI/UX Design", courses: 1, avatar: "ER" }
   ];
-const navigate = useNavigate();
+
   return (
-    <div className={`min-h-screen relative `}>
-      {/* Background Image with Overlay */}
+    <div className={`min-h-screen relative`}>
+      {/* Background Image */}
       <div
         className="fixed inset-0 z-0"
         style={{
@@ -91,11 +141,10 @@ const navigate = useNavigate();
         }}
       />
 
-
       {/* Content Wrapper */}
       <div className="relative z-10 pt-35">
         {/* Header */}
-        <header className={`${darkMode ? 'bg-slate-800/95 backdrop-blur-sm' : 'bg-white/95 backdrop-blur-sm'} border-b ${darkMode ? 'border-slate-700' : 'border-gray-200'} fixed top-0 left-0 w-full  h-26 z-50 `}>
+        <header className={`${darkMode ? 'bg-slate-800/95 backdrop-blur-sm' : 'bg-white/95 backdrop-blur-sm'} border-b ${darkMode ? 'border-slate-700' : 'border-gray-200'} fixed top-0 left-0 w-full h-26 z-50`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-26 pt-5">
               {/* Logo */}
@@ -105,67 +154,128 @@ const navigate = useNavigate();
                   alt="Skill Guru Logo"
                   className="h-10 w-auto"
                 />
-                <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-
-                </span>
+                <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}></span>
               </div>
 
-            {/* Search Bar */}
-            <div className="flex-1 max-w-2xl mx-8">
-              <div className="relative">
-                <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 ${darkMode ? 'text-slate-400' : 'text-gray-400'}`} />
-                <input
-                  type="text"
-                  placeholder="Search for courses, instructors, or topics..."
-                  className={`w-full pl-10 pr-4 py-2 rounded-lg ${darkMode ? 'bg-slate-700 text-white placeholder-slate-400 border-slate-600' : 'bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300'} border focus:outline-none focus:ring-2 focus:ring-emerald-400`}
-                />
-              </div>
-            </div>
-
-            {/* Right Icons */}
-            <div className="flex items-center space-x-4">
-              <button onClick={() => setDarkMode(!darkMode)} className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'}`}>
-                {darkMode ? <Sun className="w-5 h-5 text-slate-300" /> : <Moon className="w-5 h-5 text-gray-600" />}
-              </button>
-              <button
-                onClick={() => navigate(isAuthenticated ? '/cart' : '/login')}
-                className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} relative`}
-                title="Cart"
-              >
-                <ShoppingCart className={`w-5 h-5 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`} />
-                {count > 0 && (
-                  <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 bg-emerald-500 text-white text-[10px] leading-[18px] font-semibold rounded-full text-center">
-                    {count}
-                  </span>
-                )}
-              </button>
-              <button className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} relative`}>
-                <Bell className={`w-5 h-5 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`} />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-400 rounded-full"></span>
-              </button>
-              <button className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'}`}>
-                <HelpCircle className={`w-5 h-5 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`} />
-              </button>
-              <div className="flex items-center space-x-2 pl-4 border-l border-slate-700">
-                <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-semibold">A</span>
+              {/* Search (compact) */}
+              <div className="flex-1 max-w-md mx-6">
+                <div className="relative">
+                  <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 ${darkMode ? 'text-slate-400' : 'text-gray-400'}`} />
+                  <input
+                    type="text"
+                    placeholder="Search courses..."
+                    className={`w-full pl-9 pr-3 py-1.5 text-sm rounded-md ${darkMode ? 'bg-slate-700 text-white placeholder-slate-400 border-slate-600' : 'bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300'} border focus:outline-none focus:ring-2 focus:ring-emerald-400`}
+                  />
                 </div>
-                <span className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>Akriti</span>
+              </div>
+
+              {/* Right Icons */}
+              <div className="flex items-center space-x-4">
+                <button onClick={() => setDarkMode(!darkMode)} className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'}`}>
+                  {darkMode ? <Sun className="w-5 h-5 text-slate-300" /> : <Moon className="w-5 h-5 text-gray-600" />}
+                </button>
+
+                <button
+                  onClick={() => navigate(isAuthenticated ? '/cart' : '/login')}
+                  className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} relative`}
+                  title="Cart"
+                >
+                  <ShoppingCart className={`w-5 h-5 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`} />
+                  {count > 0 && (
+                    <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 bg-emerald-500 text-white text-[10px] leading-[18px] font-semibold rounded-full text-center">
+                      {count}
+                    </span>
+                  )}
+                </button>
+
+                <button className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} relative`}>
+                  <Bell className={`w-5 h-5 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`} />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-400 rounded-full"></span>
+                </button>
+
+                {/* Profile */}
+                <div className="flex items-center space-x-2 pl-4 border-l border-slate-700 relative" ref={profileMenuRef}>
+                  <div 
+                    className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center cursor-pointer"
+                    onClick={toggleProfileMenu}
+                  >
+                    <span className="text-white text-sm font-semibold">{username.charAt(0).toUpperCase()}</span>
+                  </div>
+                  <span 
+                    className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'} cursor-pointer`}
+                    onClick={toggleProfileMenu}
+                  >
+                    {username}
+                  </span>
+
+                  {/* Dropdown */}
+                  {showProfileMenu && (
+                    <div className="absolute top-12 right-0 w-64 bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 z-50 border border-gray-200 dark:border-slate-700">
+                      {profileData ? (
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-3 pb-3 border-b border-gray-200 dark:border-slate-700">
+                            <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center">
+                              <span className="text-white text-lg font-semibold">{profileData.name?.charAt(0).toUpperCase()}</span>
+                            </div>
+                            <div>
+                              <p className="text-sm font-semibold text-gray-900 dark:text-white">{profileData.name}</p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">{profileData.email}</p>
+                            </div>
+                          </div>
+                          
+                          <button 
+                            className="w-full text-left text-sm px-3 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded flex items-center gap-2 text-gray-700 dark:text-gray-300"
+                            onClick={() => {
+                              setShowProfileMenu(false);
+                              navigate('/dashboard/profile');
+                            }}
+                          >
+                            <span>👤</span>
+                            View Profile
+                          </button>
+                          
+                          <button 
+                            className="w-full text-left text-sm px-3 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded flex items-center gap-2 text-gray-700 dark:text-gray-300"
+                            onClick={() => {
+                              setShowProfileMenu(false);
+                              navigate('/cart');
+                            }}
+                          >
+                            <span>🛒</span>
+                            My Cart
+                          </button>
+                          
+                          <button
+                            className="w-full text-left text-sm px-3 py-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded flex items-center gap-2 text-red-600 dark:text-red-400 border-t border-gray-200 dark:border-slate-700 mt-2 pt-3"
+                            onClick={() => {
+                              localStorage.removeItem('token');
+                              localStorage.removeItem('name');
+                              navigate('/login');
+                            }}
+                          >
+                            <span>🚪</span>
+                            Logout
+                          </button>
+                        </div>
+                      ) : (
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Loading...</p>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
         {/* Main Content */}
-        <div className=" mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className={`text-3xl font-bold ${darkMode ? 'text-black' : 'text-gray-900'} mb-2`}>
-            Hi Akriti 👋, here's your learning progress!
-          </h1>
-          <p className={`${darkMode ? 'text-black' : 'text-black'}`}>Keep up the great work and continue your journey to success</p>
-        </div>
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="mb-8">
+            <h1 className={`text-3xl font-bold mb-2 ${darkMode ? 'text-black' : 'text-gray-900'}`}>
+              Hi {username} 👋, here's your learning progress!
+            </h1>
+            <p className={`${darkMode ? 'text-black' : 'text-black'}`}>Keep up the great work and continue your journey to success</p>
+          </div>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
@@ -173,7 +283,7 @@ const navigate = useNavigate();
             <div className="flex items-center justify-between mb-2">
               <BookOpen className="w-8 h-8 text-emerald-400" />
             </div>
-            <p className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-1`}>12</p>
+            <p className={`text-3xl font-bold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>12</p>
             <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>Total Courses</p>
           </div>
 
@@ -181,7 +291,7 @@ const navigate = useNavigate();
             <div className="flex items-center justify-between mb-2">
               <TrendingUp className="w-8 h-8 text-blue-400" />
             </div>
-            <p className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-1`}>3</p>
+            <p className={`text-3xl font-bold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>3</p>
             <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>In Progress</p>
           </div>
 
@@ -189,7 +299,7 @@ const navigate = useNavigate();
             <div className="flex items-center justify-between mb-2">
               <Award className="w-8 h-8 text-yellow-400" />
             </div>
-            <p className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-1`}>9</p>
+            <p className={`text-3xl font-bold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>9</p>
             <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>Completed</p>
           </div>
 
@@ -197,7 +307,7 @@ const navigate = useNavigate();
             <div className="flex items-center justify-between mb-2">
               <AlertCircle className="w-8 h-8 text-orange-400" />
             </div>
-            <p className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-1`}>6</p>
+            <p className={`text-3xl font-bold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>6</p>
             <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>Pending Tasks</p>
           </div>
 
@@ -205,7 +315,7 @@ const navigate = useNavigate();
             <div className="flex items-center justify-between mb-2">
               <Clock className="w-8 h-8 text-purple-400" />
             </div>
-            <p className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-1`}>3</p>
+            <p className={`text-3xl font-bold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>3</p>
             <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>Upcoming Classes</p>
           </div>
         </div>
@@ -216,7 +326,7 @@ const navigate = useNavigate();
           <div className="lg:col-span-2 space-y-6">
             {/* My Courses */}
             <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-xl p-6 border`}>
-              <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>My Courses</h2>
+              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>My Courses</h2>
               <div className="space-y-4">
                 {courses.map(course => (
                   <div key={course.id} className={`${darkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-gray-50 border-gray-200'} rounded-lg p-4 border hover:border-emerald-400 transition-all`}>
@@ -225,7 +335,7 @@ const navigate = useNavigate();
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-2">
                           <div>
-                            <h3 className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{course.title}</h3>
+                            <h3 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{course.title}</h3>
                             <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>{course.instructor}</p>
                           </div>
                           {course.liveNow && (
@@ -276,15 +386,15 @@ const navigate = useNavigate();
 
             {/* Assignments */}
             <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-xl p-6 border`}>
-              <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>Upcoming Assignments</h2>
+              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Upcoming Assignments</h2>
               <div className="space-y-3">
                 {assignments.map(assignment => (
                   <div key={assignment.id} className={`${darkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-gray-50 border-gray-200'} rounded-lg p-4 border flex items-center justify-between hover:border-emerald-400 transition-all`}>
                     <div className="flex-1">
-                      <h3 className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{assignment.title}</h3>
-                      <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'} mb-2`}>{assignment.course}</p>
+                      <h3 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{assignment.title}</h3>
+                      <p className={`text-sm mb-2 ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>{assignment.course}</p>
                       <div className="flex items-center gap-3">
-                        <span className={`text-xs ${darkMode ? 'text-slate-400' : 'text-gray-600'} flex items-center gap-1`}>
+                        <span className={`text-xs flex items-center gap-1 ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>
                           <Clock className="w-3 h-3" />
                           Due: {assignment.deadline}
                         </span>
@@ -313,15 +423,15 @@ const navigate = useNavigate();
 
             {/* Instructors */}
             <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-xl p-6 border`}>
-              <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>Your Instructors</h2>
+              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Your Instructors</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {instructors.map((instructor, idx) => (
                   <div key={idx} className={`${darkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-gray-50 border-gray-200'} rounded-lg p-4 border text-center hover:border-emerald-400 transition-all`}>
                     <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-3">
                       <span className="text-white text-lg font-bold">{instructor.avatar}</span>
                     </div>
-                    <h3 className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{instructor.name}</h3>
-                    <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'} mb-2`}>{instructor.expertise}</p>
+                    <h3 className={`font-semibold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{instructor.name}</h3>
+                    <p className={`text-sm mb-2 ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>{instructor.expertise}</p>
                     <p className={`text-xs ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>{instructor.courses} Courses</p>
                     <button className="mt-3 w-full px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-sm font-medium rounded-lg transition-colors">
                       Message
@@ -343,7 +453,7 @@ const navigate = useNavigate();
               <div className="space-y-4">
                 {upcomingClasses.map((cls, idx) => (
                   <div key={idx} className={`${darkMode ? 'bg-slate-700/50' : 'bg-gray-50'} rounded-lg p-4`}>
-                    <p className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>{cls.course}</p>
+                    <p className={`text-sm font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{cls.course}</p>
                     <div className="flex items-center gap-2 mb-2">
                       <Clock className={`w-4 h-4 ${darkMode ? 'text-slate-400' : 'text-gray-600'}`} />
                       <span className={`text-xs ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>{cls.time}</span>
@@ -356,7 +466,7 @@ const navigate = useNavigate();
 
             {/* Progress Chart */}
             <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-xl p-6 border`}>
-              <h2 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>Overall Progress</h2>
+              <h2 className={`text-lg font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Overall Progress</h2>
               <div className="flex items-center justify-center">
                 <div className="relative w-40 h-40">
                   <svg className="transform -rotate-90 w-40 h-40">
@@ -379,7 +489,7 @@ const navigate = useNavigate();
 
             {/* Achievements */}
             <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-xl p-6 border`}>
-              <h2 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>Achievements</h2>
+              <h2 className={`text-lg font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Achievements</h2>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">

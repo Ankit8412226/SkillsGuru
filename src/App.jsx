@@ -30,6 +30,8 @@ import Profile from "./pages/Profile.jsx";
 import SkillGuruDashboard from "./pages/SkillGuruDashboard";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+
 
 // Scroll to top when route changes
 const ScrollToTop = () => {
@@ -126,6 +128,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/dashboard/profile" element={<ProfilePage />} />
 
           <Route path="/browsecourses" element={<BrouseCourses />} />
 
