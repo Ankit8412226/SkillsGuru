@@ -26,6 +26,7 @@ import Explore_Learn_more from "./pages/Explore_Learn_more.jsx";
 import Instructors from "./pages/Instructors.jsx";
 import LearnMore from "./pages/LearnMore.jsx";
 import New_sesion from "./pages/New_sesion.jsx";
+import Profile from "./pages/Profile.jsx";
 import SkillGuruDashboard from "./pages/SkillGuruDashboard";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
@@ -110,6 +111,17 @@ function App() {
               <ProtectedRoute>
                 <div className="min-h-screen">
                   <SkillGuruDashboard />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/course"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen">
+                  <CoursesPage />
                 </div>
               </ProtectedRoute>
             }
@@ -201,6 +213,14 @@ function App() {
             element={
               <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
                 <CartPage />
+              </div>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                <Profile />
               </div>
             }
           />

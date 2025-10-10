@@ -1,20 +1,23 @@
-import React, { useState , useEffect } from 'react';
-import { Bell, Search, User, LogOut, Settings, HelpCircle, BookOpen, Calendar, Award, Users, TrendingUp, MessageSquare, Download, Sun, Moon, Clock, ChevronRight, Play, Upload, CheckCircle, AlertCircle } from 'lucide-react';
-import axios from 'axios';
+import { AlertCircle, Award, Bell, BookOpen, Calendar, CheckCircle, ChevronRight, Clock, HelpCircle, MessageSquare, Moon, Play, Search, ShoppingCart, Sun, TrendingUp, Upload } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext.jsx';
+import api from '../utils/api';
 
 const SkillGuruDashboard = () => {
-  const [activeTab, setActiveTab] = useState('overview');
+
   const [darkMode, setDarkMode] = useState(true);
- 
+  const { count } = useCart();
+  const isAuthenticated = Boolean(localStorage.getItem('token'));
+
 
   const getDashboard = async () =>{
     try{
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/dashboard/me`);
-        const data = response.data;
+        await api.get(`${import.meta.env.VITE_API_BASE_URL}/dashboard/me`);
 
     } catch (error) {
       console.error("Error fetching dashboard:", error);
-    } 
+    }
 
   }
   useEffect (() => {
@@ -73,11 +76,11 @@ const SkillGuruDashboard = () => {
     { name: "Prof. Michael Chen", expertise: "Data Science & AI", courses: 3, avatar: "MC" },
     { name: "Emily Rodriguez", expertise: "UI/UX Design", courses: 1, avatar: "ER" }
   ];
-
+const navigate = useNavigate();
   return (
     <div className={`min-h-screen relative `}>
       {/* Background Image with Overlay */}
-      <div 
+      <div
         className="fixed inset-0 z-0"
         style={{
           backgroundImage: `url('/bg.jpg')`,
@@ -87,24 +90,23 @@ const SkillGuruDashboard = () => {
           backgroundAttachment: 'fixed'
         }}
       />
-      {/* Dark overlay for better text visibility */}
-      <div className={`fixed inset-0 z-0 `}></div>
-      
+
+
       {/* Content Wrapper */}
       <div className="relative z-10 pt-35">
         {/* Header */}
-        <header className={`${darkMode ? 'bg-slate-800/95 backdrop-blur-sm' : 'bg-white/95 backdrop-blur-sm'} border-b ${darkMode ? 'border-slate-700' : 'border-gray-200'} fixed top-20 left-0 w-full  h-26 z-50`}>
+        <header className={`${darkMode ? 'bg-slate-800/95 backdrop-blur-sm' : 'bg-white/95 backdrop-blur-sm'} border-b ${darkMode ? 'border-slate-700' : 'border-gray-200'} fixed top-0 left-0 w-full  h-26 z-50 `}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-26 pt-5">
               {/* Logo */}
               <div className="flex items-center space-x-3">
-                <img 
-                  src="./Skill Guru Logo Teal.svg" 
-                  alt="Skill Guru Logo" 
+                <img
+                  src="./Skill Guru Logo Teal.svg"
+                  alt="Skill Guru Logo"
                   className="h-10 w-auto"
                 />
                 <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                 
+
                 </span>
               </div>
 
@@ -125,6 +127,18 @@ const SkillGuruDashboard = () => {
               <button onClick={() => setDarkMode(!darkMode)} className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'}`}>
                 {darkMode ? <Sun className="w-5 h-5 text-slate-300" /> : <Moon className="w-5 h-5 text-gray-600" />}
               </button>
+              <button
+                onClick={() => navigate(isAuthenticated ? '/cart' : '/login')}
+                className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} relative`}
+                title="Cart"
+              >
+                <ShoppingCart className={`w-5 h-5 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`} />
+                {count > 0 && (
+                  <span className="absolute top-1 right-1 min-w-[18px] h-[18px] px-1 bg-emerald-500 text-white text-[10px] leading-[18px] font-semibold rounded-full text-center">
+                    {count}
+                  </span>
+                )}
+              </button>
               <button className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} relative`}>
                 <Bell className={`w-5 h-5 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`} />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-400 rounded-full"></span>
@@ -144,7 +158,7 @@ const SkillGuruDashboard = () => {
       </header>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className=" mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className={`text-3xl font-bold ${darkMode ? 'text-black' : 'text-gray-900'} mb-2`}>
@@ -220,7 +234,7 @@ const SkillGuruDashboard = () => {
                             </span>
                           )}
                         </div>
-                        
+
                         <div className="mb-3">
                           <div className="flex items-center justify-between mb-1">
                             <span className={`text-sm ${darkMode ? 'text-slate-400' : 'text-gray-600'}`}>Progress</span>
@@ -401,7 +415,7 @@ const SkillGuruDashboard = () => {
             <div className={`${darkMode ? 'bg-gradient-to-br from-emerald-500 to-teal-600' : 'bg-gradient-to-br from-emerald-400 to-teal-500'} rounded-xl p-6`}>
               <h3 className="text-white font-bold text-lg mb-4">Ready to Learn?</h3>
               <p className="text-emerald-50 text-sm mb-4">Explore new courses and expand your skills</p>
-              <button className="w-full px-4 py-2 bg-white text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50 transition-colors">
+              <button className="w-full px-4 py-2 bg-white text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50 transition-colors" onClick={() => navigate('/dashboard/course')}>
                 Browse Courses
               </button>
             </div>
