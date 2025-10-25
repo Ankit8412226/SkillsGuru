@@ -1,17 +1,17 @@
 import axios from "axios";
 import {
-    Award,
-    BookOpen,
-    CheckCircle2,
-    ChevronDown,
-    ChevronUp,
-    Clock,
-    FileText,
-    Infinity,
-    Play,
-    Smartphone,
-    Star,
-    Users
+  Award,
+  BookOpen,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  FileText,
+  Infinity,
+  Play,
+  Smartphone,
+  Star,
+  Users
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -51,9 +51,9 @@ const CourseDescriptionPage = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
+        <div className="text-center animate-in fade-in duration-500">
           <div className="w-16 h-16 border-4 border-[#2FC7A1] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-[#0E2A46] text-lg font-medium">Loading course details...</p>
+          <p className="text-[#0E2A46] text-lg font-medium animate-pulse">Loading course details...</p>
         </div>
       </div>
     );
@@ -62,8 +62,8 @@ const CourseDescriptionPage = () => {
   if (error || !courseData) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <p className="text-red-600 text-lg font-medium">{error || "Course not found"}</p>
+        <div className="text-center animate-in fade-in duration-500">
+          <p className="text-red-600 text-lg font-medium animate-bounce">{error || "Course not found"}</p>
         </div>
       </div>
     );
@@ -93,74 +93,75 @@ const CourseDescriptionPage = () => {
   return (
     <div className="bg-white w-full">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-[#0E2A46] via-[#0E2A46] to-[#1a3d5f] text-white">
+      <div className="bg-gradient-to-br from-[#0E2A46] via-[#0E2A46] to-[#1a3d5f] text-white animate-in slide-in-from-top duration-700">
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Content */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 animate-in slide-in-from-left duration-700">
               <div className="mb-4">
-                <span className="inline-block px-3 py-1 bg-[#2FC7A1] text-white text-sm font-semibold rounded-full">
+                <span className="inline-block px-3 py-1 bg-[#2FC7A1] text-white text-sm font-semibold rounded-full animate-in fade-in duration-500 animate-pulse">
                   {courseData.category}
                 </span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight animate-in fade-in duration-700">
                 {courseData.title}
               </h1>
 
-              <p className="text-xl text-gray-200 mb-6 leading-relaxed">
+              <p className="text-xl text-gray-200 mb-6 leading-relaxed animate-in fade-in duration-900">
                 {courseData.shortDescription}
               </p>
 
-              <div className="flex flex-wrap items-center gap-6 mb-8">
-                <div className="flex items-center gap-2">
-                  <span className="text-yellow-400 font-bold text-lg">4.8</span>
+              <div className="flex flex-wrap items-center gap-6 mb-8 animate-in fade-in duration-1000">
+                <div className="flex items-center gap-2 group">
+                  <span className="text-yellow-400 font-bold text-lg transition-transform duration-300 group-hover:scale-110">4.8</span>
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-5 h-5 ${
+                        className={`w-5 h-5 transition-transform duration-300 hover:scale-110 ${
                           i < 4
                             ? "fill-yellow-400 text-yellow-400"
                             : "text-gray-400"
                         }`}
+                        style={{ animationDelay: `${i * 100}ms` }}
                       />
                     ))}
                   </div>
-                  <span className="text-gray-300 text-sm">
+                  <span className="text-gray-300 text-sm transition-colors duration-300 group-hover:text-yellow-400">
                     (1,234 students)
                   </span>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-500">
                   <div className="flex items-center gap-2 mb-2">
-                    <Clock className="w-5 h-5 text-[#2FC7A1]" />
+                    <Clock className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                     <span className="text-sm text-gray-300">Duration</span>
                   </div>
                   <p className="text-xl font-bold">{courseData.durationHours}h</p>
                 </div>
 
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-500" style={{ animationDelay: '100ms' }}>
                   <div className="flex items-center gap-2 mb-2">
-                    <BookOpen className="w-5 h-5 text-[#2FC7A1]" />
+                    <BookOpen className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                     <span className="text-sm text-gray-300">Lessons</span>
                   </div>
                   <p className="text-xl font-bold">{totalLessons || courseData.totalClasses}</p>
                 </div>
 
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-500" style={{ animationDelay: '200ms' }}>
                   <div className="flex items-center gap-2 mb-2">
-                    <Award className="w-5 h-5 text-[#2FC7A1]" />
+                    <Award className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                     <span className="text-sm text-gray-300">Level</span>
                   </div>
                   <p className="text-xl font-bold capitalize">{courseData.level}</p>
                 </div>
 
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-500" style={{ animationDelay: '300ms' }}>
                   <div className="flex items-center gap-2 mb-2">
-                    <Users className="w-5 h-5 text-[#2FC7A1]" />
+                    <Users className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                     <span className="text-sm text-gray-300">Students</span>
                   </div>
                   <p className="text-xl font-bold">1.2k+</p>
@@ -168,31 +169,31 @@ const CourseDescriptionPage = () => {
               </div>
 
               {instructor.name && (
-                <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#2FC7A1] to-[#28B895] flex items-center justify-center text-white font-bold text-xl border-2 border-white">
+                <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-700">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#2FC7A1] to-[#28B895] flex items-center justify-center text-white font-bold text-xl border-2 border-white transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
                     {instructor.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
                     <p className="text-sm text-gray-300">Created by</p>
-                    <p className="font-semibold text-lg">{instructor.name}</p>
-                    <p className="text-sm text-gray-400">{instructor.email}</p>
+                    <p className="font-semibold text-lg transition-colors duration-300 group-hover:text-[#2FC7A1]">{instructor.name}</p>
+                    <p className="text-sm text-gray-400 transition-colors duration-300 group-hover:text-[#28B895]">{instructor.email}</p>
                   </div>
                 </div>
               )}
             </div>
 
             {/* Sidebar - Desktop Only */}
-            <div className="hidden lg:block">
-              <div className="bg-white rounded-xl shadow-2xl overflow-hidden sticky top-4">
-                <div className="relative">
+            <div className="hidden lg:block animate-in slide-in-from-right duration-700">
+              <div className="bg-white rounded-xl shadow-2xl overflow-hidden sticky top-4 hover:shadow-3xl transition-all duration-300">
+                <div className="relative group">
                   <img
                     src={courseData.thumbnailUrl}
                     alt={courseData.title}
-                    className="w-full h-52 object-cover"
+                    className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
-                    <div className="bg-white rounded-full p-4">
-                      <Play className="w-8 h-8 text-[#0E2A46]" />
+                    <div className="bg-white rounded-full p-4 transition-transform duration-300 hover:scale-110">
+                      <Play className="w-8 h-8 text-[#0E2A46] transition-transform duration-300 group-hover:scale-110" />
                     </div>
                   </div>
                 </div>
@@ -216,9 +217,12 @@ const CourseDescriptionPage = () => {
                       }
                       navigate(`/checkout?courseId=${id}`);
                     }}
-                    className="w-full rounded-lg bg-[#2FC7A1] text-white font-semibold py-3.5 hover:bg-[#28B895] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mb-3"
+                    className="w-full rounded-lg bg-[#2FC7A1] text-white font-semibold py-3.5 hover:bg-[#28B895] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mb-3 hover:scale-105 group"
                   >
-                    Enroll Now
+                    <span className="flex items-center justify-center gap-2">
+                      Enroll Now
+                      <Play className="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-1" />
+                    </span>
                   </button>
 
                   <button
@@ -232,27 +236,30 @@ const CourseDescriptionPage = () => {
                         // optional toast
                       }
                     }}
-                    className="w-full rounded-lg border-2 border-[#0E2A46] text-[#0E2A46] font-semibold py-3 hover:bg-[#0E2A46] hover:text-white transition-all"
+                    className="w-full rounded-lg border-2 border-[#0E2A46] text-[#0E2A46] font-semibold py-3 hover:bg-[#0E2A46] hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-lg group"
                   >
-                    Add to Cart
+                    <span className="flex items-center justify-center gap-2">
+                      Add to Cart
+                      <ShoppingCart className="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                    </span>
                   </button>
 
                   <div className="mt-6 pt-6 border-t space-y-3">
-                    <div className="flex items-center gap-3 text-sm">
-                      <Infinity className="w-5 h-5 text-[#2FC7A1]" />
-                      <span className="text-gray-700">Lifetime access</span>
+                    <div className="flex items-center gap-3 text-sm hover:bg-gray-50 p-2 rounded-lg transition-all duration-300 group">
+                      <Infinity className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                      <span className="text-gray-700 transition-colors duration-300 group-hover:text-[#2FC7A1]">Lifetime access</span>
                     </div>
-                    <div className="flex items-center gap-3 text-sm">
-                      <Smartphone className="w-5 h-5 text-[#2FC7A1]" />
-                      <span className="text-gray-700">Access on mobile and desktop</span>
+                    <div className="flex items-center gap-3 text-sm hover:bg-gray-50 p-2 rounded-lg transition-all duration-300 group">
+                      <Smartphone className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                      <span className="text-gray-700 transition-colors duration-300 group-hover:text-[#2FC7A1]">Access on mobile and desktop</span>
                     </div>
-                    <div className="flex items-center gap-3 text-sm">
-                      <Award className="w-5 h-5 text-[#2FC7A1]" />
-                      <span className="text-gray-700">Certificate of completion</span>
+                    <div className="flex items-center gap-3 text-sm hover:bg-gray-50 p-2 rounded-lg transition-all duration-300 group">
+                      <Award className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                      <span className="text-gray-700 transition-colors duration-300 group-hover:text-[#2FC7A1]">Certificate of completion</span>
                     </div>
-                    <div className="flex items-center gap-3 text-sm">
-                      <FileText className="w-5 h-5 text-[#2FC7A1]" />
-                      <span className="text-gray-700">Downloadable resources</span>
+                    <div className="flex items-center gap-3 text-sm hover:bg-gray-50 p-2 rounded-lg transition-all duration-300 group">
+                      <FileText className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                      <span className="text-gray-700 transition-colors duration-300 group-hover:text-[#2FC7A1]">Downloadable resources</span>
                     </div>
                   </div>
                 </div>
@@ -263,10 +270,10 @@ const CourseDescriptionPage = () => {
       </div>
 
       {/* Mobile Sticky Purchase Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 z-50">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 z-50 animate-in slide-in-from-bottom duration-500">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <span className="text-2xl font-bold text-[#0E2A46]">₹{courseData.price}</span>
+            <span className="text-2xl font-bold text-[#0E2A46] animate-pulse">₹{courseData.price}</span>
           </div>
           <button
             onClick={() => {
@@ -276,9 +283,12 @@ const CourseDescriptionPage = () => {
               }
               navigate(`/checkout?courseId=${id}`);
             }}
-            className="flex-1 rounded-lg bg-[#2FC7A1] text-white font-semibold py-3 hover:bg-[#28B895] transition"
+            className="flex-1 rounded-lg bg-[#2FC7A1] text-white font-semibold py-3 hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-lg group"
           >
-            Enroll Now
+            <span className="flex items-center justify-center gap-2">
+              Enroll Now
+              <Play className="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:translate-x-1" />
+            </span>
           </button>
         </div>
       </div>
