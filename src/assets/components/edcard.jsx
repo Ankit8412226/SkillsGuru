@@ -93,12 +93,12 @@ const CourseCard = ({
                 navigate("/login");
                 return;
               }
-              await addToCart(_id);
+              navigate(`/checkout?courseId=${_id}`);
             }}
-            className="flex items-center gap-2 bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#0E2A46] px-4 py-2 rounded-md text-sm font-medium transition-all duration-300"
+            className="flex items-center gap-2 bg-[#2FC7A1] hover:bg-[#28B895] text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300"
           >
             <ShoppingCart className="w-4 h-4" />
-            Add To Cart
+            Enroll Now
           </button>
         </div>
       </div>

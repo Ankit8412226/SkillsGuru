@@ -19,6 +19,7 @@ import Register from "./pages/Register.jsx";
 import FloatingActions from "./assets/components/FloatingAction.jsx";
 import AdmissionForm from "./pages/AdmissionForm.jsx";
 import CartPage from "./pages/CartPage.jsx";
+import CheckoutPage from "./pages/CheckoutPage.jsx";
 import CourseDescriptionPage from "./pages/CourseDescriptionPage.jsx";
 import CoursesPage from "./pages/Courses.jsx";
 import Explore_event from "./pages/Explore_event.jsx";
@@ -27,10 +28,10 @@ import Instructors from "./pages/Instructors.jsx";
 import LearnMore from "./pages/LearnMore.jsx";
 import New_sesion from "./pages/New_sesion.jsx";
 import Profile from "./pages/Profile.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
 import SkillGuruDashboard from "./pages/SkillGuruDashboard";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
-import ProfilePage from "./pages/ProfilePage.jsx";
 
 
 // Scroll to top when route changes
@@ -216,6 +217,14 @@ function App() {
             element={
               <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
                 <CartPage />
+              </div>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                <CheckoutPage />
               </div>
             }
           />

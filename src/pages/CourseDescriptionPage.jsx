@@ -16,7 +16,6 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext.jsx";
-import api from "../utils/api";
 
 const CourseDescriptionPage = () => {
   const [courseData, setCourseData] = useState(null);
@@ -215,25 +214,11 @@ const CourseDescriptionPage = () => {
                         navigate("/login");
                         return;
                       }
-                      try {
-                        setBuying(true);
-                        const res = await api.post(`/orders`, { courseId: id });
-                        const order = res.data?.data || res.data;
-                        if (order?.paymentLink) {
-                          window.location.href = order.paymentLink;
-                        } else {
-                          navigate("/cart");
-                        }
-                      } catch (e) {
-                        alert(e?.response?.data?.message || "Failed to create order");
-                      } finally {
-                        setBuying(false);
-                      }
+                      navigate(`/checkout?courseId=${id}`);
                     }}
-                    disabled={buying}
-                    className="w-full rounded-lg bg-[#2FC7A1] text-white font-semibold py-3.5 hover:bg-[#28B895] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mb-3 disabled:opacity-60"
+                    className="w-full rounded-lg bg-[#2FC7A1] text-white font-semibold py-3.5 hover:bg-[#28B895] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mb-3"
                   >
-                    {buying ? "Processing..." : "Buy Now"}
+                    Enroll Now
                   </button>
 
                   <button
@@ -283,7 +268,16 @@ const CourseDescriptionPage = () => {
           <div>
             <span className="text-2xl font-bold text-[#0E2A46]">₹{courseData.price}</span>
           </div>
-          <button className="flex-1 rounded-lg bg-[#2FC7A1] text-white font-semibold py-3 hover:bg-[#28B895] transition">
+          <button
+            onClick={() => {
+              if (!localStorage.getItem("token")) {
+                navigate("/login");
+                return;
+              }
+              navigate(`/checkout?courseId=${id}`);
+            }}
+            className="flex-1 rounded-lg bg-[#2FC7A1] text-white font-semibold py-3 hover:bg-[#28B895] transition"
+          >
             Enroll Now
           </button>
         </div>

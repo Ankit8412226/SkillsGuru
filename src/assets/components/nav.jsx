@@ -1,7 +1,7 @@
 import { ArrowRight, Menu, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
-import { useCart } from "../../context/CartContext.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext.jsx";
 import Contact from "./Contact";
 
 const navLinks = [
@@ -190,6 +190,70 @@ const Nav = () => {
           </button>
         </div>
       </div>
+
+      {/* Mobile Full-Screen Navigation */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-white">
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b">
+            <img
+              src="./Skill Guru Logo Teal.svg"
+              alt="Skill Guru Logo"
+              className="w-12 h-12 object-contain"
+            />
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors duration-200"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="px-6 py-8">
+            <div className="space-y-6">
+              {navLinks.map((link) => (
+                <button
+                  key={link.key}
+                  onClick={() => handleLinkClick(link)}
+                  className={`w-full text-left py-4 px-4 rounded-lg text-lg font-medium transition-colors duration-200 ${
+                    active === link.key
+                      ? "bg-[#2FC7A1] text-white"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {link.name}
+                </button>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-12 space-y-4">
+              <button
+                onClick={handleLoginClick}
+                className="w-full flex items-center justify-center py-4 px-6 border-2 border-[#2FC7A1] text-[#2FC7A1] font-medium rounded-lg hover:bg-[#2FC7A1] hover:text-white transition-colors duration-200"
+              >
+                <User size={20} className="mr-2" />
+                Login
+              </button>
+
+              <button
+                onClick={handleRegisterClick}
+                className="w-full flex items-center justify-center py-4 px-6 bg-[#2FC7A1] text-white font-medium rounded-lg hover:bg-[#28B895] transition-colors duration-200"
+              >
+                Register
+              </button>
+
+              <button
+                onClick={handleContactClick}
+                className="w-full flex items-center justify-center py-4 px-6 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              >
+                Contact Us
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Contact Modal */}
       <Contact
