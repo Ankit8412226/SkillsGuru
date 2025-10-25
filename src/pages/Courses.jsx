@@ -1,8 +1,9 @@
 import axios from "axios";
 import { ArrowRight, BookOpen, Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom"; 
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CourseCard from "../assets/components/edcard";
+import InternshipBanner from "../assets/components/InternshipBanner";
 
 const CoursesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -11,7 +12,7 @@ const CoursesPage = () => {
   const [coursesData, setCoursesData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const getCourses = async () => {
     try {
@@ -175,7 +176,7 @@ const CoursesPage = () => {
             our courses.
           </p>
           <div className="flex justify-center">
-            
+
             <button
               onClick={() => navigate("/admission")}
               className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
@@ -190,6 +191,9 @@ const CoursesPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Internship Banner */}
+      <InternshipBanner />
     </div>
   );
 };

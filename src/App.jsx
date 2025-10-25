@@ -3,6 +3,7 @@ import { Navigate, Route, BrowserRouter as Router, Routes, useLocation } from "r
 import "./App.css";
 
 import Hero from "./assets/components/hero.jsx";
+import InternshipBanner from "./assets/components/InternshipBanner.jsx";
 import Nav from "./assets/components/nav.jsx";
 import About from "./pages/About.jsx";
 import BestMentor from "./pages/BestMentors.jsx";
@@ -91,6 +92,7 @@ function App() {
                   <section className="w-full py-8 sm:py-12 lg:py-16"><TestimonialSection /></section>
                   <section className="w-full py-8 sm:py-12 lg:py-16"><Explore_event /></section>
                   <section className="w-full"><Instructors /></section>
+                  <section className="w-full"><InternshipBanner /></section>
                 </div>
                 <FloatingActions />
               </>
