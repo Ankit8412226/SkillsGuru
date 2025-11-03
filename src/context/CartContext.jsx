@@ -63,7 +63,7 @@ export const CartProvider = ({ children }) => {
   const clearCart = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await api.delete(`/cart`);
+      const res = await api.delete(`/cart/clear`);
       const data = res.data?.data || res.data;
       setItems(data?.items || []);
       setError(null);

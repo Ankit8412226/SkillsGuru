@@ -65,7 +65,7 @@ const Nav = () => {
   };
 
   const handleCartClick = () => {
-    navigate("/cart");
+    navigate("/dashboard/cart");
     setIsMenuOpen(false);
   };
 

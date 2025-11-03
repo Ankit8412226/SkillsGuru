@@ -1,3 +1,5 @@
+import { AlertCircle, Award, Bell, BookOpen, Calendar, CheckCircle, ChevronRight, Clock, MessageSquare, Moon, Play, Search, ShoppingCart, Sun, TrendingUp, Upload } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { AlertCircle, Award, Bell, BookOpen, Calendar, CheckCircle, ChevronRight, ChevronDown, Clock, MessageSquare, Play, Search, ShoppingCart, TrendingUp, Upload, User, LogOut } from 'lucide-react';
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +13,9 @@ const SkillGuruDashboard = () => {
   // Profile Dropdown
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [username, setUsername] = useState("User");
+  const [activeTab, setActiveTab] = useState("courses");
+  const [orders, setOrders] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
   const [userEmail, setUserEmail] = useState("");
   const profileMenuRef = useRef(null);
 
@@ -19,19 +24,61 @@ const SkillGuruDashboard = () => {
   // Fetch dashboard data
   const getDashboard = async () => {
     try {
-      await api.get(`${import.meta.env.VITE_API_BASE_URL}/dashboard/me`);
+      await api.get(`/dashboard/me`);
     } catch (error) {
       console.error("Error fetching dashboard:", error);
     }
   };
 
+  // Fetch profile data dynamically
+  const getProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate('/login');
+        return;
+      }
+
+      const res = await api.get(`/auth/me`);
+      const data = res.data?.user || res.data;
+      setProfileData(data);
+      setUsername(data?.name || "User");
+      localStorage.setItem('name', data?.name || "User");
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('name');
+        navigate('/login');
+      }
+    }
   // Load user data from localStorage
   const loadUserData = () => {
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
-    
+
     if (name) setUsername(name);
     if (email) setUserEmail(email);
+  };
+
+  const loadOrders = async () => {
+    try {
+      const res = await api.get(`/orders/me`);
+      const data = res.data?.data || res.data;
+      setOrders(data || []);
+    } catch (e) {
+      console.log(e)
+    }
+  };
+
+  const loadWishlist = async () => {
+    try {
+      const res = await api.get(`/wishlist/me`);
+      const data = res.data?.data || res.data;
+      setWishlist(data?.items || []);
+    } catch (e) {
+      // ignore
+    }
   };
 
   // Toggle profile menu
@@ -55,6 +102,9 @@ const SkillGuruDashboard = () => {
 
   useEffect(() => {
     getDashboard();
+    getProfile();
+    loadOrders();
+    loadWishlist();
     loadUserData();
   }, []);
 
@@ -153,6 +203,8 @@ const SkillGuruDashboard = () => {
               {/* Right Icons */}
               <div className="flex items-center space-x-4">
                 <button
+                  onClick={() => navigate(isAuthenticated ? '/dashboard/cart' : '/login')}
+                  className={`p-2 rounded-lg ${darkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} relative`}
                   onClick={() => navigate(isAuthenticated ? '/cart' : '/login')}
                   className="p-2 rounded-lg hover:bg-gray-100 relative"
                   title="Cart"
@@ -171,11 +223,22 @@ const SkillGuruDashboard = () => {
                 </button>
 
                 {/* Profile */}
+                <div className="flex items-center space-x-2 pl-4 border-l border-slate-700 relative" ref={profileMenuRef}>
+                  <div
+                    className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center cursor-pointer"
                 <div className="flex items-center space-x-2 pl-4 border-l border-gray-300 relative" ref={profileMenuRef}>
-                  <div 
+                  <div
                     className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 rounded-lg px-3 py-2 transition-colors"
                     onClick={toggleProfileMenu}
                   >
+                    <span className="text-white text-sm font-semibold">{username.charAt(0).toUpperCase()}</span>
+                  </div>
+                  <span
+                    className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-gray-900'} cursor-pointer`}
+                    onClick={toggleProfileMenu}
+                  >
+                    {username}
+                  </span>
                     <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center">
                       <span className="text-white text-sm font-semibold">{username.charAt(0).toUpperCase()}</span>
                     </div>
@@ -187,6 +250,56 @@ const SkillGuruDashboard = () => {
 
                   {/* Dropdown */}
                   {showProfileMenu && (
+                    <div className="absolute top-12 right-0 w-64 bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 z-50 border border-gray-200 dark:border-slate-700">
+                      {profileData ? (
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-3 pb-3 border-b border-gray-200 dark:border-slate-700">
+                            <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center">
+                              <span className="text-white text-lg font-semibold">{profileData.name?.charAt(0).toUpperCase()}</span>
+                            </div>
+                            <div>
+                              <p className="text-sm font-semibold text-gray-900 dark:text-white">{profileData.name}</p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">{profileData.email}</p>
+                            </div>
+                          </div>
+
+                          <button
+                            className="w-full text-left text-sm px-3 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded flex items-center gap-2 text-gray-700 dark:text-gray-300"
+                            onClick={() => {
+                              setShowProfileMenu(false);
+                              navigate('/dashboard/profile');
+                            }}
+                          >
+                            <span>👤</span>
+                            View Profile
+                          </button>
+
+                          <button
+                            className="w-full text-left text-sm px-3 py-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded flex items-center gap-2 text-gray-700 dark:text-gray-300"
+                            onClick={() => {
+                              setShowProfileMenu(false);
+                              navigate('/dashboard/cart');
+                            }}
+                          >
+                            <span>🛒</span>
+                            My Cart
+                          </button>
+
+                          <button
+                            className="w-full text-left text-sm px-3 py-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded flex items-center gap-2 text-red-600 dark:text-red-400 border-t border-gray-200 dark:border-slate-700 mt-2 pt-3"
+                            onClick={() => {
+                              localStorage.removeItem('token');
+                              localStorage.removeItem('name');
+                              navigate('/login');
+                            }}
+                          >
+                            <span>🚪</span>
+                            Logout
+                          </button>
+                        </div>
+                      ) : (
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Loading...</p>
+                      )}
                     <div className="absolute top-14 right-0 w-64 bg-white shadow-xl rounded-lg p-4 border border-gray-200">
                       <div className="space-y-3">
                         <div className="flex items-center gap-3 pb-3 border-b border-gray-200">
@@ -198,8 +311,8 @@ const SkillGuruDashboard = () => {
                             <p className="text-xs text-gray-500">{userEmail || 'No email'}</p>
                           </div>
                         </div>
-                        
-                        <button 
+
+                        <button
                           className="w-full text-left text-sm px-3 py-2 hover:bg-gray-100 rounded flex items-center gap-2 text-gray-700"
                           onClick={() => {
                             setShowProfileMenu(false);
@@ -209,8 +322,8 @@ const SkillGuruDashboard = () => {
                           <User className="w-4 h-4" />
                           View Profile
                         </button>
-                        
-                        <button 
+
+                        <button
                           className="w-full text-left text-sm px-3 py-2 hover:bg-gray-100 rounded flex items-center gap-2 text-gray-700"
                           onClick={() => {
                             setShowProfileMenu(false);
@@ -220,7 +333,7 @@ const SkillGuruDashboard = () => {
                           <ShoppingCart className="w-4 h-4" />
                           My Cart
                         </button>
-                        
+
                         <button
                           className="w-full text-left text-sm px-3 py-2 hover:bg-red-50 rounded flex items-center gap-2 text-red-600 border-t border-gray-200 mt-2 pt-3"
                           onClick={() => {
@@ -294,11 +407,28 @@ const SkillGuruDashboard = () => {
           </div>
         </div>
 
+        {/* Tab bar */}
+        <div className="mb-6 flex gap-2">
+          {[
+            { key: 'courses', label: 'My Courses' },
+            { key: 'orders', label: 'My Orders' },
+            { key: 'wishlist', label: 'Wishlist' },
+          ].map(t => (
+            <button key={t.key} onClick={() => setActiveTab(t.key)} className={`px-4 py-2 rounded-lg text-sm font-medium ${activeTab===t.key ? 'bg-emerald-500 text-white' : (darkMode ? 'bg-slate-700 text-white' : 'bg-gray-100 text-gray-800')}`}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Courses */}
           <div className="lg:col-span-2 space-y-6">
             {/* My Courses */}
+            {activeTab === 'courses' && (
+            <>
+            <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-xl p-6 border`}>
+              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>My Courses</h2>
             <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
               <h2 className="text-xl font-bold mb-6 text-gray-900">My Courses</h2>
               <div className="space-y-4">
@@ -414,6 +544,47 @@ const SkillGuruDashboard = () => {
                 ))}
               </div>
             </div>
+            </>
+            )}
+
+            {activeTab === 'orders' && (
+            <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-xl p-6 border`}>
+              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>My Orders</h2>
+              <div className="space-y-3">
+                {orders.length === 0 && <p className={darkMode? 'text-slate-400':'text-gray-600'}>No orders yet.</p>}
+                {orders.map((o) => (
+                  <div key={o._id} className={`${darkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-gray-50 border-gray-200'} rounded-lg p-4 border flex items-center justify-between`}>
+                    <div>
+                      <p className={`${darkMode? 'text-white':'text-gray-900'} font-semibold`}>Order #{o._id.slice(-6)}</p>
+                      <p className={`${darkMode? 'text-slate-400':'text-gray-600'} text-sm`}>{new Date(o.createdAt).toLocaleString()}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold">₹{o.amount}</p>
+                      <p className={`text-sm ${o.status === 'paid' ? 'text-emerald-500' : 'text-orange-500'}`}>{o.status}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            )}
+
+            {activeTab === 'wishlist' && (
+            <div className={`${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-xl p-6 border`}>
+              <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Wishlist</h2>
+              <div className="space-y-3">
+                {wishlist.length === 0 && <p className={darkMode? 'text-slate-400':'text-gray-600'}>Your wishlist is empty.</p>}
+                {wishlist.map((w) => (
+                  <div key={w.course?._id || w.course} className={`${darkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-gray-50 border-gray-200'} rounded-lg p-4 border flex items-center justify-between`}>
+                    <div>
+                      <p className={`${darkMode? 'text-white':'text-gray-900'} font-semibold`}>{w.course?.title}</p>
+                      <p className={`${darkMode? 'text-slate-400':'text-gray-600'} text-sm`}>Added {new Date(w.addedAt).toLocaleDateString()}</p>
+                    </div>
+                    <div className="text-right font-semibold">₹{w.course?.price}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            )}
           </div>
 
           {/* Right Column - Sidebar */}

@@ -1,3 +1,4 @@
+import { ArrowLeft, Calendar, Edit2, Mail, Save, Shield, User, X } from 'lucide-react';
 import { ArrowLeft, Mail, User, Calendar, Shield, Edit2, Save, X, LogOut, Phone, Image } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +9,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
-  
+
   const [editedData, setEditedData] = useState({
     name: '',
     phone: '',
@@ -25,16 +26,17 @@ const ProfilePage = () => {
         return;
       }
 
-      const res = await api.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      
-      setProfileData(res.data);
+      const res = await api.get(`/auth/me`);
+      const data = res.data?.user || res.data;
+      setProfileData(data);
       setEditedData({
         name: res.data.name || '',
         phone: res.data.phone || '',
         bio: res.data.bio || '',
         avatarUrl: res.data.avatarUrl || ''
+        name: data?.name || '',
+        phone: data?.phone || '',
+        bio: data?.bio || ''
       });
       setLoading(false);
     } catch (err) {
@@ -70,9 +72,9 @@ const ProfilePage = () => {
     setSaving(true);
     try {
       const token = localStorage.getItem("token");
-      
+
       console.log("Sending update request with data:", editedData);
-      
+
       const response = await api.put(
         `${import.meta.env.VITE_API_BASE_URL}/user/me`,
         {
@@ -82,18 +84,18 @@ const ProfilePage = () => {
           avatarUrl: editedData.avatarUrl.trim()
         },
         {
-          headers: { 
+          headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
         }
       );
-      
+
       console.log("Update response:", response);
-      
+
       // Update localStorage
       localStorage.setItem('name', editedData.name.trim());
-      
+
       // Update profile data with the response
       if (response.data) {
         setProfileData(response.data);
@@ -108,13 +110,13 @@ const ProfilePage = () => {
         const updatedData = { ...profileData, ...editedData };
         setProfileData(updatedData);
       }
-      
+
       setIsEditing(false);
       alert("Profile updated successfully!");
     } catch (err) {
       console.error("Error updating profile:", err);
       console.error("Error response:", err.response);
-      
+
       // More specific error messages
       if (err.response) {
         const errorMessage = err.response.data?.message || err.response.data?.error || "Failed to update profile";
@@ -127,6 +129,10 @@ const ProfilePage = () => {
     } finally {
       setSaving(false);
     }
+    // No backend endpoint for updating profile yet; update local state for now
+    localStorage.setItem('name', editedData.name);
+    setProfileData({ ...profileData, ...editedData });
+    setIsEditing(false);
   };
 
   const handleCancel = () => {
@@ -187,9 +193,9 @@ const ProfilePage = () => {
             <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-8 text-center">
               <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg overflow-hidden">
                 {(isEditing ? editedData.avatarUrl : profileData?.avatarUrl) ? (
-                  <img 
-                    src={isEditing ? editedData.avatarUrl : profileData?.avatarUrl} 
-                    alt="Avatar" 
+                  <img
+                    src={isEditing ? editedData.avatarUrl : profileData?.avatarUrl}
+                    alt="Avatar"
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.target.style.display = 'none';
@@ -197,7 +203,7 @@ const ProfilePage = () => {
                     }}
                   />
                 ) : null}
-                <span 
+                <span
                   className="text-5xl font-bold text-emerald-600"
                   style={{ display: (isEditing ? editedData.avatarUrl : profileData?.avatarUrl) ? 'none' : 'flex' }}
                 >

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navigate, Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
+import { Navigate, Outlet, Route, BrowserRouter as Router, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 
 import Hero from "./assets/components/hero.jsx";
@@ -19,7 +19,6 @@ import Register from "./pages/Register.jsx";
 
 import FloatingActions from "./assets/components/FloatingAction.jsx";
 import AdmissionForm from "./pages/AdmissionForm.jsx";
-import InternshipForm from "./pages/InternshipForm.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import CourseDescriptionPage from "./pages/CourseDescriptionPage.jsx";
@@ -27,14 +26,15 @@ import CoursesPage from "./pages/Courses.jsx";
 import Explore_event from "./pages/Explore_event.jsx";
 import Explore_Learn_more from "./pages/Explore_Learn_more.jsx";
 import Instructors from "./pages/Instructors.jsx";
+import InternshipForm from "./pages/InternshipForm.jsx";
 import LearnMore from "./pages/LearnMore.jsx";
 import New_sesion from "./pages/New_sesion.jsx";
 import Profile from "./pages/Profile.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import SkillGuruDashboard from "./pages/SkillGuruDashboard";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
+import VerifyCertificatePage from "./pages/VerifyCertificatePage.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
-
 
 
 // Scroll to top when route changes
@@ -96,7 +96,7 @@ function App() {
                   <section className="w-full"><Instructors /></section>
                   <section className="w-full"><InternshipBanner /></section>
 
-                  
+
                 </div>
                 <FloatingActions />
               </>
@@ -113,30 +113,22 @@ function App() {
             }
           />
 
-          {/* ✅ Protected Dashboard (no Nav/Footer) */}
+          {/* ✅ Protected Dashboard with nested routes (no Nav/Footer) */}
           <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
                 <div className="min-h-screen">
-                  <SkillGuruDashboard />
+                  <Outlet />
                 </div>
               </ProtectedRoute>
             }
-          />
-          
-
-          <Route
-            path="/dashboard/course"
-            element={
-              <ProtectedRoute>
-                <div className="min-h-screen">
-                  <CoursesPage />
-                </div>
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/dashboard/profile" element={<ProfilePage />} />
+          >
+            <Route index element={<SkillGuruDashboard />} />
+            <Route path="course" element={<CoursesPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="cart" element={<CartPage />} />
+          </Route>
 
           <Route path="/browsecourses" element={<BrouseCourses />} />
 
@@ -236,13 +228,15 @@ function App() {
             }
           />
           <Route
-            path="/cart"
+            path="/verify-certificate"
             element={
               <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
-                <CartPage />
+                <VerifyCertificatePage />
               </div>
             }
           />
+          {/* Legacy cart route: redirect to dashboard/cart */}
+          <Route path="/cart" element={<Navigate to="/dashboard/cart" replace />} />
           <Route
             path="/checkout"
             element={

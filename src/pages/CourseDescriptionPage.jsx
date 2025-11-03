@@ -1,17 +1,17 @@
 import axios from "axios";
 import {
-  Award,
-  BookOpen,
-  CheckCircle2,
-  ChevronDown,
-  ChevronUp,
-  Clock,
-  FileText,
-  Infinity,
-  Play,
-  Smartphone,
-  Star,
-  Users
+    Award,
+    BookOpen,
+    CheckCircle2,
+    ChevronDown,
+    ChevronUp,
+    Clock,
+    FileText,
+    Infinity,
+    Play,
+    Smartphone,
+    Star,
+    Users
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -23,10 +23,16 @@ const CourseDescriptionPage = () => {
   const [error, setError] = useState(null);
   const [expandedWeek, setExpandedWeek] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
+  const [reviews, setReviews] = useState([]);
+  const [summary, setSummary] = useState({ average: 0, count: 0 });
+  const [myRating, setMyRating] = useState(5);
+  const [myComment, setMyComment] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [buying, setBuying] = useState(false);
+  const [cert, setCert] = useState(null);
+  const [wishing, setWishing] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -46,6 +52,20 @@ const CourseDescriptionPage = () => {
     };
 
     if (id) fetchCourse();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/reviews/courses/${id}`);
+        const data = res.data?.data || {};
+        setReviews(data.reviews || []);
+        setSummary(data.summary || { average: 0, count: 0 });
+      } catch (e) {
+        // ignore
+      }
+    };
+    if (id) fetchReviews();
   }, [id]);
 
   if (loading) {
@@ -244,6 +264,50 @@ const CourseDescriptionPage = () => {
                     </span>
                   </button>
 
+                  <button
+                    onClick={async () => {
+                      if (!localStorage.getItem("token")) {
+                        navigate("/login");
+                        return;
+                      }
+                      try {
+                        setWishing(true);
+                        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/wishlist/items`, { courseId: id }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+                      } catch (e) {
+                        // ignore
+                      } finally {
+                        setWishing(false);
+                      }
+                    }}
+                    className="w-full mt-3 rounded-lg border border-gray-300 text-gray-700 font-semibold py-3 hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  >
+                    {wishing ? 'Adding...' : 'Add to Wishlist'}
+                  </button>
+
+                  {localStorage.getItem('token') && (
+                    <button
+                      onClick={async () => {
+                        try {
+                          const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/certificates/issue/${id}`, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+                          const data = res.data?.data || res.data;
+                          setCert(data);
+                        } catch (e) {}
+                      }}
+                      className="w-full mt-3 rounded-lg bg-emerald-50 text-emerald-700 font-semibold py-3 hover:bg-emerald-100 transition-all duration-300"
+                    >
+                      Get Certificate
+                    </button>
+                  )}
+
+                  {cert?.certificateId && (
+                    <div className="mt-4 text-sm text-gray-700">
+                      Certificate issued: <span className="font-semibold">{cert.certificateId}</span>
+                      <div>
+                        <a className="text-emerald-600 underline" href={`/verify-certificate?id=${cert.certificateId}`}>View / Verify</a>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="mt-6 pt-6 border-t space-y-3">
                     <div className="flex items-center gap-3 text-sm hover:bg-gray-50 p-2 rounded-lg transition-all duration-300 group">
                       <Infinity className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
@@ -298,7 +362,7 @@ const CourseDescriptionPage = () => {
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="border-b">
             <div className="flex gap-8 px-6 overflow-x-auto">
-              {["overview", "curriculum", "instructor"].map((tab) => (
+              {["overview", "curriculum", "instructor", "reviews"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -451,11 +515,11 @@ const CourseDescriptionPage = () => {
                                     {sub.title}
                                   </p>
                                   <div className="space-y-2">
-                                    {sub.classes.map((cls, cIndex) => (
-                                      <div
-                                        key={cIndex}
-                                        className="flex justify-between items-center py-3 px-4 hover:bg-gray-50 rounded-lg transition-colors group cursor-pointer"
-                                      >
+                                  {sub.classes.map((cls, cIndex) => (
+                                    <div
+                                      key={cIndex}
+                                      className="flex justify-between items-center py-3 px-4 hover:bg-gray-50 rounded-lg transition-colors group"
+                                    >
                                         <div className="flex items-center gap-3">
                                           <Play className="w-4 h-4 text-gray-400 group-hover:text-[#2FC7A1] transition-colors" />
                                           <span className="text-gray-700 group-hover:text-[#0E2A46] font-medium">
@@ -463,6 +527,12 @@ const CourseDescriptionPage = () => {
                                           </span>
                                         </div>
                                         <div className="flex items-center gap-3">
+                                          <input type="checkbox" onChange={async (e)=>{
+                                            try {
+                                              const key = `w${week.weekNumber}-t${tIndex}-s${sIndex}-c${cIndex}`;
+                                              await axios.post(`${import.meta.env.VITE_API_BASE_URL}/progress/${id}/toggle`, { lessonKey: key, completed: e.target.checked }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+                                            } catch (e) {}
+                                          }} />
                                           {cls.resources && cls.resources.length > 0 && (
                                             <FileText className="w-4 h-4 text-gray-400" />
                                           )}
@@ -531,6 +601,60 @@ const CourseDescriptionPage = () => {
                       </p>
                     </div>
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* Reviews */}
+            {activeTab === "reviews" && (
+              <div>
+                <h2 className="text-3xl font-bold text-[#0E2A46] mb-4">Student Reviews</h2>
+                <div className="mb-6 flex items-center gap-4">
+                  <div className="text-2xl font-bold text-[#0E2A46]">{summary.average.toFixed(1)}</div>
+                  <div className="text-gray-600">({summary.count} reviews)</div>
+                </div>
+
+                {localStorage.getItem("token") && (
+                  <div className="mb-8 p-4 border rounded-xl bg-gray-50">
+                    <h3 className="font-semibold text-[#0E2A46] mb-3">Write a review</h3>
+                    <div className="flex items-center gap-3 mb-3">
+                      {[1,2,3,4,5].map(n => (
+                        <button key={n} onClick={() => setMyRating(n)} className={`p-1 ${n<=myRating ? 'text-yellow-500' : 'text-gray-300'}`}>
+                          <Star className={`w-6 h-6 ${n<=myRating ? 'fill-yellow-400' : ''}`} />
+                        </button>
+                      ))}
+                    </div>
+                    <textarea value={myComment} onChange={(e)=>setMyComment(e.target.value)} placeholder="Share your experience" className="w-full border rounded-lg p-3 mb-3" rows={3} />
+                    <button onClick={async ()=>{
+                      try {
+                        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/reviews/courses/${id}`, { rating: myRating, comment: myComment }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+                        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/reviews/courses/${id}`);
+                        const data = res.data?.data || {};
+                        setReviews(data.reviews || []);
+                        setSummary(data.summary || { average: 0, count: 0 });
+                        setMyComment("");
+                      } catch(e) {}
+                    }} className="px-4 py-2 bg-emerald-500 text-white rounded-lg">Submit Review</button>
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  {reviews.length === 0 && <p className="text-gray-600">No reviews yet.</p>}
+                  {reviews.map(r => (
+                    <div key={r._id} className="border rounded-xl p-4">
+                      <div className="flex items-center gap-3 mb-1">
+                        <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">{r.user?.name?.[0]?.toUpperCase() || 'U'}</div>
+                        <div className="font-semibold text-[#0E2A46]">{r.user?.name || 'User'}</div>
+                        <div className="ml-auto flex">
+                          {[1,2,3,4,5].map(n => (
+                            <Star key={n} className={`w-4 h-4 ${n<=r.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
+                          ))}
+                        </div>
+                      </div>
+                      <div className="text-gray-700">{r.comment}</div>
+                      <div className="text-xs text-gray-400 mt-1">{new Date(r.createdAt).toLocaleString()}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

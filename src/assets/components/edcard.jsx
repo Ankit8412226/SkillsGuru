@@ -1,5 +1,9 @@
-import { BookOpen, Clock, Eye, ShoppingCart, Users } from "lucide-react";
+
 import { useNavigate } from "react-router-dom";
+
+
+
+import { BookOpen, Clock, Eye, ShoppingCart, Users } from "lucide-react";
 
 const CourseCard = ({
   _id,

@@ -1,9 +1,9 @@
 import { Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Alert from "../assets/components/Alert.jsx";
 import Loader from "../assets/components/Loader.jsx";
 import LoaderOverlay from "../assets/components/LoaderOverlay.jsx";
-import Alert from "../assets/components/Alert.jsx";
 import { useCart } from "../context/CartContext.jsx";
 import api from "../utils/api";
 
@@ -11,6 +11,8 @@ const CartPage = () => {
   const navigate = useNavigate();
   const { items, total, removeFromCart, loading, loadCart } = useCart();
   const [placing, setPlacing] = useState(false);
+  const [coupon, setCoupon] = useState("");
+  const [calc, setCalc] = useState(null);
   const [alert, setAlert] = useState(null);
   const isAuthenticated = Boolean(localStorage.getItem("token"));
 
@@ -104,7 +106,7 @@ const CartPage = () => {
             <h2 className="text-xl font-bold mb-4 text-[#0E2A46]">Order Summary</h2>
             <div className="flex justify-between mb-2">
               <span className="text-gray-600">Subtotal</span>
-              <span className="font-semibold">₹{total}</span>
+              <span className="font-semibold">₹{calc?.subtotal ?? total}</span>
             </div>
             <div className="flex justify-between mb-4">
               <span className="text-gray-600">Tax</span>
@@ -115,7 +117,20 @@ const CartPage = () => {
             </div>
             <div className="flex justify-between py-3 border-t">
               <span className="font-bold">Total</span>
-              <span className="font-bold">₹{total}</span>
+              <span className="font-bold">₹{calc?.total ?? total}</span>
+            </div>
+            <div className="mt-3 flex gap-2">
+              <input value={coupon} onChange={(e)=>setCoupon(e.target.value)} placeholder="Coupon code" className="flex-1 border rounded-lg px-3 py-2" />
+              <button className="px-4 py-2 border rounded-lg" onClick={async()=>{
+                try {
+                  const res = await api.post(`/coupons/apply`, { code: coupon });
+                  setCalc(res.data?.data || null);
+                  setAlert({ type: "success", title: "Coupon Applied", message: `-${res.data?.data?.percent}% discount applied` });
+                } catch (e) {
+                  setCalc(null);
+                  setAlert({ type: "error", title: "Invalid Coupon", message: e?.response?.data?.message || "Coupon not valid" });
+                }
+              }}>Apply</button>
             </div>
             <button
               disabled={placing}
