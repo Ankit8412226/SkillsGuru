@@ -1,6 +1,5 @@
-import { ArrowLeft, Calendar, Edit2, Mail, Save, Shield, User, X } from 'lucide-react';
-import { ArrowLeft, Mail, User, Calendar, Shield, Edit2, Save, X, LogOut, Phone, Image } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { ArrowLeft, Calendar, Edit2, Image, LogOut, Mail, Phone, Save, User, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 
@@ -30,13 +29,10 @@ const ProfilePage = () => {
       const data = res.data?.user || res.data;
       setProfileData(data);
       setEditedData({
-        name: res.data.name || '',
-        phone: res.data.phone || '',
-        bio: res.data.bio || '',
-        avatarUrl: res.data.avatarUrl || ''
         name: data?.name || '',
         phone: data?.phone || '',
-        bio: data?.bio || ''
+        bio: data?.bio || '',
+        avatarUrl: data?.avatarUrl || ''
       });
       setLoading(false);
     } catch (err) {
@@ -63,7 +59,6 @@ const ProfilePage = () => {
   };
 
   const handleSave = async () => {
-    // Validate fields
     if (!editedData.name || editedData.name.trim() === '') {
       alert("Name is required!");
       return;
@@ -73,10 +68,8 @@ const ProfilePage = () => {
     try {
       const token = localStorage.getItem("token");
 
-      console.log("Sending update request with data:", editedData);
-
       const response = await api.put(
-        `${import.meta.env.VITE_API_BASE_URL}/user/me`,
+        `/user/me`,
         {
           name: editedData.name.trim(),
           phone: editedData.phone.trim(),
@@ -91,12 +84,8 @@ const ProfilePage = () => {
         }
       );
 
-      console.log("Update response:", response);
-
-      // Update localStorage
       localStorage.setItem('name', editedData.name.trim());
 
-      // Update profile data with the response
       if (response.data) {
         setProfileData(response.data);
         setEditedData({
@@ -106,7 +95,6 @@ const ProfilePage = () => {
           avatarUrl: response.data.avatarUrl || ''
         });
       } else {
-        // If no response data, use the edited data
         const updatedData = { ...profileData, ...editedData };
         setProfileData(updatedData);
       }
@@ -115,9 +103,7 @@ const ProfilePage = () => {
       alert("Profile updated successfully!");
     } catch (err) {
       console.error("Error updating profile:", err);
-      console.error("Error response:", err.response);
 
-      // More specific error messages
       if (err.response) {
         const errorMessage = err.response.data?.message || err.response.data?.error || "Failed to update profile";
         alert(`Error: ${errorMessage}`);
@@ -129,14 +115,9 @@ const ProfilePage = () => {
     } finally {
       setSaving(false);
     }
-    // No backend endpoint for updating profile yet; update local state for now
-    localStorage.setItem('name', editedData.name);
-    setProfileData({ ...profileData, ...editedData });
-    setIsEditing(false);
   };
 
   const handleCancel = () => {
-    // Reset to original profile data
     if (profileData) {
       setEditedData({
         name: profileData.name || '',
@@ -150,319 +131,301 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-emerald-500 border-t-transparent"></div>
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-emerald-500 border-t-transparent mx-auto mb-4"></div>
+          <p className="text-gray-600 font-medium">Loading your profile...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen relative bg-gray-50">
-      {/* Background Image */}
-      <div
-        className="fixed inset-0 z-0"
-        style={{
-          backgroundImage: `url('/bg.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
-        }}
-      />
+    <div className="min-h-screen relative bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-72 h-72 bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse delay-700"></div>
+      </div>
 
       {/* Content */}
       <div className="relative z-10 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-8">
             <button
               onClick={() => navigate('/dashboard')}
-              className="flex items-center gap-2 text-gray-900 hover:text-emerald-600 transition-colors mb-4"
+              className="flex items-center gap-2 text-gray-700 hover:text-emerald-600 transition-all mb-6 group"
             >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="font-medium">Back to Dashboard</span>
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-semibold">Back to Dashboard</span>
             </button>
-            <h1 className="text-3xl font-bold text-gray-900">
-              My Profile
-            </h1>
+            <div className="flex items-center gap-4">
+              <div className="h-1 w-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                My Profile
+              </h1>
+            </div>
+            <p className="text-gray-600 mt-2 ml-16">Manage your personal information and preferences</p>
           </div>
 
           {/* Profile Card */}
-          <div className="bg-white/95 backdrop-blur-sm border-gray-200 rounded-xl border shadow-xl overflow-hidden">
-            {/* Header Section */}
-            <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-8 text-center">
-              <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg overflow-hidden">
-                {(isEditing ? editedData.avatarUrl : profileData?.avatarUrl) ? (
-                  <img
-                    src={isEditing ? editedData.avatarUrl : profileData?.avatarUrl}
-                    alt="Avatar"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
-                    }}
-                  />
-                ) : null}
-                <span
-                  className="text-5xl font-bold text-emerald-600"
-                  style={{ display: (isEditing ? editedData.avatarUrl : profileData?.avatarUrl) ? 'none' : 'flex' }}
-                >
-                  {(isEditing ? editedData.name : profileData?.name)?.charAt(0).toUpperCase() || 'U'}
-                </span>
+          <div className="bg-white/80 backdrop-blur-xl border border-gray-200/50 rounded-2xl shadow-2xl overflow-hidden">
+            {/* Header Section with Gradient */}
+            <div className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 p-12 text-center overflow-hidden">
+              {/* Decorative Pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+                }}></div>
               </div>
-              <h2 className="text-2xl font-bold text-white mb-2">
-                {isEditing ? editedData.name || 'Your Name' : profileData?.name}
-              </h2>
-              <p className="text-emerald-50">{profileData?.email}</p>
+
+              <div className="relative">
+                <div className="w-36 h-36 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl border-4 border-white/50 overflow-hidden transform hover:scale-105 transition-transform">
+                  {(isEditing ? editedData.avatarUrl : profileData?.avatarUrl) ? (
+                    <img
+                      src={isEditing ? editedData.avatarUrl : profileData?.avatarUrl}
+                      alt="Avatar"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.parentElement.querySelector('.avatar-fallback').style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <span
+                    className="avatar-fallback text-6xl font-bold text-emerald-600 flex items-center justify-center w-full h-full"
+                    style={{ display: (isEditing ? editedData.avatarUrl : profileData?.avatarUrl) ? 'none' : 'flex' }}
+                  >
+                    {(isEditing ? editedData.name : profileData?.name)?.charAt(0).toUpperCase() || 'U'}
+                  </span>
+                </div>
+                <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
+                  {isEditing ? editedData.name || 'Your Name' : profileData?.name}
+                </h2>
+                <p className="text-emerald-50 text-lg">{profileData?.email}</p>
+
+                {/* Status Badges */}
+                <div className="flex items-center justify-center gap-3 mt-4">
+                  {profileData?.isVerified ? (
+                    <span className="px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/30">
+                      ✓ Verified Account
+                    </span>
+                  ) : (
+                    <span className="px-4 py-1.5 bg-orange-500/20 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/30">
+                      ⚠ Unverified
+                    </span>
+                  )}
+                  <span className="px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/30 capitalize">
+                    {profileData?.role || 'Student'}
+                  </span>
+                </div>
+              </div>
             </div>
 
             {/* Content Section */}
-            <div className="p-8">
+            <div className="p-8 md:p-10">
               {/* Edit/Save Buttons */}
-              <div className="flex justify-end mb-6">
+              <div className="flex justify-end mb-8">
                 {!isEditing ? (
                   <button
                     onClick={() => setIsEditing(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg transition-colors"
+                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                   >
-                    <Edit2 className="w-4 h-4" />
+                    <Edit2 className="w-5 h-5" />
                     Edit Profile
                   </button>
                 ) : (
-                  <div className="flex gap-2">
+                  <div className="flex gap-3">
                     <button
                       onClick={handleSave}
                       disabled={saving}
-                      className="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                     >
                       {saving ? (
                         <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                          <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
                           Saving...
                         </>
                       ) : (
                         <>
-                          <Save className="w-4 h-4" />
-                          Save
+                          <Save className="w-5 h-5" />
+                          Save Changes
                         </>
                       )}
                     </button>
                     <button
                       onClick={handleCancel}
                       disabled={saving}
-                      className="flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-5 h-5" />
                       Cancel
                     </button>
                   </div>
                 )}
               </div>
 
-              {/* Profile Information */}
-              <div className="space-y-6">
+              {/* Profile Information Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Name */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gray-100 rounded-lg">
-                    <User className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
-                      Full Name <span className="text-red-500">*</span>
-                    </label>
-                    {!isEditing ? (
-                      <p className="text-lg text-gray-900">
-                        {profileData?.name}
-                      </p>
-                    ) : (
-                      <input
-                        type="text"
-                        value={editedData.name}
-                        onChange={(e) => setEditedData({ ...editedData, name: e.target.value })}
-                        placeholder="Enter your name"
-                        className="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300 border focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                        required
-                      />
-                    )}
+                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6 border border-emerald-100 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white rounded-xl shadow-sm">
+                      <User className="w-6 h-6 text-emerald-500" />
+                    </div>
+                    <div className="flex-1">
+                      <label className="text-sm font-semibold text-gray-600 block mb-2">
+                        Full Name <span className="text-red-500">*</span>
+                      </label>
+                      {!isEditing ? (
+                        <p className="text-lg font-medium text-gray-900">
+                          {profileData?.name}
+                        </p>
+                      ) : (
+                        <input
+                          type="text"
+                          value={editedData.name}
+                          onChange={(e) => setEditedData({ ...editedData, name: e.target.value })}
+                          placeholder="Enter your name"
+                          className="w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 placeholder-gray-400 border-2 border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition-all"
+                          required
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
 
                 {/* Email */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gray-100 rounded-lg">
-                    <Mail className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
-                      Email Address
-                    </label>
-                    <p className="text-lg text-gray-900">
-                      {profileData?.email}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
+                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 border border-blue-100 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white rounded-xl shadow-sm">
+                      <Mail className="w-6 h-6 text-blue-500" />
+                    </div>
+                    <div className="flex-1">
+                      <label className="text-sm font-semibold text-gray-600 block mb-2">
+                        Email Address
+                      </label>
+                      <p className="text-lg font-medium text-gray-900">
+                        {profileData?.email}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">🔒 Email cannot be changed</p>
+                    </div>
                   </div>
                 </div>
 
                 {/* Phone */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gray-100 rounded-lg">
-                    <Phone className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
-                      Phone Number
-                    </label>
-                    {!isEditing ? (
-                      <p className="text-lg text-gray-900">
-                        {profileData?.phone || 'Not provided'}
-                      </p>
-                    ) : (
-                      <input
-                        type="tel"
-                        value={editedData.phone}
-                        onChange={(e) => setEditedData({ ...editedData, phone: e.target.value })}
-                        placeholder="Enter phone number"
-                        className="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300 border focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                      />
-                    )}
+                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white rounded-xl shadow-sm">
+                      <Phone className="w-6 h-6 text-purple-500" />
+                    </div>
+                    <div className="flex-1">
+                      <label className="text-sm font-semibold text-gray-600 block mb-2">
+                        Phone Number
+                      </label>
+                      {!isEditing ? (
+                        <p className="text-lg font-medium text-gray-900">
+                          {profileData?.phone || 'Not provided'}
+                        </p>
+                      ) : (
+                        <input
+                          type="tel"
+                          value={editedData.phone}
+                          onChange={(e) => setEditedData({ ...editedData, phone: e.target.value })}
+                          placeholder="Enter phone number"
+                          className="w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 placeholder-gray-400 border-2 border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all"
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
 
                 {/* Avatar URL */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gray-100 rounded-lg">
-                    <Image className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
-                      Avatar URL
-                    </label>
-                    {!isEditing ? (
-                      <p className="text-lg text-gray-900 break-all">
-                        {profileData?.avatarUrl || 'Not provided'}
-                      </p>
-                    ) : (
-                      <input
-                        type="url"
-                        value={editedData.avatarUrl}
-                        onChange={(e) => setEditedData({ ...editedData, avatarUrl: e.target.value })}
-                        placeholder="Enter avatar image URL"
-                        className="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300 border focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                      />
-                    )}
-                  </div>
-                </div>
-
-                {/* Bio */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gray-100 rounded-lg">
-                    <User className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
-                      Bio
-                    </label>
-                    {!isEditing ? (
-                      <p className="text-lg text-gray-900">
-                        {profileData?.bio || 'No bio provided'}
-                      </p>
-                    ) : (
-                      <textarea
-                        value={editedData.bio}
-                        onChange={(e) => setEditedData({ ...editedData, bio: e.target.value })}
-                        placeholder="Tell us about yourself"
-                        rows="4"
-                        className="w-full px-4 py-2 rounded-lg bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300 border focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                      />
-                    )}
-                  </div>
-                </div>
-
-                {/* Role */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gray-100 rounded-lg">
-                    <Shield className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
-                      Role
-                    </label>
-                    <p className="text-lg text-gray-900 capitalize">
-                      {profileData?.role || 'Student'}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">Role cannot be changed</p>
-                  </div>
-                </div>
-
-                {/* Verification Status */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gray-100 rounded-lg">
-                    <Shield className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
-                      Verification Status
-                    </label>
-                    <div className="flex items-center gap-2">
-                      {profileData?.isVerified ? (
-                        <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-sm font-medium rounded-full">
-                          ✓ Verified
-                        </span>
+                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-100 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white rounded-xl shadow-sm">
+                      <Image className="w-6 h-6 text-orange-500" />
+                    </div>
+                    <div className="flex-1">
+                      <label className="text-sm font-semibold text-gray-600 block mb-2">
+                        Avatar URL
+                      </label>
+                      {!isEditing ? (
+                        <p className="text-sm font-medium text-gray-900 break-all line-clamp-2">
+                          {profileData?.avatarUrl || 'Not provided'}
+                        </p>
                       ) : (
-                        <span className="px-3 py-1 bg-orange-100 text-orange-700 text-sm font-medium rounded-full">
-                          ⚠ Not Verified
-                        </span>
+                        <input
+                          type="url"
+                          value={editedData.avatarUrl}
+                          onChange={(e) => setEditedData({ ...editedData, avatarUrl: e.target.value })}
+                          placeholder="Enter avatar image URL"
+                          className="w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 placeholder-gray-400 border-2 border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all"
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bio - Full Width */}
+                <div className="lg:col-span-2 bg-gradient-to-br from-teal-50 to-emerald-50 rounded-xl p-6 border border-teal-100 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white rounded-xl shadow-sm">
+                      <User className="w-6 h-6 text-teal-500" />
+                    </div>
+                    <div className="flex-1">
+                      <label className="text-sm font-semibold text-gray-600 block mb-2">
+                        Bio
+                      </label>
+                      {!isEditing ? (
+                        <p className="text-lg font-medium text-gray-900">
+                          {profileData?.bio || 'No bio provided'}
+                        </p>
+                      ) : (
+                        <textarea
+                          value={editedData.bio}
+                          onChange={(e) => setEditedData({ ...editedData, bio: e.target.value })}
+                          placeholder="Tell us about yourself..."
+                          rows="4"
+                          className="w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 placeholder-gray-400 border-2 border-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all resize-none"
+                        />
                       )}
                     </div>
                   </div>
                 </div>
 
                 {/* Join Date */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gray-100 rounded-lg">
-                    <Calendar className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-600 block mb-1">
-                      Member Since
-                    </label>
-                    <p className="text-lg text-gray-900">
-                      {profileData?.createdAt ? new Date(profileData.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}
-                    </p>
+                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-100 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-white rounded-xl shadow-sm">
+                      <Calendar className="w-6 h-6 text-indigo-500" />
+                    </div>
+                    <div className="flex-1">
+                      <label className="text-sm font-semibold text-gray-600 block mb-2">
+                        Member Since
+                      </label>
+                      <p className="text-lg font-medium text-gray-900">
+                        {profileData?.createdAt ? new Date(profileData.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
                 {/* Last Updated */}
                 {profileData?.updatedAt && (
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-gray-100 rounded-lg">
-                      <Calendar className="w-6 h-6 text-emerald-400" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-sm font-medium text-gray-600 block mb-1">
-                        Last Updated
-                      </label>
-                      <p className="text-lg text-gray-900">
-                        {new Date(profileData.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Metadata (if exists) */}
-                {profileData?.metadata && Object.keys(profileData.metadata).length > 0 && (
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-gray-100 rounded-lg">
-                      <Shield className="w-6 h-6 text-emerald-400" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-sm font-medium text-gray-600 block mb-1">
-                        Additional Information
-                      </label>
-                      <div className="bg-gray-50 p-3 rounded-lg">
-                        <pre className="text-sm text-gray-700 overflow-x-auto">
-                          {JSON.stringify(profileData.metadata, null, 2)}
-                        </pre>
+                  <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-6 border border-pink-100 hover:shadow-md transition-shadow">
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 bg-white rounded-xl shadow-sm">
+                        <Calendar className="w-6 h-6 text-pink-500" />
+                      </div>
+                      <div className="flex-1">
+                        <label className="text-sm font-semibold text-gray-600 block mb-2">
+                          Last Updated
+                        </label>
+                        <p className="text-lg font-medium text-gray-900">
+                          {new Date(profileData.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -470,16 +433,21 @@ const ProfilePage = () => {
               </div>
 
               {/* Logout Button */}
-              <div className="mt-8 pt-8 border-t border-gray-200">
+              <div className="mt-10 pt-8 border-t-2 border-gray-200">
                 <button
                   onClick={handleLogout}
-                  className="w-full px-4 py-3 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+                  className="w-full px-6 py-4 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3"
                 >
                   <LogOut className="w-5 h-5" />
-                  Logout
+                  Logout from Account
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Additional Info Section */}
+          <div className="mt-6 text-center text-sm text-gray-500">
+            <p>Need help? Contact support at <span className="text-emerald-600 font-semibold">support@skillguru.com</span></p>
           </div>
         </div>
       </div>
