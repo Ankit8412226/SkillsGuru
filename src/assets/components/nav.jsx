@@ -5,9 +5,9 @@ import { useCart } from "../../context/CartContext.jsx";
 import Contact from "./Contact";
 
 const navLinks = [
-  // { name: "Home", href: "#home", key: "home", isRoute: false },
+ 
   { name: "About", href: "#about", key: "about", isRoute: false },
-  { name: "Popular Courses", href: "#Popularcourses", key: "Popularcourses", isRoute: false },
+  { name: "Internship", href: "#Internship-banner", key: "Internship", isRoute: false },
   { name: "Courses", href: "/courses", key: "courses", isRoute: true },
 ];
 

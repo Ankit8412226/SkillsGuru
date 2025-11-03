@@ -19,6 +19,7 @@ import Register from "./pages/Register.jsx";
 
 import FloatingActions from "./assets/components/FloatingAction.jsx";
 import AdmissionForm from "./pages/AdmissionForm.jsx";
+import InternshipForm from "./pages/InternshipForm.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import CourseDescriptionPage from "./pages/CourseDescriptionPage.jsx";
@@ -33,6 +34,7 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import SkillGuruDashboard from "./pages/SkillGuruDashboard";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
+
 
 
 // Scroll to top when route changes
@@ -93,6 +95,8 @@ function App() {
                   <section className="w-full py-8 sm:py-12 lg:py-16"><Explore_event /></section>
                   <section className="w-full"><Instructors /></section>
                   <section className="w-full"><InternshipBanner /></section>
+
+                  
                 </div>
                 <FloatingActions />
               </>
@@ -120,6 +124,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          
 
           <Route
             path="/dashboard/course"
@@ -179,6 +184,22 @@ function App() {
               </div>
             }
           />
+          <Route
+            path="/internship"
+            element={
+              <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                <InternshipForm />
+              </div>
+            }
+          />
+          {/* <Route
+            path="/internship"
+            element={
+              <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                <InternshipBanner />
+              </div>
+            }
+          /> */}
 
           <Route
             path="/exam-prep"

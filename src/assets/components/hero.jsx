@@ -18,12 +18,12 @@ const Hero = () => {
         <section
             id="home"
             className="relative w-full bg-cover bg-center px-4 sm:px-6 md:px-16 lg:px-24"
-            style={{ backgroundImage: `url(./bg.jpg)` }}
+            style={{ backgroundImage: `url('/bg.jpg')` }}
         >
             {/* Internship Banner (Full Width at Top) */}
             <div className="w-full z-30 pt-10 sm:pt-8 md:pt-28 ">
                 <img
-                    src="./Internship_banner (2).png"
+                    src="/Internship_banner%20(2).png"
                     alt="We're Hiring Interns"
                     className="w-full h-auto rounded-[15px] object-contain cursor-pointer hover:opacity-95 transition-opacity duration-300"
                     onClick={() => navigate("/internship")}
@@ -106,7 +106,7 @@ const Hero = () => {
                         <div className="relative flex justify-center md:justify-end items-center">
                             <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-20">
                                 <img
-                                    src="./Avatar1.svg"
+                                    src="/Avatar1.svg"
                                     alt="students"
                                     className="w-80 h-10 lg:w-96 lg:h-20 object-cover rounded-[10px]"
                                 />
@@ -116,7 +116,7 @@ const Hero = () => {
                                 <div className="relative">
                                     <div className="p-1 w-40 h-56 sm:w-44 sm:h-60 md:w-48 md:h-64 lg:w-55 lg:h-80 xl:h-90 rounded-full border-2 border-orange-500 overflow-hidden">
                                         <img
-                                            src="./Heroimg1.jpg"
+                                            src="/Heroimg1.jpg"
                                             alt="student1"
                                             className="w-full h-full object-cover object-top"
                                             style={{ transform: "translateY(16px)" }}
@@ -127,7 +127,7 @@ const Hero = () => {
                                 <div className="relative mt-4 lg:mt-6">
                                     <div className="p-1 w-40 h-56 sm:w-44 sm:h-60 md:w-48 md:h-64 lg:w-55 lg:h-80 xl:h-90 rounded-full border-2 border-orange-500 overflow-hidden">
                                         <img
-                                            src="./hero2.jpg"
+                                            src="/hero2.jpg"
                                             alt="student2"
                                             className="w-full h-full object-cover object-top"
                                             style={{ transform: "translateY(12px)" }}
@@ -146,7 +146,7 @@ const Hero = () => {
                     <div className="md:hidden relative flex justify-center items-center mt-8">
                         <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-20">
                             <img
-                                src="./Avatar1.svg"
+                                src="/Avatar1.svg"
                                 alt="students"
                                 className="w-60 h-10 lg:w-96 lg:h-20 object-cover rounded-[10px]"
                             />
@@ -156,7 +156,7 @@ const Hero = () => {
                             <div className="relative">
                                 <div className="p-1 w-32 h-44 sm:w-36 sm:h-48 rounded-full border-2 border-orange-500 overflow-hidden">
                                     <img
-                                        src="./Heroimg1.jpg"
+                                        src="/Heroimg1.jpg"
                                         alt="student1"
                                         className="w-full h-full object-cover object-top"
                                         style={{ transform: "translateY(12px)" }}
@@ -167,7 +167,7 @@ const Hero = () => {
                             <div className="relative mt-3">
                                 <div className="p-1 w-32 h-44 sm:w-36 sm:h-48 rounded-full border-2 border-orange-500 overflow-hidden">
                                     <img
-                                        src="./hero2.jpg"
+                                        src="/hero2.jpg"
                                         alt="student2"
                                         className="w-full h-full object-cover object-top"
                                         style={{ transform: "translateY(8px)" }}
