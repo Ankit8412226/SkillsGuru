@@ -17,6 +17,9 @@ const SkillGuruDashboard = () => {
   const [wishlist, setWishlist] = useState([]);
   const [userEmail, setUserEmail] = useState("");
   const [profileData, setProfileData] = useState(null);
+  const [enrollments, setEnrollments] = useState([]);
+  const [dashboardAssignments, setDashboardAssignments] = useState([]);
+  const [loading, setLoading] = useState(true);
   const profileMenuRef = useRef(null);
 
   const navigate = useNavigate();
@@ -24,9 +27,19 @@ const SkillGuruDashboard = () => {
   // Fetch dashboard data
   const getDashboard = async () => {
     try {
-      await api.get(`/dashboard/me`);
+      console.log('📡 Fetching dashboard data...');
+      const res = await api.get(`/dashboard/me`);
+      console.log('✅ Dashboard response:', res.data);
+      const data = res.data?.data || res.data;
+      setEnrollments(data.enrollments || []);
+      setDashboardAssignments(data.assignments || []);
+      console.log('📚 Enrollments:', data.enrollments?.length || 0);
+      console.log('📝 Assignments:', data.assignments?.length || 0);
     } catch (error) {
-      console.error("Error fetching dashboard:", error);
+      console.error("❌ Error fetching dashboard:", error);
+      console.error('Error details:', error.response?.data || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,56 +116,74 @@ const SkillGuruDashboard = () => {
     loadWishlist();
   }, []);
 
-  const courses = [
-    {
-      id: 1,
-      title: "Advanced React & TypeScript",
-      instructor: "Dr. Sarah Johnson",
-      thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=250&fit=crop",
-      progress: 65,
-      nextDeadline: "Oct 15, 2025",
-      pendingAssignments: 2,
-      liveNow: false
-    },
-    {
-      id: 2,
-      title: "Data Science with Python",
-      instructor: "Prof. Michael Chen",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop",
-      progress: 82,
-      nextDeadline: "Oct 12, 2025",
-      pendingAssignments: 1,
-      liveNow: true
-    },
-    {
-      id: 3,
-      title: "UI/UX Design Masterclass",
-      instructor: "Emily Rodriguez",
-      thumbnail: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=250&fit=crop",
-      progress: 45,
-      nextDeadline: "Oct 20, 2025",
-      pendingAssignments: 3,
-      liveNow: false
-    }
-  ];
+  // Calculate stats from real data
+  const totalCourses = enrollments.length;
+  const completedCourses = enrollments.filter(e => e.status === 'completed').length;
+  const inProgressCourses = enrollments.filter(e => e.status === 'enrolled').length;
+  const pendingTasks = dashboardAssignments.filter(a => !a.submitted).length;
 
-  const upcomingClasses = [
-    { course: "Data Science with Python", time: "Today, 3:00 PM", instructor: "Prof. Michael Chen" },
-    { course: "Advanced React & TypeScript", time: "Tomorrow, 10:00 AM", instructor: "Dr. Sarah Johnson" },
-    { course: "UI/UX Design Masterclass", time: "Oct 11, 2:00 PM", instructor: "Emily Rodriguez" }
-  ];
+  // Extract unique instructors from enrolled courses
+  const uniqueInstructors = [...new Set(enrollments.map(e => {
+    const instructor = e.course?.instructor;
+    return typeof instructor === 'object' ? instructor?.name : instructor;
+  }).filter(Boolean))];
 
-  const assignments = [
-    { id: 1, course: "Data Science with Python", title: "ML Model Implementation", deadline: "Oct 12, 2025", status: "pending" },
-    { id: 2, course: "Advanced React & TypeScript", title: "Build E-commerce App", deadline: "Oct 15, 2025", status: "pending" },
-    { id: 3, course: "UI/UX Design Masterclass", title: "Mobile App Redesign", deadline: "Oct 20, 2025", status: "submitted" }
-  ];
+  // Get course data from enrollments
+  const courses = enrollments.map(enrollment => ({
+    id: enrollment.course?._id || enrollment._id,
+    title: enrollment.course?.title || 'Untitled Course',
+    instructor: typeof enrollment.course?.instructor === 'object'
+      ? enrollment.course?.instructor?.name
+      : enrollment.course?.instructor || 'Unknown Instructor',
+    thumbnail: enrollment.course?.thumbnailUrl || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=250&fit=crop',
+    progress: enrollment.progress || 0,
+    status: enrollment.status,
+    enrolledAt: enrollment.enrolledAt,
+    liveNow: false, // Can be updated based on live class schedule
+    pendingAssignments: dashboardAssignments.filter(a =>
+      (a.course?._id || a.course) === (enrollment.course?._id || enrollment.course) && !a.submitted
+    ).length,
+    nextDeadline: (() => {
+      const courseAssignments = dashboardAssignments.filter(a =>
+        (a.course?._id || a.course) === (enrollment.course?._id || enrollment.course) && !a.submitted
+      );
+      if (courseAssignments.length > 0 && courseAssignments[0].dueDate) {
+        return new Date(courseAssignments[0].dueDate).toLocaleDateString();
+      }
+      return 'No deadline';
+    })()
+  }));
 
-  const instructors = [
-    { name: "Dr. Sarah Johnson", expertise: "Full-Stack Development", courses: 2, avatar: "SJ" },
-    { name: "Prof. Michael Chen", expertise: "Data Science & AI", courses: 3, avatar: "MC" },
-    { name: "Emily Rodriguez", expertise: "UI/UX Design", courses: 1, avatar: "ER" }
-  ];
+  // Get assignments with course info
+  const assignments = dashboardAssignments.map(assignment => ({
+    id: assignment._id,
+    courseId: assignment.course?._id || assignment.course,
+    courseTitle: enrollments.find(e =>
+      (e.course?._id || e.course) === (assignment.course?._id || assignment.course)
+    )?.course?.title || 'Unknown Course',
+    title: assignment.title || 'Untitled Assignment',
+    deadline: assignment.dueDate ? new Date(assignment.dueDate).toLocaleDateString() : 'No deadline',
+    status: assignment.submitted ? 'submitted' : 'pending'
+  }));
+
+  // Create instructors list from unique instructors
+  const instructors = uniqueInstructors.map(name => ({
+    name,
+    expertise: 'Course Instructor',
+    courses: enrollments.filter(e => {
+      const instructor = e.course?.instructor;
+      const instructorName = typeof instructor === 'object' ? instructor?.name : instructor;
+      return instructorName === name;
+    }).length,
+    avatar: name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+  }));
+
+  // Placeholder for upcoming classes (can be enhanced with real data)
+  const upcomingClasses = courses.slice(0, 3).map(course => ({
+    course: course.title,
+    time: 'TBD',
+    instructor: course.instructor
+  }));
 
   return (
     <div className="min-h-screen relative bg-gray-50">
@@ -302,7 +333,7 @@ const SkillGuruDashboard = () => {
             <div className="flex items-center justify-between mb-2">
               <BookOpen className="w-8 h-8 text-emerald-400" />
             </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">12</p>
+            <p className="text-3xl font-bold mb-1 text-gray-900">{totalCourses}</p>
             <p className="text-sm text-gray-600">Total Courses</p>
           </div>
 
@@ -310,7 +341,7 @@ const SkillGuruDashboard = () => {
             <div className="flex items-center justify-between mb-2">
               <TrendingUp className="w-8 h-8 text-blue-400" />
             </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">3</p>
+            <p className="text-3xl font-bold mb-1 text-gray-900">{inProgressCourses}</p>
             <p className="text-sm text-gray-600">In Progress</p>
           </div>
 
@@ -318,7 +349,7 @@ const SkillGuruDashboard = () => {
             <div className="flex items-center justify-between mb-2">
               <Award className="w-8 h-8 text-yellow-400" />
             </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">9</p>
+            <p className="text-3xl font-bold mb-1 text-gray-900">{completedCourses}</p>
             <p className="text-sm text-gray-600">Completed</p>
           </div>
 
@@ -326,7 +357,7 @@ const SkillGuruDashboard = () => {
             <div className="flex items-center justify-between mb-2">
               <AlertCircle className="w-8 h-8 text-orange-400" />
             </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">6</p>
+            <p className="text-3xl font-bold mb-1 text-gray-900">{pendingTasks}</p>
             <p className="text-sm text-gray-600">Pending Tasks</p>
           </div>
 
@@ -334,7 +365,7 @@ const SkillGuruDashboard = () => {
             <div className="flex items-center justify-between mb-2">
               <Clock className="w-8 h-8 text-purple-400" />
             </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">3</p>
+            <p className="text-3xl font-bold mb-1 text-gray-900">{upcomingClasses.length}</p>
             <p className="text-sm text-gray-600">Upcoming Classes</p>
           </div>
         </div>
@@ -365,6 +396,23 @@ const SkillGuruDashboard = () => {
             <>
             <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
               <h2 className="text-xl font-bold mb-6 text-gray-900">My Courses</h2>
+              {loading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto"></div>
+                  <p className="mt-4 text-gray-600">Loading courses...</p>
+                </div>
+              ) : courses.length === 0 ? (
+                <div className="text-center py-8">
+                  <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                  <p className="text-gray-600 mb-4">No enrolled courses yet</p>
+                  <button
+                    onClick={() => navigate('/dashboard/course')}
+                    className="px-6 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600"
+                  >
+                    Browse Courses
+                  </button>
+                </div>
+              ) : (
               <div className="space-y-4">
                 {courses.map(course => (
                   <div key={course.id} className="bg-gray-50 border-gray-200 rounded-lg p-4 border hover:border-emerald-400 transition-all">
@@ -409,7 +457,10 @@ const SkillGuruDashboard = () => {
                                 Join Now
                               </button>
                             )}
-                            <button className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
+                            <button
+                              onClick={() => navigate(`/dashboard/course/${course.id}`)}
+                              className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+                            >
                               View Course
                               <ChevronRight className="w-4 h-4" />
                             </button>
@@ -420,6 +471,7 @@ const SkillGuruDashboard = () => {
                   </div>
                 ))}
               </div>
+              )}
             </div>
 
             {/* Assignments */}
@@ -430,7 +482,7 @@ const SkillGuruDashboard = () => {
                   <div key={assignment.id} className="bg-gray-50 border-gray-200 rounded-lg p-4 border flex items-center justify-between hover:border-emerald-400 transition-all">
                     <div className="flex-1">
                       <h3 className="font-semibold mb-1 text-gray-900">{assignment.title}</h3>
-                      <p className="text-sm mb-2 text-gray-600">{assignment.course}</p>
+                      <p className="text-sm mb-2 text-gray-600">{assignment.courseTitle}</p>
                       <div className="flex items-center gap-3">
                         <span className="text-xs flex items-center gap-1 text-gray-600">
                           <Clock className="w-3 h-3" />
@@ -449,7 +501,10 @@ const SkillGuruDashboard = () => {
                       </div>
                     </div>
                     {assignment.status === 'pending' && (
-                      <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
+                      <button
+                        onClick={() => navigate(`/dashboard/assignment/${assignment.id}`)}
+                        className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+                      >
                         <Upload className="w-4 h-4" />
                         Submit
                       </button>
@@ -530,16 +585,38 @@ const SkillGuruDashboard = () => {
                 <Calendar className="w-5 h-5 text-gray-600" />
               </div>
               <div className="space-y-4">
-                {upcomingClasses.map((cls, idx) => (
-                  <div key={idx} className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm font-semibold mb-2 text-gray-900">{cls.course}</p>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Clock className="w-4 h-4 text-gray-600" />
-                      <span className="text-xs text-gray-600">{cls.time}</span>
-                    </div>
-                    <p className="text-xs text-gray-600">{cls.instructor}</p>
+                {upcomingClasses.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500 text-sm">
+                    <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-2" />
+                    <p>No upcoming classes scheduled</p>
                   </div>
-                ))}
+                ) : (
+                  upcomingClasses.map((cls, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-gray-50 rounded-lg p-4 hover:bg-emerald-50 hover:border-emerald-400 border border-transparent transition-all cursor-pointer group"
+                      title={`Join ${cls.course} with ${cls.instructor}`}
+                    >
+                      <p className="text-sm font-semibold mb-2 text-gray-900 group-hover:text-emerald-600 transition-colors">
+                        {cls.course}
+                      </p>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Clock className="w-4 h-4 text-gray-600 group-hover:text-emerald-600 transition-colors" />
+                        <span className="text-xs text-gray-600 group-hover:text-emerald-600 transition-colors">
+                          {cls.time}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-600 group-hover:text-emerald-600 transition-colors">
+                        {cls.instructor}
+                      </p>
+                      <div className="mt-3 pt-3 border-t border-gray-200 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button className="w-full px-3 py-1.5 bg-emerald-500 text-white text-xs font-medium rounded hover:bg-emerald-600 transition-colors">
+                          Join Class
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
 

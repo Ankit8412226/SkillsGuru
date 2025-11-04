@@ -38,7 +38,7 @@ const InternshipBanner = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/admisssion`,
+        `${import.meta.env.VITE_API_BASE_URL}/admission`,
         {
           first_name: formData.firstName,
           last_name: formData.lastName,
@@ -74,6 +74,7 @@ const InternshipBanner = () => {
 
   return (
     <>
+
       {/* Internship Banner */}
       <div className="bg-gradient-to-r from-[#0E2A46] via-[#1a3d5f] to-[#0E2A46] text-white py-16 animate-in slide-in-from-top duration-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
