@@ -126,6 +126,7 @@ function App() {
           >
             <Route index element={<SkillGuruDashboard />} />
             <Route path="course" element={<CoursesPage />} />
+            <Route path="cart/course" element={<CoursesPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="cart" element={<CartPage />} />
           </Route>

@@ -64,7 +64,7 @@ const CartPage = () => {
           </div>
           <p className="text-gray-600 mb-4">Your cart is empty.</p>
           <button
-            onClick={() => navigate("/courses")}
+            onClick={() => navigate("/dashboard/cart/course")}
             className="px-6 py-3 bg-[#2FC7A1] text-white rounded-lg font-semibold hover:bg-[#28B895]"
           >
             Browse Courses
