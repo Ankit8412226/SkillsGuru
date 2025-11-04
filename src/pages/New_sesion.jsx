@@ -1,62 +1,270 @@
-import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Briefcase } from "lucide-react";
+import { useState } from "react";
+import Alert from "../assets/components/Alert.jsx";
 
-const New_session = () => {
-    const navigate = useNavigate();
-    // navigate to Admission form page
-    const handleAdmissionClick = () => {
-        navigate("/admission");
-    };
+const New_sesion = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    message: "",
+    agreeToTerms: false,
+  });
 
-    return (
-        <section
-            className="relative flex items-center bg-[#0E2A46] text-white overflow-hidden"
-            style={{
-                backgroundImage: `url(${"./bg_sesion.jpeg"})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat"
-            }}
-        >
-            
-            {/* Left Content */}
-            <div className="relative z-10 flex flex-col px-4 sm:px-6 md:px-12 lg:px-24 py-8 w-full max-w-7xl mx-auto">
-                <p className="text-red-400 font-semibold text-sm sm:text-base mb-2 sm:mb-4">
-                    Join Our New Session
-                </p>
-                <h1 className="text-xl sm:text-2xl md:text-xl lg:text-2xl xl:text-6xl font-medium leading-tight sm:leading-snug pb-4">
-                    Upgrade Your Future with AI-Powered Learning. <br />
-                    <span className="text-xl sm:text-2xl md:text-3xl lg:text-2xl xl:text-2xl">
-                        (+91) 8298252909
-                    </span>
-                </h1>
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showForm, setShowForm] = useState(false);
 
-                {/* Join Button */}
-                <div className="flex items-start mt-6 sm:mt-8">
-                    <button
-                        onClick={handleAdmissionClick}
-                        className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 md:h-14 pl-4 sm:pl-6 md:pl-8 pr-0 overflow-hidden gap-2 sm:gap-4 hover:bg-[#28B898] transition-colors duration-300 group"
-                    >
-                        <span className="text-xs sm:text-sm md:text-base font-medium text-white">
-                            Admission open
-                        </span>
-                        <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full group-hover:bg-[#2FC7A1] transition-colors duration-300">
-                            <ArrowRight size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />
-                        </span>
-                    </button>
+  const handleChange = (e) => {
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.agreeToTerms) {
+      setErrorMessage("Please agree to the Terms and Policies before submitting.");
+      return;
+    }
+
+    setLoading(true);
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/admission`,
+        {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          contact_no: formData.phoneNumber,
+          messages: formData.message,
+          form_name: "internship",
+        }
+      );
+
+      setSuccessMessage(
+        `Thank you ${formData.firstName} ${formData.lastName}, your internship application has been submitted!`
+      );
+
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        message: "",
+        agreeToTerms: false,
+      });
+
+      setTimeout(() => {
+        setShowForm(false);
+        setSuccessMessage("");
+      }, 3000);
+    } catch (error) {
+      console.error("Error submitting internship application:", error);
+      setErrorMessage(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      {/* ✅ Internship Banner as Background Image */}
+      <div
+  className="relative w-full h-[40vh] md:h-[70vh] flex items-center justify-center bg-contain bg-no-repeat bg-center rounded-xl"
+  style={{
+    backgroundImage: "url('/Internship_banner (2).png')",
+  }}
+></div>
+
+      {/* ✅ Internship Application Form Modal */}
+      {showForm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-in fade-in duration-300">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom duration-500">
+            <div className="p-6">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[#2FC7A1] rounded-full flex items-center justify-center">
+                    <Briefcase className="w-5 h-5 text-white" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-[#0E2A46]">
+                    Internship Application
+                  </h2>
                 </div>
+                <button
+                  onClick={() => setShowForm(false)}
+                  className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors duration-300"
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Alerts */}
+              {successMessage && (
+                <div className="mb-4">
+                  <Alert
+                    variant="success"
+                    title="Application Submitted!"
+                    message={successMessage}
+                  />
+                </div>
+              )}
+              {errorMessage && (
+                <div className="mb-4">
+                  <Alert
+                    variant="error"
+                    title="Submission Failed"
+                    message={errorMessage}
+                  />
+                </div>
+              )}
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Names */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      placeholder="John"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2FC7A1] text-sm"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      placeholder="Doe"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2FC7A1] text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Email & Phone */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="john@example.com"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2FC7A1] text-sm"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleChange}
+                      placeholder="+91 9876543210"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2FC7A1] text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Tell us about yourself
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Why are you interested in this internship?"
+                    rows="3"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2FC7A1] text-sm"
+                    required
+                  />
+                </div>
+
+                {/* Terms */}
+                <div className="flex items-start">
+                  <input
+                    type="checkbox"
+                    name="agreeToTerms"
+                    checked={formData.agreeToTerms}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-[#2FC7A1] border-gray-300 rounded focus:ring-[#2FC7A1] mt-0.5"
+                    required
+                  />
+                  <label className="ml-2 text-sm text-gray-700">
+                    I agree to all the{" "}
+                    <a
+                      href="/terms"
+                      className="text-[#2FC7A1] hover:text-[#28B895]"
+                    >
+                      Terms
+                    </a>{" "}
+                    and{" "}
+                    <a
+                      href="/privacy"
+                      className="text-[#2FC7A1] hover:text-[#28B895]"
+                    >
+                      Privacy Policies
+                    </a>
+                  </label>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full flex items-center justify-center gap-2 bg-[#2FC7A1] text-white font-semibold py-3 rounded-lg hover:bg-[#28B895] transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed group"
+                >
+                  {loading ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Briefcase className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                      Submit Application
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
-
-           
-
-           
-
-            {/* Mobile Gradient */}
-            {/* <div className="absolute inset-0 pointer-events-none z-5">
-                <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent sm:hidden"></div>
-            </div> */}
-        </section>
-    );
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
-export default New_session;
+export default New_sesion;

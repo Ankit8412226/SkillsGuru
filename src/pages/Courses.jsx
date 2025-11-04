@@ -84,8 +84,9 @@ const CoursesPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        Loading courses…
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+        <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-600 text-lg font-medium">Loading courses…</p>
       </div>
     );
   }
@@ -128,11 +129,10 @@ const CoursesPage = () => {
                 <button
                   key={category}
                   onClick={() => handleCategoryChange(category)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                    selectedCategory === category
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedCategory === category
                       ? "bg-[#2FC7A1] text-white"
                       : "bg-white text-[#4D5756] border border-gray-300 hover:bg-gray-50"
-                  }`}
+                    }`}
                 >
                   {category}
                 </button>
@@ -176,17 +176,13 @@ const CoursesPage = () => {
             our courses.
           </p>
           <div className="flex justify-center">
-
+            {/*  onClick={() => navigate("/admission")} */}
             <button
               onClick={() => navigate("/admission")}
-              className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
+              className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
             >
-              <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
-                Get Admission
-              </span>
-              <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1">
-                <ArrowRight size={16} className="lg:w-5 lg:h-5" />
-              </div>
+              <span>Get Admission</span>
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
         </div>

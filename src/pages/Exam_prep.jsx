@@ -55,17 +55,13 @@ const Exam_prep = () => {
               <h3 className="text-base sm:text-lg font-semibold leading-snug mb-4 sm:mb-6">
                 Get expert guidance, structured study plans, and practice Mock tests designed to boost your confidence for interview.
               </h3>
-
+              {/* onClick={handleJoinClick} */}
               <button
                 onClick={handleJoinClick}
-                className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 pl-4 sm:pl-6 pr-0 overflow-hidden hover:bg-[#26A085] transition-colors w-full sm:w-auto"
+                className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
               >
-                <span className="text-xs sm:text-sm leading-6 sm:leading-8 font-medium text-white whitespace-nowrap">
-                  Join Now
-                </span>
-                <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full ml-2">
-                  <ArrowRight size={16} className="sm:w-5 sm:h-5" />
-                </span>
+                <span>Join Now</span>
+                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </div>
 
@@ -95,18 +91,15 @@ const Exam_prep = () => {
               <h3 className="text-base sm:text-lg font-semibold leading-snug mb-4 sm:mb-6">
                 Practice with mock interviews, industry-specific questions, and expert feedback to boost your confidence and secure offers.
               </h3>
-
+              {/* [#17254E]bg-[#17254E]  [#0F1A38] hover:bg-[#0F1A38]*/}
               <button
                 onClick={handleJoinClick}
-                className="flex items-center justify-between rounded-full bg-[#17254E] text-white font-medium h-10 sm:h-12 pl-4 sm:pl-6 pr-0 overflow-hidden hover:bg-[#0F1A38] transition-colors w-full sm:w-auto"
+                className="flex items-center gap-3 bg-[#17254E] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#0F1A38] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
               >
-                <span className="text-xs sm:text-sm leading-6 sm:leading-8 font-medium text-white whitespace-nowrap">
-                  Join Now
-                </span>
-                <span className="flex items-center justify-center h-full aspect-square bg-[#1F3061] rounded-full ml-2">
-                  <ArrowRight size={16} className="sm:w-5 sm:h-5" />
-                </span>
+                <span>Join Now</span>
+                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
+
             </div>
 
             {/* Boy Image */}

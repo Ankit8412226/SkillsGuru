@@ -134,7 +134,7 @@ const InternshipBanner = () => {
               {/* CTA Button */}
               <button
                 onClick={() => setShowForm(true)}
-                className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-lg hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
+                className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
               >
                 <span>Apply for Internship</span>
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />

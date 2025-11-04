@@ -1,13 +1,13 @@
 import axios from "axios";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import CourseCard from "../assets/components/edcard";
 
 const BrowseCourses = () => {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -27,12 +27,13 @@ const BrowseCourses = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500 text-lg">Loading courses...</p>
-      </div>
-    );
-  }
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+      <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+      <p className="mt-4 text-gray-600 text-lg font-medium">Loading courses…</p>
+    </div>
+  );
+}
 
   return (
     <div id="Popularcourses" className="min-h-screen bg-gray-100">
@@ -59,18 +60,14 @@ const BrowseCourses = () => {
                 Professional Development with Guaranteed Career Support
               </h1>
             </div>
-
+            {/*  onClick={() => navigate("/courses")} */}
             <div className="flex-shrink-0">
               <button
                 onClick={() => navigate("/courses")}
-                className="flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 sm:h-11 md:h-12 pl-4 sm:pl-6 md:pl-8 pr-0 overflow-hidden gap-2 sm:gap-3 md:gap-4 hover:bg-[#28B895] transition-colors duration-200 shadow-md"
+                className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
               >
-                <span className="text-xs sm:text-sm leading-6 sm:leading-8 font-medium text-white whitespace-nowrap">
-                  Learn More
-                </span>
-                <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full">
-                  <ArrowRight size={16} className="sm:w-5 sm:h-5" />
-                </span>
+                <span>Learn More</span>
+                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </div>
           </div>
@@ -80,8 +77,8 @@ const BrowseCourses = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-7xl mx-auto">
             {courses.map((course) => (
-              <div 
-                key={course._id} 
+              <div
+                key={course._id}
                 className="w-full cursor-pointer"
                 onClick={() => navigate(`/Course-DescriptionPage/${course._id}`)}
               >
