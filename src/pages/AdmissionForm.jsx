@@ -37,7 +37,7 @@ const AdmissionForm = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/admisssion`,
+        `${import.meta.env.VITE_API_BASE_URL}/admission`,
         {
           first_name: formData.firstName,
           last_name: formData.lastName,

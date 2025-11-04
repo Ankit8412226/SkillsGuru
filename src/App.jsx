@@ -35,6 +35,8 @@ import SkillGuruDashboard from "./pages/SkillGuruDashboard";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import VerifyCertificatePage from "./pages/VerifyCertificatePage.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
+import CourseDetailPage from "./pages/CourseDetailPage.jsx";
+import AssignmentSubmitPage from "./pages/AssignmentSubmitPage.jsx";
 
 
 // Scroll to top when route changes
@@ -126,6 +128,8 @@ function App() {
           >
             <Route index element={<SkillGuruDashboard />} />
             <Route path="course" element={<CoursesPage />} />
+            <Route path="course/:courseId" element={<CourseDetailPage />} />
+            <Route path="assignment/:assignmentId" element={<AssignmentSubmitPage />} />
             <Route path="cart/course" element={<CoursesPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="cart" element={<CartPage />} />
