@@ -62,7 +62,7 @@ const Features = () => {
               icon={BookOpen}
               title="Course Materials"
               description="Complete learning resources including video lectures and digital practice materials."
-              buttonText="Browse Materials"
+              buttonText="Materials"
             />
 
             {/* Card 4 - Certification */}
@@ -76,19 +76,15 @@ const Features = () => {
           </div>
         </div>
 
-        {/* Admission Button */}
+        {/* Admission Button  onClick={() => navigate("/admission")} */}
         <div className="flex-shrink-0 mt-2 sm:mt-2">
           <button
-            onClick={() => navigate("/admission")}
-            className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 pl-4 sm:pl-8 pr-0 overflow-hidden gap-2 sm:gap-4 hover:bg-[#26A085] transition-colors"
-          >
-            <span className="text-xs sm:text-sm leading-6 sm:leading-8 font-medium text-white whitespace-nowrap">
-              Admission Open
-            </span>
-            <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full">
-              <ArrowRight size={16} className="sm:w-5 sm:h-5" />
-            </span>
-          </button>
+                onClick={() => navigate("/courses")}
+                className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
+              >
+                <span>Admission Open</span>
+                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
         </div>
       </div>
     </div>

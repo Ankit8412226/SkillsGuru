@@ -17,19 +17,9 @@ const Hero = () => {
     return (
         <section
             id="home"
-            className="relative w-full bg-cover bg-center px-4 sm:px-6 md:px-16 lg:px-24"
+            className="relative w-full bg-cover bg-center px-4 sm:px-6 md:px-16 lg:px-24 pt-20"
             style={{ backgroundImage: `url('/bg.jpg')` }}
         >
-            {/* Internship Banner (Full Width at Top) */}
-            <div className="w-full z-30 pt-10 sm:pt-8 md:pt-28 ">
-                <img
-                    src="/Internship_banner%20(2).png"
-                    alt="We're Hiring Interns"
-                    className="w-full h-auto rounded-[15px] object-contain cursor-pointer hover:opacity-95 transition-opacity duration-300"
-                    onClick={() => navigate("/internship")}
-                />
-            </div>
-
             {/* Hero Content Section */}
             <div className="py-8 sm:py-12 md:py-16 lg:py-20">
                 <div className="max-w-7xl mx-auto">

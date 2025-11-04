@@ -5,7 +5,7 @@ import { useCart } from "../../context/CartContext.jsx";
 import Contact from "./Contact";
 
 const navLinks = [
- 
+
   { name: "About", href: "#about", key: "about", isRoute: false },
   { name: "Internship", href: "#Internship-banner", key: "Internship", isRoute: false },
   { name: "Courses", href: "/courses", key: "courses", isRoute: true },
@@ -143,17 +143,13 @@ const Nav = () => {
               </button>
             </div>
 
-            {/* Contact Button */}
+            {/* Contact Button onClick={handleContactClick} */}
             <button
               onClick={handleContactClick}
-              className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-all duration-300 overflow-hidden hover:scale-105 hover:shadow-xl group"
+              className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
             >
-              <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
-                Contact Us
-              </span>
-              <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
-                <ArrowRight size={16} className="lg:w-5 lg:h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </div>
+              <span>Contact Us</span>
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
         </div>
@@ -220,11 +216,10 @@ const Nav = () => {
                 <button
                   key={link.key}
                   onClick={() => handleLinkClick(link)}
-                  className={`w-full text-left py-4 px-4 rounded-lg text-lg font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg animate-in slide-in-from-left duration-500 ${
-                    active === link.key
+                  className={`w-full text-left py-4 px-4 rounded-lg text-lg font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg animate-in slide-in-from-left duration-500 ${active === link.key
                       ? "bg-[#2FC7A1] text-white"
                       : "text-gray-700 hover:bg-gray-100"
-                  }`}
+                    }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {link.name}

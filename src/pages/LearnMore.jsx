@@ -298,29 +298,22 @@ const LearnMore = ({ onBack }) => {
             Join thousands of learners who have transformed their careers with
             our comprehensive courses and expert guidance.
           </p>
+          {/* // onClick={handleContactClick} */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-            // onClick={handleContactClick}
-            className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
-          >
-            <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
-              Browse course
-            </span>
-            <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1">
-              <ArrowRight size={16} className="lg:w-5 lg:h-5" />
-            </div>
-          </button>
+              //onClick={handleContactClick}
+              className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
+            >
+              <span>Browse Courses</span>
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
             <button
-            // onClick={handleContactClick}
-            className="hidden md:flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
-          >
-            <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
-              Contact us
-            </span>
-            <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 bg-[#35D7AE] rounded-full ml-1">
-              <ArrowRight size={16} className="lg:w-5 lg:h-5" />
-            </div>
-          </button>
+              //onClick={handleContactClick}
+              className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
+            >
+              <span>Contact US</span>
+              <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+            </button>
           </div>
         </div>
       </div>

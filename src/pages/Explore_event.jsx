@@ -42,18 +42,14 @@ const ExploreEvent = () => {
           training to mock interviews and real-world projects, we help you stand
           out in the job market. Join us and unlock your pathway to success.
         </p>
-
+        {/* onClick={() => navigate("/explore-learn-more")} */}
         <div className="pt-2 sm:pt-3">
           <button
             onClick={() => navigate("/explore-learn-more")}
-            className="flex items-center justify-between rounded-full bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 md:h-14 pl-5 sm:pl-7 md:pl-8 pr-0 overflow-hidden gap-2 sm:gap-3 hover:bg-[#28B898] transition-colors duration-300 group"
+            className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
           >
-            <span className="text-xs sm:text-sm md:text-base font-medium text-white">
-              Learn More
-            </span>
-            <span className="flex items-center justify-center h-full aspect-square bg-[#35D7AE] rounded-full group-hover:bg-[#2FC7A1] transition-colors duration-300">
-              <ArrowRight size={16} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />
-            </span>
+            <span>Learn More</span>
+            <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </div>
       </div>

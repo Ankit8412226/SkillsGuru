@@ -92,18 +92,14 @@ const About = ({ onLearnMore }) => {
                 </p>
               </div>
             </div>
-
+            {/* onClick={handleLearnMoreClick} */}
             <div className="flex justify-center lg:justify-start mt-6 lg:mt-8">
               <button
                 onClick={handleLearnMoreClick}
-                className="flex items-center rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 sm:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden cursor-pointer"
+                className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
               >
-                <span className="px-4 sm:px-6 py-2 text-xs sm:text-sm font-medium">
-                  Learn more
-                </span>
-                <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-[#35D7AE] rounded-full ml-1">
-                  <ArrowRight size={16} className="sm:w-5 sm:h-5" />
-                </div>
+                <span>Learn More</span>
+                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </div>
           </div>

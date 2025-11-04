@@ -40,16 +40,14 @@ const CoachingCard = ({
       <p className={`${descriptionColor} text-base leading-relaxed mb-8`}>{description}</p>
 
       {/* Button */}
-      <button
+       <button
         type="button"
-        onClick={onClick} 
+        onClick={onClick}
         aria-label={buttonText}
-        className={`cursor-pointer flex items-center justify-between rounded-full ${buttonBgColor} ${buttonHoverColor} text-white font-medium h-12 pl-8 pr-0 overflow-hidden gap-4 transition-colors duration-200 w-full`}
+        className={`flex items-center justify-center gap-3 ${buttonBgColor} text-white font-semibold px-8 py-4 rounded-[200px] ${buttonHoverColor} transition-all duration-300 hover:scale-105 hover:shadow-xl group w-full`}
       >
-        <span className="text-sm leading-8 font-medium text-white">{buttonText}</span>
-        <span className={`flex items-center justify-center h-full aspect-square ${buttonIconBg} rounded-full`}>
-          <ArrowRight size={20} />
-        </span>
+        <span>{buttonText}</span>
+        <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
       </button>
     </div>
   );
