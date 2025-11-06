@@ -130,13 +130,13 @@ export default function Footer() {
 
                         {/* Services */}
                         <div className="text-center sm:text-left">
-                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Our Services:</h3>
+                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Our Courses:</h3>
                             <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
                                 <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Web Development</li>
                                 <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Mobile Apps</li>
                                 <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› UI/UX Design</li>
                                 <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Digital Marketing</li>
-                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Consulting</li>
+                                
                             </ul>
                         </div>
 

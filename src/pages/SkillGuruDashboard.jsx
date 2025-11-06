@@ -19,7 +19,7 @@ const SkillGuruDashboard = () => {
   const [profileData, setProfileData] = useState(null);
   const [enrollments, setEnrollments] = useState([]);
   const [dashboardAssignments, setDashboardAssignments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const profileMenuRef = useRef(null);
 
   const navigate = useNavigate();
@@ -184,6 +184,14 @@ const SkillGuruDashboard = () => {
     time: 'TBD',
     instructor: course.instructor
   }));
+  if (loading) {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+      <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+      <p className="mt-4 text-gray-600 text-lg font-medium">Loading Dashboard…</p>
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen relative bg-gray-50">
@@ -217,11 +225,11 @@ const SkillGuruDashboard = () => {
               {/* Search */}
               <div className="flex-1 max-w-md mx-6">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" />
                   <input
                     type="text"
                     placeholder="Search courses..."
-                    className="w-full pl-9 pr-3 py-1.5 text-sm rounded-md bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300 border focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                    className="w-full h-12 pl-12 pr-3 py-1.5 text-md rounded-[200px] bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300 border focus:outline-none focus:ring-2 focus:ring-emerald-400"
                   />
                 </div>
               </div>
