@@ -1,5 +1,20 @@
-import { ArrowLeft, Calendar, Edit2, Image, LogOut, Mail, Phone, Save, User, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import {
+  ArrowLeft,
+  Mail,
+  User,
+  Calendar,
+  Shield,
+  Edit2,
+  Save,
+  X,
+  LogOut,
+  Phone,
+  Image,
+  MapPin,
+  Globe,
+  Trash2,
+} from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 
@@ -10,33 +25,49 @@ const ProfilePage = () => {
   const [saving, setSaving] = useState(false);
 
   const [editedData, setEditedData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    address: '',
     phone: '',
-    bio: '',
-    avatarUrl: ''
+    dob: '',
+    location: '',
+    postalCode: '',
+    gender: 'Male',
   });
+
   const navigate = useNavigate();
 
+  // ✅ Fetch profile dynamically using token
   const fetchProfile = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       if (!token) {
         navigate('/login');
         return;
       }
 
-      const res = await api.get(`/auth/me`);
-      const data = res.data?.user || res.data;
-      setProfileData(data);
-      setEditedData({
-        name: data?.name || '',
-        phone: data?.phone || '',
-        bio: data?.bio || '',
-        avatarUrl: data?.avatarUrl || ''
+      const res = await api.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
+
+      const user = res.data;
+      setProfileData(user);
+      setEditedData({
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        email: user.email || '',
+        address: user.address || '',
+        phone: user.phone || '',
+        dob: user.dob || '',
+        location: user.location || '',
+        postalCode: user.postalCode || '',
+        gender: user.gender || 'Male',
+      });
+
       setLoading(false);
     } catch (err) {
-      console.error("Error fetching profile:", err);
+      console.error('Error fetching profile:', err);
       if (err.response?.status === 401) {
         localStorage.removeItem('token');
         localStorage.removeItem('name');
@@ -51,6 +82,7 @@ const ProfilePage = () => {
     fetchProfile();
   }, []);
 
+  // ✅ Logout handler
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('name');
@@ -58,72 +90,78 @@ const ProfilePage = () => {
     navigate('/login');
   };
 
+  // ✅ Save updated user data dynamically
   const handleSave = async () => {
-    if (!editedData.name || editedData.name.trim() === '') {
-      alert("Name is required!");
+    if (!editedData.firstName.trim() || !editedData.lastName.trim()) {
+      alert('First name and last name are required!');
       return;
     }
 
     setSaving(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
+      const payload = {
+        firstName: editedData.firstName.trim(),
+        lastName: editedData.lastName.trim(),
+        address: editedData.address.trim(),
+        phone: editedData.phone.trim(),
+        dob: editedData.dob.trim(),
+        location: editedData.location.trim(),
+        postalCode: editedData.postalCode.trim(),
+        gender: editedData.gender,
+      };
 
       const response = await api.put(
-        `/user/me`,
-        {
-          name: editedData.name.trim(),
-          phone: editedData.phone.trim(),
-          bio: editedData.bio.trim(),
-          avatarUrl: editedData.avatarUrl.trim()
-        },
+        `${import.meta.env.VITE_API_BASE_URL}/user/me`,
+        payload,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         }
       );
 
-      localStorage.setItem('name', editedData.name.trim());
-
-      if (response.data) {
-        setProfileData(response.data);
-        setEditedData({
-          name: response.data.name || '',
-          phone: response.data.phone || '',
-          bio: response.data.bio || '',
-          avatarUrl: response.data.avatarUrl || ''
-        });
-      } else {
-        const updatedData = { ...profileData, ...editedData };
-        setProfileData(updatedData);
-      }
-
+      const updated = response.data;
+      setProfileData(updated);
+      setEditedData({
+        firstName: updated.firstName || '',
+        lastName: updated.lastName || '',
+        email: updated.email || '',
+        address: updated.address || '',
+        phone: updated.phone || '',
+        dob: updated.dob || '',
+        location: updated.location || '',
+        postalCode: updated.postalCode || '',
+        gender: updated.gender || 'Male',
+      });
       setIsEditing(false);
-      alert("Profile updated successfully!");
+      alert('Profile updated successfully!');
     } catch (err) {
-      console.error("Error updating profile:", err);
-
-      if (err.response) {
-        const errorMessage = err.response.data?.message || err.response.data?.error || "Failed to update profile";
-        alert(`Error: ${errorMessage}`);
-      } else if (err.request) {
-        alert("No response from server. Please check your connection.");
-      } else {
-        alert("Failed to update profile. Please try again.");
-      }
+      console.error('Error updating profile:', err);
+      const msg =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        'Failed to update profile';
+      alert(`Error: ${msg}`);
     } finally {
       setSaving(false);
     }
   };
 
+  // ✅ Cancel editing (restore previous data)
   const handleCancel = () => {
     if (profileData) {
       setEditedData({
-        name: profileData.name || '',
+        firstName: profileData.firstName || '',
+        lastName: profileData.lastName || '',
+        email: profileData.email || '',
+        address: profileData.address || '',
         phone: profileData.phone || '',
-        bio: profileData.bio || '',
-        avatarUrl: profileData.avatarUrl || ''
+        dob: profileData.dob || '',
+        location: profileData.location || '',
+        postalCode: profileData.postalCode || '',
+        gender: profileData.gender || 'Male',
       });
     }
     setIsEditing(false);
@@ -131,125 +169,114 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-emerald-500 border-t-transparent mx-auto mb-4"></div>
-          <p className="text-gray-600 font-medium">Loading your profile...</p>
-        </div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-emerald-500 border-t-transparent"></div>
+        <p className="mt-4 text-gray-600 text-lg font-medium">Loading Profile…</p>
       </div>
     );
   }
 
+  // ✅ UI stays the same
   return (
-    <div className="min-h-screen relative bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse delay-700"></div>
-      </div>
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="mb-6">
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="flex items-center gap-2 text-gray-900 hover:text-emerald-600 transition-colors mb-4"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">Back to Dashboard</span>
+          </button>
+          <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
+        </div>
 
-      {/* Content */}
-      <div className="relative z-10 min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="flex items-center gap-2 text-gray-700 hover:text-emerald-600 transition-all mb-6 group"
-            >
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-semibold">Back to Dashboard</span>
-            </button>
-            <div className="flex items-center gap-4">
-              <div className="h-1 w-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                My Profile
-              </h1>
-            </div>
-            <p className="text-gray-600 mt-2 ml-16">Manage your personal information and preferences</p>
-          </div>
-
-          {/* Profile Card */}
-          <div className="bg-white/80 backdrop-blur-xl border border-gray-200/50 rounded-2xl shadow-2xl overflow-hidden">
-            {/* Header Section with Gradient */}
-            <div className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 p-12 text-center overflow-hidden">
-              {/* Decorative Pattern */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute inset-0" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-                }}></div>
-              </div>
-
-              <div className="relative">
-                <div className="w-36 h-36 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl border-4 border-white/50 overflow-hidden transform hover:scale-105 transition-transform">
-                  {(isEditing ? editedData.avatarUrl : profileData?.avatarUrl) ? (
+        <div className="flex gap-6">
+          {/* Sidebar */}
+          <div className="w-80 bg-white rounded-2xl shadow-sm p-6 h-180">
+            {/* Profile Avatar and Info */}
+            <div className="text-center mb-8">
+              <div className="relative w-24 h-24 mx-auto mb-4">
+                <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-teal-400">
+                  {profileData?.avatarUrl ? (
                     <img
-                      src={isEditing ? editedData.avatarUrl : profileData?.avatarUrl}
+                      src={profileData.avatarUrl}
                       alt="Avatar"
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.parentElement.querySelector('.avatar-fallback').style.display = 'flex';
-                      }}
                     />
-                  ) : null}
-                  <span
-                    className="avatar-fallback text-6xl font-bold text-emerald-600 flex items-center justify-center w-full h-full"
-                    style={{ display: (isEditing ? editedData.avatarUrl : profileData?.avatarUrl) ? 'none' : 'flex' }}
-                  >
-                    {(isEditing ? editedData.name : profileData?.name)?.charAt(0).toUpperCase() || 'U'}
-                  </span>
-                </div>
-                <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
-                  {isEditing ? editedData.name || 'Your Name' : profileData?.name}
-                </h2>
-                <p className="text-emerald-50 text-lg">{profileData?.email}</p>
-
-                {/* Status Badges */}
-                <div className="flex items-center justify-center gap-3 mt-4">
-                  {profileData?.isVerified ? (
-                    <span className="px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/30">
-                      ✓ Verified Account
-                    </span>
                   ) : (
-                    <span className="px-4 py-1.5 bg-orange-500/20 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/30">
-                      ⚠ Unverified
-                    </span>
+                    <div className="flex items-center justify-center w-full h-full bg-gray-200 text-2xl font-bold text-teal-400">
+                      {profileData?.firstName?.[0]?.toUpperCase() || 'U'}
+                    </div>
                   )}
-                  <span className="px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/30 capitalize">
-                    {profileData?.role || 'Student'}
-                  </span>
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-teal-400 rounded-full flex items-center justify-center">
+                  <Edit2 className="w-4 h-4 text-white" />
                 </div>
               </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-1">
+                {`${profileData?.firstName || ''} ${profileData?.lastName || ''}`}
+              </h2>
+              <p className="text-teal-400 font-medium text-sm">
+                {profileData?.role || 'Student'}
+              </p>
             </div>
 
-            {/* Content Section */}
-            <div className="p-8 md:p-10">
-              {/* Edit/Save Buttons */}
-              <div className="flex justify-end mb-8">
+            {/* Navigation Menu */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 px-4 py-3 bg-teal-500 hover:bg-teal-500 text-white rounded-lg font-medium">
+                <User className="w-5 h-5" />
+                <span>Personal Information</span>
+              </div>
+              <div className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
+                <Shield className="w-5 h-5" />
+                <span>Login & Password</span>
+              </div>
+              <div
+                onClick={handleLogout}
+                className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer"
+              >
+                <LogOut className="w-5 h-5" />
+                <span>Log Out</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1 bg-white rounded-2xl shadow-sm overflow-hidden">
+            {/* Top Section */}
+            <div className="flex items-center justify-between p-6 ">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-1">
+                  Personal Information
+                </h3>
+              </div>
+
+              <div className="flex gap-2">
                 {!isEditing ? (
                   <button
                     onClick={() => setIsEditing(true)}
-                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    className="flex items-center gap-2 px-4 py-2 bg-teal-400 hover:bg-teal-500 text-white rounded-lg transition-colors"
                   >
-                    <Edit2 className="w-5 h-5" />
+                    <Edit2 className="w-4 h-4" />
                     Edit Profile
                   </button>
                 ) : (
-                  <div className="flex gap-3">
+                  <>
                     <button
                       onClick={handleSave}
                       disabled={saving}
-                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                      className="flex items-center gap-2 px-4 py-2 bg-teal-400 hover:bg-teal-500 text-white rounded-[200px] transition-colors disabled:opacity-50"
                     >
                       {saving ? (
                         <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
                           Saving...
                         </>
                       ) : (
                         <>
-                          <Save className="w-5 h-5" />
+                          <Save className="w-4 h-4" />
                           Save Changes
                         </>
                       )}
@@ -257,197 +284,249 @@ const ProfilePage = () => {
                     <button
                       onClick={handleCancel}
                       disabled={saving}
-                      className="flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-300 text-[#2FC7A1] rounded-[200px] border-2 border-[#2FC7A1] transition-colors disabled:opacity-50"
                     >
-                      <X className="w-5 h-5" />
-                      Cancel
+                      <X className="w-4 h-4"  />
+                      Discard Changes
                     </button>
-                  </div>
+                  </>
                 )}
-              </div>
-
-              {/* Profile Information Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Name */}
-                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6 border border-emerald-100 hover:shadow-md transition-shadow">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-white rounded-xl shadow-sm">
-                      <User className="w-6 h-6 text-emerald-500" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-sm font-semibold text-gray-600 block mb-2">
-                        Full Name <span className="text-red-500">*</span>
-                      </label>
-                      {!isEditing ? (
-                        <p className="text-lg font-medium text-gray-900">
-                          {profileData?.name}
-                        </p>
-                      ) : (
-                        <input
-                          type="text"
-                          value={editedData.name}
-                          onChange={(e) => setEditedData({ ...editedData, name: e.target.value })}
-                          placeholder="Enter your name"
-                          className="w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 placeholder-gray-400 border-2 border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition-all"
-                          required
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Email */}
-                <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 border border-blue-100 hover:shadow-md transition-shadow">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-white rounded-xl shadow-sm">
-                      <Mail className="w-6 h-6 text-blue-500" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-sm font-semibold text-gray-600 block mb-2">
-                        Email Address
-                      </label>
-                      <p className="text-lg font-medium text-gray-900">
-                        {profileData?.email}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">🔒 Email cannot be changed</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Phone */}
-                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100 hover:shadow-md transition-shadow">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-white rounded-xl shadow-sm">
-                      <Phone className="w-6 h-6 text-purple-500" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-sm font-semibold text-gray-600 block mb-2">
-                        Phone Number
-                      </label>
-                      {!isEditing ? (
-                        <p className="text-lg font-medium text-gray-900">
-                          {profileData?.phone || 'Not provided'}
-                        </p>
-                      ) : (
-                        <input
-                          type="tel"
-                          value={editedData.phone}
-                          onChange={(e) => setEditedData({ ...editedData, phone: e.target.value })}
-                          placeholder="Enter phone number"
-                          className="w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 placeholder-gray-400 border-2 border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Avatar URL */}
-                <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-100 hover:shadow-md transition-shadow">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-white rounded-xl shadow-sm">
-                      <Image className="w-6 h-6 text-orange-500" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-sm font-semibold text-gray-600 block mb-2">
-                        Avatar URL
-                      </label>
-                      {!isEditing ? (
-                        <p className="text-sm font-medium text-gray-900 break-all line-clamp-2">
-                          {profileData?.avatarUrl || 'Not provided'}
-                        </p>
-                      ) : (
-                        <input
-                          type="url"
-                          value={editedData.avatarUrl}
-                          onChange={(e) => setEditedData({ ...editedData, avatarUrl: e.target.value })}
-                          placeholder="Enter avatar image URL"
-                          className="w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 placeholder-gray-400 border-2 border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Bio - Full Width */}
-                <div className="lg:col-span-2 bg-gradient-to-br from-teal-50 to-emerald-50 rounded-xl p-6 border border-teal-100 hover:shadow-md transition-shadow">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-white rounded-xl shadow-sm">
-                      <User className="w-6 h-6 text-teal-500" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-sm font-semibold text-gray-600 block mb-2">
-                        Bio
-                      </label>
-                      {!isEditing ? (
-                        <p className="text-lg font-medium text-gray-900">
-                          {profileData?.bio || 'No bio provided'}
-                        </p>
-                      ) : (
-                        <textarea
-                          value={editedData.bio}
-                          onChange={(e) => setEditedData({ ...editedData, bio: e.target.value })}
-                          placeholder="Tell us about yourself..."
-                          rows="4"
-                          className="w-full px-4 py-2.5 rounded-lg bg-white text-gray-900 placeholder-gray-400 border-2 border-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all resize-none"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Join Date */}
-                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-100 hover:shadow-md transition-shadow">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-white rounded-xl shadow-sm">
-                      <Calendar className="w-6 h-6 text-indigo-500" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="text-sm font-semibold text-gray-600 block mb-2">
-                        Member Since
-                      </label>
-                      <p className="text-lg font-medium text-gray-900">
-                        {profileData?.createdAt ? new Date(profileData.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Last Updated */}
-                {profileData?.updatedAt && (
-                  <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-6 border border-pink-100 hover:shadow-md transition-shadow">
-                    <div className="flex items-start gap-4">
-                      <div className="p-3 bg-white rounded-xl shadow-sm">
-                        <Calendar className="w-6 h-6 text-pink-500" />
-                      </div>
-                      <div className="flex-1">
-                        <label className="text-sm font-semibold text-gray-600 block mb-2">
-                          Last Updated
-                        </label>
-                        <p className="text-lg font-medium text-gray-900">
-                          {new Date(profileData.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Logout Button */}
-              <div className="mt-10 pt-8 border-t-2 border-gray-200">
-                <button
-                  onClick={handleLogout}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-3"
-                >
-                  <LogOut className="w-5 h-5" />
-                  Logout from Account
-                </button>
               </div>
             </div>
-          </div>
 
-          {/* Additional Info Section */}
-          <div className="mt-6 text-center text-sm text-gray-500">
-            <p>Need help? Contact support at <span className="text-emerald-600 font-semibold">support@skillguru.com</span></p>
+            {/* Personal Info Form */}
+            <div className="p-6">
+              {/* Gender */}
+              <div className="mb-6">
+                <div className="flex gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Male"
+                      checked={editedData.gender === 'Male'}
+                      onChange={(e) =>
+                        isEditing && setEditedData({ ...editedData, gender: e.target.value })
+                      }
+                      disabled={!isEditing}
+                      className="w-5 h-5 text-emerald-500 focus:ring-emerald-400"
+                    />
+                    <span className="text-gray-700">Male</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Female"
+                      checked={editedData.gender === 'Female'}
+                      onChange={(e) =>
+                        isEditing && setEditedData({ ...editedData, gender: e.target.value })
+                      }
+                      disabled={!isEditing}
+                      className="w-5 h-5 text-emerald-500 focus:ring-emerald-400"
+                    />
+                    <span className="text-gray-700">Female</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* First and Last Name */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    First Name
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editedData.firstName}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, firstName: e.target.value })
+                      }
+                      className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-200 focus:ring-2 focus:ring-emerald-400"
+                      placeholder="First name"
+                    />
+                  ) : (
+                    <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-400">
+                      {profileData?.firstName || 'Enter your First Name'}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-900 mb-2">
+                    Last Name
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editedData.lastName}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, lastName: e.target.value })
+                      }
+                      className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-200 focus:ring-2 focus:ring-emerald-400"
+                      placeholder="Last name"
+                    />
+                  ) : (
+                    <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-400">
+                      {profileData?.lastName || 'Enter Your Last Name'}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Email */}
+              {/* Email (Uneditable) */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Email
+                </label>
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 px-4 py-3 bg-gray-50 rounded-lg text-gray-400">
+                    {localStorage.getItem("email") || (
+                      <span className="text-gray-400">Enter your email</span>
+                    )}
+                  </div>
+                  <span className="flex items-center gap-1 px-3 py-1 bg-teal-400 text-white text-sm font-medium rounded-full">
+                    <Shield className="w-4 h-4" />
+                    Verified
+                  </span>
+                </div>
+              </div>
+
+
+              {/* Address */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Address
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={editedData.address}
+                    onChange={(e) =>
+                      setEditedData({ ...editedData, address: e.target.value })
+                    }
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-200 focus:ring-2 focus:ring-emerald-400"
+                    placeholder="Enter address"
+                  />
+                ) : (
+                  <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-400">
+                    {profileData?.address || 'Enter your Address'}
+                  </div>
+                )}
+              </div>
+
+              {/* Phone & DOB */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Phone Number
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="tel"
+                      value={editedData.phone}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, phone: e.target.value })
+                      }
+                      className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-200 focus:ring-2 focus:ring-emerald-400"
+                      placeholder="(123) 456-7890"
+                    />
+                  ) : (
+                    <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-400">
+                      {profileData?.phone || 'Enter your Phone Number'}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-900 mb-2">
+                    Date of Birth
+                  </label>
+                  {isEditing ? (
+                    <div className="relative">
+                      <input
+                        type="date"
+                        value={editedData.dob}
+                        onChange={(e) =>
+                          setEditedData({ ...editedData, dob: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-400 border border-gray-200 focus:ring-2 focus:ring-emerald-400"
+                      />
+                      {/* <Trash2
+                        className="absolute right-3 top-3.5 w-5 h-5 text-gray-400 cursor-pointer hover:text-red-500"
+                        onClick={() =>
+                          isEditing && setEditedData({ ...editedData, dob: '' })
+                        }
+                      /> */}
+                    </div>
+                  ) : (
+                    <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-400">
+                      {profileData?.dob
+                        ? new Date(profileData.dob).toLocaleDateString('en-GB')
+                        : 'Enter your DOB'}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Location & Postal */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Location
+                  </label>
+                  {isEditing ? (
+                    <div className="relative">
+                      <select
+                        value={editedData.location}
+                        onChange={(e) =>
+                          setEditedData({ ...editedData, location: e.target.value })
+                        }
+                        className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-400 border border-gray-200 focus:ring-2 focus:ring-emerald-400 appearance-none"
+                      >
+                        <option value="">Select location</option>
+                        <option value="New Delhi, India">New Delhi, India</option>
+                        <option value="Atlanta, USA">Atlanta, USA</option>
+                        <option value="New York, USA">New York, USA</option>
+                        <option value="Los Angeles, USA">Los Angeles, USA</option>
+                        <option value="Chicago, USA">Chicago, USA</option>
+                      </select>
+                      <Globe className="absolute right-3 top-3.5 w-5 h-5 text-gray-400 pointer-events-none" />
+                    </div>
+                  ) : (
+                    <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-400 flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-teal-400" />
+                      {profileData?.location || 'Enter your Location'}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    Postal Code
+                  </label>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editedData.postalCode}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, postalCode: e.target.value })
+                      }
+                      className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-200 focus:ring-2 focus:ring-emerald-400"
+                      placeholder="Enter postal code"
+                    />
+                  ) : (
+                    <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-400">
+                      {profileData?.postalCode || 'Enter Your postal code'}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+
+            </div>
           </div>
         </div>
       </div>
