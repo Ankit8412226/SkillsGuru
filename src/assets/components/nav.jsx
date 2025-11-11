@@ -54,13 +54,8 @@ const Nav = () => {
     setIsMenuOpen(false);
   };
 
-  const handleLoginClick = () => {
+  const handleAuthClick = () => {
     navigate("/login");
-    setIsMenuOpen(false);
-  };
-
-  const handleRegisterClick = () => {
-    navigate("/register");
     setIsMenuOpen(false);
   };
 
@@ -124,24 +119,14 @@ const Nav = () => {
               )}
             </button>
 
-            {/* Login Button */}
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={handleLoginClick}
-                className="flex items-center justify-center h-10 lg:h-12 px-4 lg:px-6 text-sm lg:text-base border-2 border-teal-500 text-teal-500 font-medium rounded-[200px] hover:bg-teal-100 transition-all duration-300 space-x-2 hover:scale-105 hover:shadow-lg group"
-              >
-                <User size={16} className="lg:w-5 lg:h-5 transition-transform duration-300 group-hover:scale-110" />
-                <span>Login</span>
-              </button>
-
-              {/* Register Button */}
-              <button
-                onClick={handleRegisterClick}
-                className="flex items-center justify-center h-10 lg:h-12 px-4 lg:px-6 text-sm lg:text-base border-2 border-teal-500 text-teal-500 font-medium rounded-[200px] hover:bg-teal-100 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-              >
-                Register
-              </button>
-            </div>
+            {/* Auth Button */}
+            <button
+              onClick={handleAuthClick}
+              className="flex items-center justify-center h-10 lg:h-12 px-4 lg:px-6 text-sm lg:text-base border-2 border-teal-500 text-teal-500 font-medium rounded-[200px] hover:bg-teal-100 transition-all duration-300 space-x-2 hover:scale-105 hover:shadow-lg group"
+            >
+              <User size={16} className="lg:w-5 lg:h-5 transition-transform duration-300 group-hover:scale-110" />
+              <span>Sign In</span>
+            </button>
 
             {/* Contact Button onClick={handleContactClick} */}
             <button
@@ -169,9 +154,9 @@ const Nav = () => {
             )}
           </button>
 
-          {/* Mobile Login */}
+          {/* Mobile Auth */}
           <button
-            onClick={handleLoginClick}
+            onClick={handleAuthClick}
             className="flex items-center justify-center w-8 h-8 rounded-[200px] hover:bg-gray-100 transition-all duration-300 hover:scale-110 group"
           >
             <User size={16} color="black" className="transition-transform duration-300 group-hover:scale-110" />
@@ -230,26 +215,18 @@ const Nav = () => {
             {/* Action Buttons */}
             <div className="mt-12 space-y-4">
               <button
-                onClick={handleLoginClick}
-                className="w-full flex items-center justify-center py-4 px-6 border-2 border-[#2FC7A1] text-[#2FC7A1] font-medium rounded-lg hover:bg-[#2FC7A1] hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-lg animate-in slide-in-from-bottom duration-700 group"
+                onClick={handleAuthClick}
+                className="w-full flex items-center justify-center py-4 px-6 bg-[#2FC7A1] text-white font-medium rounded-lg hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-lg animate-in slide-in-from-bottom duration-700 group"
                 style={{ animationDelay: '400ms' }}
               >
                 <User size={20} className="mr-2 transition-transform duration-300 group-hover:scale-110" />
-                Login
-              </button>
-
-              <button
-                onClick={handleRegisterClick}
-                className="w-full flex items-center justify-center py-4 px-6 bg-[#2FC7A1] text-white font-medium rounded-lg hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-lg animate-in slide-in-from-bottom duration-700"
-                style={{ animationDelay: '500ms' }}
-              >
-                Register
+                Sign In
               </button>
 
               <button
                 onClick={handleContactClick}
                 className="w-full flex items-center justify-center py-4 px-6 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-in slide-in-from-bottom duration-700"
-                style={{ animationDelay: '600ms' }}
+                style={{ animationDelay: '500ms' }}
               >
                 Contact Us
               </button>

@@ -14,8 +14,7 @@ import SuhFeatures from "./pages/Features.jsx";
 import Footer from "./pages/Footer.jsx";
 import StatusSection from "./pages/StatusSection.jsx";
 
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
+import Auth from "./pages/Auth.jsx";
 
 import FloatingActions from "./assets/components/FloatingAction.jsx";
 import AdmissionForm from "./pages/AdmissionForm.jsx";
@@ -246,7 +245,7 @@ function App() {
             path="/login"
             element={
               <div className="pt-20 pb-8 flex items-center justify-center">
-                <Login />
+                <Auth />
               </div>
             }
           />
@@ -254,7 +253,7 @@ function App() {
             path="/register"
             element={
               <div className="pt-20 pb-8 flex items-center justify-center">
-                <Register />
+                <Auth />
               </div>
             }
           />
