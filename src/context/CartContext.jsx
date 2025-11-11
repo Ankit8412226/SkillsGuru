@@ -12,6 +12,7 @@ export const CartProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     if (!token) {
       setItems([]);
+      setLoading(false);
       return;
     }
     try {
@@ -22,7 +23,9 @@ export const CartProvider = ({ children }) => {
       setItems(data?.items || []);
       setError(null);
     } catch (e) {
+      console.error("Cart load error:", e);
       setError(e?.response?.data?.message || "Failed to load cart");
+      setItems([]); // Set empty items on error to prevent blocking
     } finally {
       setLoading(false);
     }
@@ -82,14 +85,6 @@ export const CartProvider = ({ children }) => {
   const total = useMemo(() => items.reduce((sum, it) => sum + (it.priceAtAdd || it.price || 0), 0), [items]);
 
   const value = useMemo(() => ({ items, count, total, loading, error, loadCart, addToCart, removeFromCart, clearCart }), [items, count, total, loading, error, loadCart, addToCart, removeFromCart, clearCart]);
-  if (loading) {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
-      <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
-      <p className="mt-4 text-gray-600 text-lg font-medium">Loading Dashboard…</p>
-    </div>
-  );
-}
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

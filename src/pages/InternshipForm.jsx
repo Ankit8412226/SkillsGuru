@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
 import { Briefcase, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 const InternshipForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -70,8 +70,8 @@ const InternshipForm = ({ onClose }) => {
   };
 
   const modalContent = (
-    <div 
-      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-[9999]"
+    <div
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-[9999] pb-4"
       onClick={handleBackdropClick}
     >
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 relative max-h-[90vh] overflow-y-auto">

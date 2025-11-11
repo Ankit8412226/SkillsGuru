@@ -1,8 +1,8 @@
 import React from "react";
 
-const SuccessToast = ({ onClose }) => {
+const SuccessToast = ({ onClose, message }) => {
   return (
-    <div className="relative flex items-start bg-white rounded-2xl shadow-md border border-gray-200 pt-8 pb-8 pl-4 pr-4 max-w-xl mx-auto">
+    <div className="relative flex items-start bg-white rounded-2xl shadow-md border border-gray-200 pt-8 pb-8 pl-4 pr-4 max-w-xl">
       {/* Left Section */}
       <div className="flex items-start space-x-3">
         {/* ✅ Success Icon */}
@@ -17,11 +17,10 @@ const SuccessToast = ({ onClose }) => {
         {/* Text Section */}
         <div>
           <h2 className="text-base font-semibold text-black">
-            Profile Updated Successfully
+            {message?.title || "Success!"}
           </h2>
           <p className="text-gray-600 text-sm leading-snug">
-            You’re all set! Keeping your profile updated helps personalize your
-            learning experience.
+            {message?.description || message || "Operation completed successfully."}
           </p>
         </div>
       </div>

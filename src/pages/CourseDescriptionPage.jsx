@@ -1,17 +1,18 @@
 import axios from "axios";
 import {
-    Award,
-    BookOpen,
-    CheckCircle2,
-    ChevronDown,
-    ChevronUp,
-    Clock,
-    FileText,
-    Infinity,
-    Play,
-    Smartphone,
-    Star,
-    Users
+  Award,
+  BookOpen,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  FileText,
+  Infinity as InfinityIcon,
+  Play,
+  ShoppingCart,
+  Smartphone,
+  Star,
+  Users
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -30,7 +31,6 @@ const CourseDescriptionPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const [buying, setBuying] = useState(false);
   const [cert, setCert] = useState(null);
   const [wishing, setWishing] = useState(false);
 
@@ -61,8 +61,8 @@ const CourseDescriptionPage = () => {
         const data = res.data?.data || {};
         setReviews(data.reviews || []);
         setSummary(data.summary || { average: 0, count: 0 });
-      } catch (e) {
-        // ignore
+      } catch {
+        // Ignore errors when fetching reviews
       }
     };
     if (id) fetchReviews();
@@ -155,7 +155,7 @@ const CourseDescriptionPage = () => {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-500">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all hover:scale-105 group animate-in slide-in-from-bottom duration-500">
                   <div className="flex items-center gap-2 mb-2">
                     <Clock className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                     <span className="text-sm text-gray-300">Duration</span>
@@ -163,7 +163,7 @@ const CourseDescriptionPage = () => {
                   <p className="text-xl font-bold">{courseData.durationHours}h</p>
                 </div>
 
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-500" style={{ animationDelay: '100ms' }}>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all hover:scale-105 group animate-in slide-in-from-bottom duration-500" style={{ animationDelay: '100ms' }}>
                   <div className="flex items-center gap-2 mb-2">
                     <BookOpen className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                     <span className="text-sm text-gray-300">Lessons</span>
@@ -171,7 +171,7 @@ const CourseDescriptionPage = () => {
                   <p className="text-xl font-bold">{totalLessons || courseData.totalClasses}</p>
                 </div>
 
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-500" style={{ animationDelay: '200ms' }}>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all hover:scale-105 group animate-in slide-in-from-bottom duration-500" style={{ animationDelay: '200ms' }}>
                   <div className="flex items-center gap-2 mb-2">
                     <Award className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                     <span className="text-sm text-gray-300">Level</span>
@@ -179,7 +179,7 @@ const CourseDescriptionPage = () => {
                   <p className="text-xl font-bold capitalize">{courseData.level}</p>
                 </div>
 
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-500" style={{ animationDelay: '300ms' }}>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all hover:scale-105 group animate-in slide-in-from-bottom duration-500" style={{ animationDelay: '300ms' }}>
                   <div className="flex items-center gap-2 mb-2">
                     <Users className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                     <span className="text-sm text-gray-300">Students</span>
@@ -189,7 +189,7 @@ const CourseDescriptionPage = () => {
               </div>
 
               {instructor.name && (
-                <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 group animate-in slide-in-from-bottom duration-700">
+                <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all hover:scale-105 group animate-in slide-in-from-bottom duration-700">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#2FC7A1] to-[#28B895] flex items-center justify-center text-white font-bold text-xl border-2 border-white transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
                     {instructor.name.charAt(0).toUpperCase()}
                   </div>
@@ -273,8 +273,8 @@ const CourseDescriptionPage = () => {
                       try {
                         setWishing(true);
                         await axios.post(`${import.meta.env.VITE_API_BASE_URL}/wishlist/items`, { courseId: id }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-                      } catch (e) {
-                        // ignore
+                      } catch {
+                        // Ignore errors when adding to wishlist
                       } finally {
                         setWishing(false);
                       }
@@ -291,7 +291,9 @@ const CourseDescriptionPage = () => {
                           const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/certificates/issue/${id}`, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
                           const data = res.data?.data || res.data;
                           setCert(data);
-                        } catch (e) {}
+                        } catch {
+                          // Ignore errors when issuing certificate
+                        }
                       }}
                       className="w-full mt-3 rounded-lg bg-emerald-50 text-emerald-700 font-semibold py-3 hover:bg-emerald-100 transition-all duration-300"
                     >
@@ -310,7 +312,7 @@ const CourseDescriptionPage = () => {
 
                   <div className="mt-6 pt-6 border-t space-y-3">
                     <div className="flex items-center gap-3 text-sm hover:bg-gray-50 p-2 rounded-lg transition-all duration-300 group">
-                      <Infinity className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                      <InfinityIcon className="w-5 h-5 text-[#2FC7A1] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                       <span className="text-gray-700 transition-colors duration-300 group-hover:text-[#2FC7A1]">Lifetime access</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm hover:bg-gray-50 p-2 rounded-lg transition-all duration-300 group">
@@ -531,7 +533,9 @@ const CourseDescriptionPage = () => {
                                             try {
                                               const key = `w${week.weekNumber}-t${tIndex}-s${sIndex}-c${cIndex}`;
                                               await axios.post(`${import.meta.env.VITE_API_BASE_URL}/progress/${id}/toggle`, { lessonKey: key, completed: e.target.checked }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-                                            } catch (e) {}
+                                            } catch {
+                                              // Ignore errors when toggling progress
+                                            }
                                           }} />
                                           {cls.resources && cls.resources.length > 0 && (
                                             <FileText className="w-4 h-4 text-gray-400" />
@@ -633,7 +637,9 @@ const CourseDescriptionPage = () => {
                         setReviews(data.reviews || []);
                         setSummary(data.summary || { average: 0, count: 0 });
                         setMyComment("");
-                      } catch(e) {}
+                      } catch {
+                        // Ignore errors when submitting review
+                      }
                     }} className="px-4 py-2 bg-emerald-500 text-white rounded-lg">Submit Review</button>
                   </div>
                 )}

@@ -19,9 +19,11 @@ import Register from "./pages/Register.jsx";
 
 import FloatingActions from "./assets/components/FloatingAction.jsx";
 import AdmissionForm from "./pages/AdmissionForm.jsx";
+import AssignmentSubmitPage from "./pages/AssignmentSubmitPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import CourseDescriptionPage from "./pages/CourseDescriptionPage.jsx";
+import CourseDetailPage from "./pages/CourseDetailPage.jsx";
 import CoursesPage from "./pages/Courses.jsx";
 import Explore_event from "./pages/Explore_event.jsx";
 import Explore_Learn_more from "./pages/Explore_Learn_more.jsx";
@@ -29,18 +31,16 @@ import Instructors from "./pages/Instructors.jsx";
 import InternshipForm from "./pages/InternshipForm.jsx";
 import LearnMore from "./pages/LearnMore.jsx";
 import New_sesion from "./pages/New_sesion.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import Profile from "./pages/Profile.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import SkillGuruDashboard from "./pages/SkillGuruDashboard";
+import TermsConditions from "./pages/TermsConditions.jsx";
 import TestimonialSection from "./pages/TestimonialSection.jsx";
 import VerifyCertificatePage from "./pages/VerifyCertificatePage.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
-import CourseDetailPage from "./pages/CourseDetailPage.jsx";
-import AssignmentSubmitPage from "./pages/AssignmentSubmitPage.jsx";
-import SuccessToast from "./assets/components/SuccessToast.jsx";
-import FailureToast from "./assets/components/FailureToast.jsx";
-import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
-import TermsConditions from "./pages/TermsConditions.jsx";
+import ToastContainer from "./assets/components/ToastContainer.jsx";
+import { ToastProvider } from "./context/ToastContext.jsx";
 
 
 // ✅ Scroll to top & handle scroll-to-hash (smooth scrolling)
@@ -95,20 +95,19 @@ const Layout = ({ children }) => {
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
+    <ToastProvider>
+      <Router>
+        <ScrollToTop />
+        <ToastContainer />
 
-      <Layout>
+        <Layout>
 
-        <Routes>
+          <Routes>
           {/* Home Page */}
           <Route
             path="/"
             element={
               <>
-                <SuccessToast />
-
-                <FailureToast />
                 <div className="w-full">
                   <section className="w-full"><Hero /></section>
                   <section className="w-full py-8 sm:py-12 lg:py-16" id="about"><About /></section>
@@ -305,9 +304,10 @@ function App() {
             }
           />
 
-        </Routes>
-      </Layout>
-    </Router>
+          </Routes>
+        </Layout>
+      </Router>
+    </ToastProvider>
   );
 }
 
