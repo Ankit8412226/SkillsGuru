@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-import { BookOpen, Clock, Eye, ShoppingCart, Users } from "lucide-react";
+import { BookOpen, Clock, ShoppingCart, Users } from "lucide-react";
 
 const CourseCard = ({
   _id,
@@ -32,16 +32,21 @@ const CourseCard = ({
           alt={title}
           className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
         />
-        <div className="absolute top-3 left-3 bg-[#2563eb] text-white text-sm px-3 py-1 rounded-md capitalize animate-in slide-in-from-top duration-500 animate-pulse">
+        <div className="absolute top-3 left-3 bg-[#2FC7A1] text-white text-sm px-3 py-1 rounded-md capitalize animate-in slide-in-from-top duration-500 animate-pulse">
           {category}
         </div>
 
         {/* 👁️ View Details Button */}
         <button
           onClick={handleViewDetails}
-          className="absolute top-3 right-3 flex items-center justify-center w-10 h-10 rounded-full bg-black/40 text-white hover:bg-black transition-all duration-300 backdrop-blur-sm hover:scale-110 hover:rotate-12 group"
+          className="absolute top-3 right-3 flex items-center justify-center w-10 h-10 rounded-full bg-black/40 text-white hover:bg-black/40 transition-all duration-300 backdrop-blur-sm hover:scale-110 hover:rotate-12 group"
         >
-          <Eye className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+          <img
+            src="/arrow-up.svg"
+            alt="arrow icon"
+            className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 bg-[#2FC7A1]"
+            style={{ fill: "#2FC7A1" }}
+          />
         </button>
       </div>
 
@@ -72,14 +77,14 @@ const CourseCard = ({
         <hr className="border-dashed border-gray-300 mb-4" />
 
         <div className="flex items-center gap-3 mb-4 group">
-          <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-[#0E2A46] font-bold transition-all duration-300 group-hover:scale-110 group-hover:bg-[#2FC7A1] group-hover:text-white">
+          <div className="w-10 h-10 rounded-full bg-[#28B895] flex items-center justify-center text-white font-bold transition-all duration-300  group-hover:text-white">
             {instructor?.name?.charAt(0).toUpperCase()}
           </div>
           <div>
-            <p className="text-sm text-gray-700 font-medium transition-colors duration-300 group-hover:text-[#2FC7A1]">
+            <p className="text-sm text-[#28B895] font-medium transition-colors duration-300 group-hover:text-[#2FC7A1]">
               {instructor?.name}
             </p>
-            <p className="text-sm text-[#0E2A46] transition-colors duration-300 group-hover:text-[#28B895]">{instructor?.email}</p>
+            <p className="text-sm text-[#28B895] transition-colors duration-300 group-hover:text-[#28B895]">{instructor?.email}</p>
           </div>
         </div>
 

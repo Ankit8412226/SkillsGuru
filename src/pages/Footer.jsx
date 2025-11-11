@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Alert from "../assets/components/Alert.jsx";
 
 export default function Footer() {
@@ -136,30 +137,50 @@ export default function Footer() {
                                 <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Mobile Apps</li>
                                 <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› UI/UX Design</li>
                                 <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Digital Marketing</li>
-                                
+
                             </ul>
                         </div>
 
                         {/* Gallery */}
+
                         <div className="text-center sm:text-left">
                             <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Quick Links</h3>
-                            <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto sm:mx-0">
-                                <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Terms & Conditions</li>
-                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Privacy Policy</li>
-                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› About Us</li>
-                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Gallery</li>
-                                    <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Blog</li>
-                                </ul>
 
+                            <ul className="flex flex-col text-gray-400 text-sm sm:text-base space-y-2">
+                                <li>
+                                    <Link
+                                        to="/terms-conditions"
+                                        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                    >
+                                        › Terms & Conditions
+                                    </Link>
+                                </li>
 
-                            </div>
+                                <li>
+                                    <Link
+                                        to="/privacy-policy"
+                                        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                    >
+                                        › Privacy Policy
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <Link
+                                        to="/learnmore"
+                                        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                    >
+                                        › About Us
+                                    </Link>
+                                </li>
+                            </ul>
                         </div>
+
 
                         {/* Subscribe */}
                         <div className="text-center sm:text-left">
-                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Subscribe</h3>
-                            <div className="max-w-xs mx-auto sm:mx-0">
+                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Contact Info</h3>
+                            {/* <div className="max-w-xs mx-auto sm:mx-0">
                                 <input
                                     type="email"
                                     placeholder="Enter your email"
@@ -177,7 +198,14 @@ export default function Footer() {
                                     </div>
                                 )}
 
-                            </div>
+                            </div> */}
+
+                            <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
+                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer"> info@suhtech.top</li>
+                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer"> 8298252909</li>
+
+
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -190,6 +218,6 @@ export default function Footer() {
                     </p>
                 </div>
             </div>
-        </footer>
+        </footer >
     );
 }

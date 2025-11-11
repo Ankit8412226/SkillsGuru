@@ -37,16 +37,35 @@ import VerifyCertificatePage from "./pages/VerifyCertificatePage.jsx";
 import VerifyEmail from "./pages/verifyEmail.jsx";
 import CourseDetailPage from "./pages/CourseDetailPage.jsx";
 import AssignmentSubmitPage from "./pages/AssignmentSubmitPage.jsx";
+import SuccessToast from "./assets/components/SuccessToast.jsx";
+import FailureToast from "./assets/components/FailureToast.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import TermsConditions from "./pages/TermsConditions.jsx";
 
 
-// Scroll to top when route changes
+// ✅ Scroll to top & handle scroll-to-hash (smooth scrolling)
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
+
   useEffect(() => {
+    // If navigating to a hash (#about)
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 400);
+      return;
+    }
+
+    // Default scroll-to-top for all route changes
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
+
   return null;
 };
+
 
 // ✅ ProtectedRoute component
 const ProtectedRoute = ({ children }) => {
@@ -73,21 +92,26 @@ const Layout = ({ children }) => {
   );
 };
 
+
 function App() {
   return (
     <Router>
       <ScrollToTop />
 
       <Layout>
+
         <Routes>
           {/* Home Page */}
           <Route
             path="/"
             element={
               <>
+                <SuccessToast />
+
+                <FailureToast />
                 <div className="w-full">
                   <section className="w-full"><Hero /></section>
-                  <section className="w-full py-8 sm:py-12 lg:py-16"><About /></section>
+                  <section className="w-full py-8 sm:py-12 lg:py-16" id="about"><About /></section>
                   <section className="w-full py-8 sm:py-12 lg:py-16"><BrouseCourses /></section>
                   <section className="w-full py-8 sm:py-12 lg:py-16"><StatusSection /></section>
                   <section className="w-full py-8 sm:py-12 lg:py-16"><SuhFeatures /></section>
@@ -98,8 +122,8 @@ function App() {
                   <section className="w-full"><Instructors /></section>
                   <section className="w-full"><InternshipBanner /></section>
 
-
                 </div>
+
                 <FloatingActions />
               </>
             }
@@ -115,7 +139,25 @@ function App() {
             }
           />
 
-          {/* ✅ Protected Dashboard with nested routes (no Nav/Footer) */}
+          {/* ✅ Privacy Policy Page */}
+          <Route
+            path="/privacy-policy"
+            element={
+              <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                <PrivacyPolicy />
+              </div>
+            }
+          />
+          <Route
+            path="/terms-conditions"
+            element={
+              <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
+                <TermsConditions />
+              </div>
+            }
+          />
+
+          {/* ✅ Protected Dashboard with nested routes */}
           <Route
             path="/dashboard"
             element={
@@ -181,6 +223,7 @@ function App() {
               </div>
             }
           />
+
           <Route
             path="/internship"
             element={
@@ -189,14 +232,6 @@ function App() {
               </div>
             }
           />
-          {/* <Route
-            path="/internship"
-            element={
-              <div className="pt-16 md:pt-20 lg:pt-24 min-h-screen">
-                <InternshipBanner />
-              </div>
-            }
-          /> */}
 
           <Route
             path="/exam-prep"
@@ -240,8 +275,9 @@ function App() {
               </div>
             }
           />
-          {/* Legacy cart route: redirect to dashboard/cart */}
+
           <Route path="/cart" element={<Navigate to="/dashboard/cart" replace />} />
+
           <Route
             path="/checkout"
             element={
@@ -250,6 +286,7 @@ function App() {
               </div>
             }
           />
+
           <Route
             path="/profile"
             element={
@@ -258,6 +295,7 @@ function App() {
               </div>
             }
           />
+
           <Route
             path="/Course-DescriptionPage/:id"
             element={
@@ -266,6 +304,7 @@ function App() {
               </div>
             }
           />
+
         </Routes>
       </Layout>
     </Router>
