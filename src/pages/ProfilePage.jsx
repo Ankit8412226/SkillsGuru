@@ -1,28 +1,27 @@
 import {
   ArrowLeft,
-  Mail,
   User,
-  Calendar,
   Shield,
   Edit2,
   Save,
   X,
   LogOut,
-  Phone,
-  Image,
   MapPin,
   Globe,
-  Trash2,
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
+import SuccessToast from '../assets/components/SuccessToast';
+import FailureToast from '../assets/components/FailureToast';
+
 
 const ProfilePage = () => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [showToast, setShowToast] = useState(null); 
 
   const [editedData, setEditedData] = useState({
     firstName: '',
@@ -136,14 +135,12 @@ const ProfilePage = () => {
         gender: updated.gender || 'Male',
       });
       setIsEditing(false);
-      alert('Profile updated successfully!');
+      setShowToast('success'); // ✅ Show Success Toast
+      setTimeout(() => setShowToast(null), 3000);
     } catch (err) {
       console.error('Error updating profile:', err);
-      const msg =
-        err.response?.data?.message ||
-        err.response?.data?.error ||
-        'Failed to update profile';
-      alert(`Error: ${msg}`);
+      setShowToast('error'); // ❌ Show Failure Toast
+      setTimeout(() => setShowToast(null), 3000);
     } finally {
       setSaving(false);
     }
@@ -169,16 +166,29 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-emerald-500 border-t-transparent"></div>
-        <p className="mt-4 text-gray-600 text-lg font-medium">Loading Profile…</p>
+        <p className="mt-4 text-gray-600 text-lg font-medium">
+          Loading Profile…
+        </p>
       </div>
     );
   }
 
-  // ✅ UI stays the same
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      {/* ✅ Toast Notification */}
+      {showToast === 'success' && (
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+          <SuccessToast onClose={() => setShowToast(null)} />
+        </div>
+      )}
+      {showToast === 'error' && (
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+          <FailureToast onClose={() => setShowToast(null)} />
+        </div>
+      )}
+
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-6">

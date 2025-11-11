@@ -85,6 +85,7 @@ const New_sesion = () => {
   style={{
     backgroundImage: "url('/Internship_banner (2).png')",
   }}
+  on
 ></div>
 
       {/* ✅ Internship Application Form Modal */}
