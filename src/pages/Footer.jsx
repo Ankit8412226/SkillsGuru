@@ -13,10 +13,9 @@ export default function Footer() {
 
     const navigate = useNavigate();
 
-    const handleCourseClick = () => {
-        navigate("/courses");
-    };
-
+  const handleCourseClick = (categoryName) => {
+    navigate(`/courses?search=${encodeURIComponent(categoryName)}`);
+};
 
     const handleSubscribe = async () => {
         if (!email) {
@@ -70,7 +69,7 @@ export default function Footer() {
                         }`
                     }
                 >
-                    Courses
+                    
                 </NavLink>
                 <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-gray-700 border-b border-gray-700">
                     {/* Address */}
@@ -150,32 +149,33 @@ export default function Footer() {
                             <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">
                                 Our Courses:
                             </h3>
-                            <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-                                <li
-                                    onClick={handleCourseClick}
-                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
-                                >
-                                    › Web Development
-                                </li>
-                                <li
-                                    onClick={handleCourseClick}
-                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
-                                >
-                                    › Mobile Apps
-                                </li>
-                                <li
-                                    onClick={handleCourseClick}
-                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
-                                >
-                                    › UI/UX Design
-                                </li>
-                                <li
-                                    onClick={handleCourseClick}
-                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
-                                >
-                                    › Digital Marketing
-                                </li>
-                            </ul>
+       <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
+    <li
+        onClick={() => handleCourseClick("Development")}
+        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+    >
+        › Web Development
+    </li>
+    <li
+        onClick={() => handleCourseClick("Mobile")}
+        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+    >
+        › Mobile Apps
+    </li>
+    <li
+        onClick={() => handleCourseClick("Design")}
+        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+    >
+        › UI/UX Design
+    </li>
+    <li
+        onClick={() => handleCourseClick("Marketing")}
+        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+    >
+        › Digital Marketing
+    </li>
+</ul>
+
                         </div>
 
 

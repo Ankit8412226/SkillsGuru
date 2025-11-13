@@ -1,4 +1,4 @@
-import { AlertCircle, Award, Bell, BookOpen, Calendar, CheckCircle, ChevronDown, ChevronRight, Clock, LogOut, MessageSquare, Play, Search, ShoppingCart, TrendingUp, Upload, User } from 'lucide-react';
+import { AlertCircle, Award, Bell, BookOpen, Calendar, CheckCircle, ChevronDown, ChevronRight, Clock, LogOut, MessageSquare, Play, Search, ShoppingCart, TrendingUp, Upload, User, Heart, Trash2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
@@ -91,8 +91,33 @@ const SkillGuruDashboard = () => {
       const data = res.data?.data || res.data;
       setWishlist(data?.items || []);
     } catch (e) {
-      // ignore
-      console.log("hello", e)
+      console.log("Error loading wishlist:", e)
+    }
+  };
+
+  // Add to wishlist function
+  const addToWishlist = async (courseId) => {
+    try {
+      await api.post('/wishlist/items', { courseId });
+      await loadWishlist(); // Reload wishlist after adding
+      alert('Course added to wishlist!');
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
+      alert('Failed to add to wishlist');
+    }
+  };
+
+  // Remove from wishlist function
+  const removeFromWishlist = async (courseId) => {
+    try {
+      await api.delete(`/wishlist/items/${courseId}`);
+      setWishlist(prev => prev.filter(item => 
+        (item.course?._id || item.course) !== courseId
+      ));
+      alert('Removed from wishlist');
+    } catch (error) {
+      console.error('Error removing from wishlist:', error);
+      alert('Failed to remove from wishlist');
     }
   };
 
@@ -145,7 +170,7 @@ const SkillGuruDashboard = () => {
     progress: enrollment.progress || 0,
     status: enrollment.status,
     enrolledAt: enrollment.enrolledAt,
-    liveNow: false, // Can be updated based on live class schedule
+    liveNow: false,
     pendingAssignments: dashboardAssignments.filter(a =>
       (a.course?._id || a.course) === (enrollment.course?._id || enrollment.course) && !a.submitted
     ).length,
@@ -161,9 +186,9 @@ const SkillGuruDashboard = () => {
   }));
   
   const filteredCourses = courses.filter(course =>
-  course.title.toLowerCase().includes(searchQuery) ||
-  course.instructor.toLowerCase().includes(searchQuery)
-);
+    course.title.toLowerCase().includes(searchQuery) ||
+    course.instructor.toLowerCase().includes(searchQuery)
+  );
 
   // Get assignments with course info
   const assignments = dashboardAssignments.map(assignment => ({
@@ -189,12 +214,13 @@ const SkillGuruDashboard = () => {
     avatar: name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
   }));
 
-  // Placeholder for upcoming classes (can be enhanced with real data)
+  // Placeholder for upcoming classes
   const upcomingClasses = courses.slice(0, 3).map(course => ({
     course: course.title,
     time: 'TBD',
     instructor: course.instructor
   }));
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
@@ -584,19 +610,116 @@ const SkillGuruDashboard = () => {
 
               {activeTab === 'wishlist' && (
                 <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-                  <h2 className="text-xl font-bold mb-6 text-gray-900">Wishlist</h2>
-                  <div className="space-y-3">
-                    {wishlist.length === 0 && <p className="text-gray-600">Your wishlist is empty.</p>}
-                    {wishlist.map((w) => (
-                      <div key={w.course?._id || w.course} className="bg-gray-50 border-gray-200 rounded-lg p-4 border flex items-center justify-between">
-                        <div>
-                          <p className="text-gray-900 font-semibold">{w.course?.title}</p>
-                          <p className="text-gray-600 text-sm">Added {new Date(w.addedAt).toLocaleDateString()}</p>
-                        </div>
-                        <div className="text-right font-semibold">₹{w.course?.price}</div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-[#2FC7A1] rounded-full flex items-center justify-center">
+                        <Heart className="w-5 h-5 text-white fill-white" />
                       </div>
-                    ))}
+                      <div>
+                        <h2 className="text-xl font-bold text-gray-900">My Wishlist</h2>
+                        <p className="text-xs text-gray-500">{wishlist.length} {wishlist.length === 1 ? 'course' : 'courses'} saved</p>
+                      </div>
+                    </div>
                   </div>
+                  <div className="space-y-4">
+                    {wishlist.length === 0 ? (
+                      <div className="text-center py-12">
+                        <div className="w-24 h-24 bg-gradient-to-br from-rose-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <Heart className="w-12 h-12 text-rose-400" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Your wishlist is empty</h3>
+                        <p className="text-gray-600 mb-6 text-sm">Save courses you love and come back to them later</p>
+                        <button
+                          onClick={() => navigate('/dashboard/course')}
+                          className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:from-emerald-600 hover:to-teal-600 transition-all transform hover:scale-105 font-medium shadow-lg"
+                        >
+                          Explore Courses
+                        </button>
+                      </div>
+                    ) : (
+                      wishlist.map((w, index) => (
+                        <div 
+                          key={w.course?._id || w.course} 
+                          className="group bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl p-4 hover:border-emerald-400 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                          style={{ animationDelay: `${index * 100}ms` }}
+                        >
+                          <div className="flex gap-4">
+                            <div className="relative">
+                              <img 
+                                src={w.course?.thumbnailUrl || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=250&fit=crop'} 
+                                alt={w.course?.title} 
+                                className="w-40 h-28 rounded-xl object-cover shadow-md group-hover:shadow-xl transition-shadow" 
+                              />
+                              <div className="absolute top-2 right-2 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg">
+                                <Heart className="w-4 h-4" />
+                              </div>
+                            </div>
+                            <div className="flex-1 flex flex-col">
+                              <div className="flex items-start justify-between mb-2">
+                                <div className="flex-1">
+                                  <h3 className="font-bold mb-1 text-gray-900 group-hover:text-emerald-600 transition-colors text-lg leading-tight">
+                                    {w.course?.title || 'Untitled Course'}
+                                  </h3>
+                                  <p className="text-sm text-gray-600 mb-2 flex items-center gap-1">
+                                    <User className="w-3 h-3" />
+                                    {typeof w.course?.instructor === 'object' 
+                                      ? w.course?.instructor?.name 
+                                      : w.course?.instructor || 'Unknown Instructor'}
+                                  </p>
+                                  <div className="flex items-center gap-3 text-xs text-gray-500">
+                                    <span className="flex items-center gap-1">
+                                      <Clock className="w-3 h-3" />
+                                      Added {new Date(w.addedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="text-right ml-4">
+                                  <div className="bg-gradient-to-br from-emerald-400 to-teal-500 text-white px-4 py-2 rounded-lg shadow-md">
+                                    <p className="text-xs font-medium opacity-90">Price</p>
+                                    <p className="font-bold text-xl">₹{w.course?.price || 0}</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="flex gap-2 mt-auto">
+                                <button
+                                  onClick={() => navigate(`/dashboard/course/${w.course?._id || w.course}`)}
+                                  className="flex-1 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-sm font-semibold rounded-lg transition-all transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                                >
+                                  <BookOpen className="w-4 h-4" />
+                                  View Course
+                                </button>
+                                <button
+                                  onClick={() => removeFromWishlist(w.course?._id || w.course)}
+                                  className="px-4 py-2.5 bg-[#2FC7A1] text-white text-sm font-semibold rounded-lg transition-all transform hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-2"
+                                  title="Remove from wishlist"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                  Remove
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                  {wishlist.length > 0 && (
+                    <div className="mt-6 pt-6 border-t border-gray-200">
+                      <div className="flex items-center justify-between p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl border border-emerald-200">
+                        <div>
+                          <p className="font-semibold text-gray-900">Ready to start learning?</p>
+                          <p className="text-sm text-gray-600">Enroll in your favorite courses today</p>
+                        </div>
+                        <button
+                          onClick={() => navigate('/dashboard/course')}
+                          className="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:from-emerald-600 hover:to-teal-600 transition-all transform hover:scale-105 font-semibold shadow-md flex items-center gap-2"
+                        >
+                          Browse More
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
