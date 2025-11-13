@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import Alert from "../assets/components/Alert.jsx";
 
 export default function Footer() {
@@ -10,6 +10,13 @@ export default function Footer() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [isError, setIsError] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleCourseClick = () => {
+        navigate("/courses");
+    };
+
 
     const handleSubscribe = async () => {
         if (!email) {
@@ -56,6 +63,15 @@ export default function Footer() {
             {/* Footer content */}
             <div className="relative z-10">
                 {/* Top contact info row */}
+                <NavLink
+                    to="/courses"
+                    className={({ isActive }) =>
+                        `hover:text-[#2FC7A1] transition-colors ${isActive ? "text-[#2FC7A1]" : "text-white"
+                        }`
+                    }
+                >
+                    Courses
+                </NavLink>
                 <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-gray-700 border-b border-gray-700">
                     {/* Address */}
                     <div className="flex items-center justify-center gap-3 p-4 sm:p-6">
@@ -131,15 +147,37 @@ export default function Footer() {
 
                         {/* Services */}
                         <div className="text-center sm:text-left">
-                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">Our Courses:</h3>
+                            <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">
+                                Our Courses:
+                            </h3>
                             <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Web Development</li>
-                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Mobile Apps</li>
-                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› UI/UX Design</li>
-                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer">› Digital Marketing</li>
-
+                                <li
+                                    onClick={handleCourseClick}
+                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                >
+                                    › Web Development
+                                </li>
+                                <li
+                                    onClick={handleCourseClick}
+                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                >
+                                    › Mobile Apps
+                                </li>
+                                <li
+                                    onClick={handleCourseClick}
+                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                >
+                                    › UI/UX Design
+                                </li>
+                                <li
+                                    onClick={handleCourseClick}
+                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                >
+                                    › Digital Marketing
+                                </li>
                             </ul>
                         </div>
+
 
                         {/* Gallery */}
 
@@ -201,7 +239,16 @@ export default function Footer() {
                             </div> */}
 
                             <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-                                <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer"> info@suhtech.top</li>
+                                <li>
+                                    <a
+                                        href="https://mail.google.com/mail/?view=cm&fs=1&to=info@suhtech.top"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                    >
+                                        info@suhtech.top
+                                    </a>
+                                </li>
                                 <li className="hover:text-[#2FC7A1] transition-colors cursor-pointer"> 8298252909</li>
 
 

@@ -63,6 +63,7 @@ const Features = () => {
               title="Course Materials"
               description="Complete learning resources including video lectures and digital practice materials."
               buttonText="Materials"
+              onClick={() => navigate("/courses")}
             />
 
             {/* Card 4 - Certification */}
