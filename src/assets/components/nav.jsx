@@ -7,7 +7,7 @@ import Contact from "./Contact";
 const navLinks = [
 
   { name: "About", href: "#about", key: "about", isRoute: false },
-  { name: "Internship", href: "#Internship-banner", key: "Internship", isRoute: false },
+  { name: "Internship", href: "#InternshipBanner", key: "Internship", isRoute: false },
   { name: "Courses", href: "/courses", key: "courses", isRoute: true },
 ];
 
@@ -68,14 +68,29 @@ const Nav = () => {
     <>
       <div className="bg-[#F0FDF9] shadow-sm py-2 sm:py-4 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex items-center fixed top-0 left-0 w-full z-40">
         {/* Logo */}
-        <div
+        {/* <div
           className="flex items-center space-x-2 cursor-pointer group"
           onClick={() => navigate("/")}
+        > */}
+        <div
+          className="flex items-center space-x-2 cursor-pointer group"
+          onClick={() => {
+            if (location.pathname !== "/") {
+              // Navigate to home, then scroll after slight delay
+              navigate("/");
+              setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }, 200);
+            } else {
+              // Already on home, just scroll to top
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
         >
           <img
             src="./Skill Guru Logo Teal.svg"
             alt="Skill Guru Logo"
-            className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain scale-165 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+            className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain scale-165 transition-all duration-300"
           />
         </div>
 
@@ -202,8 +217,8 @@ const Nav = () => {
                   key={link.key}
                   onClick={() => handleLinkClick(link)}
                   className={`w-full text-left py-4 px-4 rounded-lg text-lg font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg animate-in slide-in-from-left duration-500 ${active === link.key
-                      ? "bg-[#2FC7A1] text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                    ? "bg-[#2FC7A1] text-white"
+                    : "text-gray-700 hover:bg-gray-100"
                     }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >

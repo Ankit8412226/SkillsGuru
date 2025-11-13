@@ -9,7 +9,8 @@ const InternshipBanner = () => {
     <>
 
       {/* Internship Banner */}
-      <div className="bg-gradient-to-r from-[#0E2A46] via-[#1a3d5f] to-[#0E2A46] text-white py-16 animate-in slide-in-from-top duration-700">
+      <div id="InternshipBanner"
+      className="bg-gradient-to-r from-[#0E2A46] via-[#1a3d5f] to-[#0E2A46] text-white py-16 animate-in slide-in-from-top duration-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}

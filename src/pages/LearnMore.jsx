@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ArrowRight,
-  ArrowLeft,
   Target,
   Eye,
   Users,
@@ -9,12 +8,24 @@ import {
   BookOpen,
   TrendingUp,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom"; // ✅ added
+import Contact from "../assets/components/Contact.jsx";// ✅ import Contact form
 
 const LearnMore = ({ onBack }) => {
-  const handleBackClick = () => {
-    if (onBack) {
-      onBack();
-    }
+  const navigate = useNavigate();
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
+  // ✅ Navigate to Courses page
+  const handleBrowseCourses = () => {
+    navigate("/courses");
+  };
+
+  // ✅ Open and close contact modal
+  const handleContactClick = () => {
+    setIsContactOpen(true);
+  };
+  const handleCloseContact = () => {
+    setIsContactOpen(false);
   };
 
   return (
@@ -22,14 +33,6 @@ const LearnMore = ({ onBack }) => {
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-[#0E2A46] to-[#1B4B73] text-white py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          {/* <button
-            onClick={handleBackClick}
-            className="flex items-center gap-2 text-white/80 hover:text-white mb-8 transition-colors duration-200"
-          >
-            <ArrowLeft size={20} />
-            <span className="text-sm font-medium">Back to About</span>
-          </button> */}
-
           <div className="text-center max-w-4xl mx-auto">
             <div className="flex items-center justify-center gap-2 mb-6">
               <img src="./icon.svg" alt="icon" className="w-6 h-6" />
@@ -214,80 +217,6 @@ const LearnMore = ({ onBack }) => {
         </div>
       </div>
 
-      {/* Statistics Section */}
-      <div className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0E2A46] mb-6">
-              Our Impact in Numbers
-            </h2>
-            <p className="text-lg text-[#4D5756] max-w-2xl mx-auto">
-              These numbers represent our commitment to delivering quality
-              education and creating meaningful impact in the lives of our
-              learners.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center group">
-              <div className="relative mb-4">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#2FC7A1] to-[#28B895] rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl font-bold text-white">35+</span>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-[#0E2A46] mb-2">
-                Years Experience
-              </h3>
-              <p className="text-[#4D5756]">
-                Decades of expertise in education and technology
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="relative mb-4">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#FE543D] to-[#E63E2E] rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl font-bold text-white">10K+</span>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-[#0E2A46] mb-2">
-                Students Taught
-              </h3>
-              <p className="text-[#4D5756]">
-                Learners from around the world have joined us
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="relative mb-4">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#0E2A46] to-[#1B4B73] rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl font-bold text-white">50+</span>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-[#0E2A46] mb-2">
-                Expert Instructors
-              </h3>
-              <p className="text-[#4D5756]">
-                Industry professionals and academic experts
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="relative mb-4">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#2FC7A1] to-[#FE543D] rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl font-bold text-white">95%</span>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-[#0E2A46] mb-2">
-                Success Rate
-              </h3>
-              <p className="text-[#4D5756]">
-                Students successfully complete their courses
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Call to Action */}
       <div className="py-16 sm:py-20 bg-gradient-to-r from-[#0E2A46] to-[#1B4B73]">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 md:px-8">
@@ -298,25 +227,29 @@ const LearnMore = ({ onBack }) => {
             Join thousands of learners who have transformed their careers with
             our comprehensive courses and expert guidance.
           </p>
-          {/* // onClick={handleContactClick} */}
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              //onClick={handleContactClick}
+              onClick={handleBrowseCourses}
               className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
             >
               <span>Browse Courses</span>
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
+
             <button
-              //onClick={handleContactClick}
-              className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#28B895] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
+              onClick={handleContactClick}
+              className="flex items-center gap-3 bg-[#2FC7A1] text-white font-semibold px-8 py-4 rounded-[200px] hover:bg-[#2FC7A1] transition-all duration-300 hover:scale-105 hover:shadow-xl group"
             >
-              <span>Contact US</span>
+              <span>Contact Us</span>
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
         </div>
       </div>
+
+      {/* ✅ Contact Form Modal */}
+      <Contact isOpen={isContactOpen} onClose={handleCloseContact} />
     </div>
   );
 };

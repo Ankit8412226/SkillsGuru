@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
 import api from '../utils/api';
+import { useSearchParams } from "react-router-dom";
 
 const SkillGuruDashboard = () => {
   const { count } = useCart();
@@ -23,6 +24,11 @@ const SkillGuruDashboard = () => {
   const profileMenuRef = useRef(null);
 
   const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search")?.toLowerCase() || "";
+
+  
 
   // Fetch dashboard data
   const getDashboard = async () => {
@@ -86,7 +92,7 @@ const SkillGuruDashboard = () => {
       setWishlist(data?.items || []);
     } catch (e) {
       // ignore
-      console.log("hello" , e)
+      console.log("hello", e)
     }
   };
 
@@ -153,6 +159,11 @@ const SkillGuruDashboard = () => {
       return 'No deadline';
     })()
   }));
+  
+  const filteredCourses = courses.filter(course =>
+  course.title.toLowerCase().includes(searchQuery) ||
+  course.instructor.toLowerCase().includes(searchQuery)
+);
 
   // Get assignments with course info
   const assignments = dashboardAssignments.map(assignment => ({
@@ -185,13 +196,13 @@ const SkillGuruDashboard = () => {
     instructor: course.instructor
   }));
   if (loading) {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
-      <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
-      <p className="mt-4 text-gray-600 text-lg font-medium">Loading Dashboard…</p>
-    </div>
-  );
-}
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+        <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-600 text-lg font-medium">Loading Dashboard…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen relative bg-gray-50">
@@ -229,6 +240,12 @@ const SkillGuruDashboard = () => {
                   <input
                     type="text"
                     placeholder="Search courses..."
+                    value={searchQuery}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value) setSearchParams({ search: value });
+                      else setSearchParams({});
+                    }}
                     className="w-full h-12 pl-12 pr-3 py-1.5 text-md rounded-[200px] bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300 border focus:outline-none focus:ring-2 focus:ring-emerald-400"
                   />
                 </div>
@@ -335,366 +352,366 @@ const SkillGuruDashboard = () => {
             <p className="text-gray-700">Keep up the great work and continue your journey to success</p>
           </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-          <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <BookOpen className="w-8 h-8 text-emerald-400" />
-            </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">{totalCourses}</p>
-            <p className="text-sm text-gray-600">Total Courses</p>
-          </div>
-
-          <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <TrendingUp className="w-8 h-8 text-blue-400" />
-            </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">{inProgressCourses}</p>
-            <p className="text-sm text-gray-600">In Progress</p>
-          </div>
-
-          <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <Award className="w-8 h-8 text-yellow-400" />
-            </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">{completedCourses}</p>
-            <p className="text-sm text-gray-600">Completed</p>
-          </div>
-
-          <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <AlertCircle className="w-8 h-8 text-orange-400" />
-            </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">{pendingTasks}</p>
-            <p className="text-sm text-gray-600">Pending Tasks</p>
-          </div>
-
-          <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <Clock className="w-8 h-8 text-purple-400" />
-            </div>
-            <p className="text-3xl font-bold mb-1 text-gray-900">{upcomingClasses.length}</p>
-            <p className="text-sm text-gray-600">Upcoming Classes</p>
-          </div>
-        </div>
-
-        {/* Tab bar */}
-        <div className="mb-6 flex gap-2">
-          {[
-            { key: 'courses', label: 'My Courses' },
-            { key: 'orders', label: 'My Orders' },
-            { key: 'wishlist', label: 'Wishlist' },
-          ].map(t => (
-            <button
-              key={t.key}
-              onClick={() => setActiveTab(t.key)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium ${activeTab===t.key ? 'bg-emerald-500 text-white' : 'bg-gray-100 text-gray-800'}`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Courses */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* My Courses */}
-            {activeTab === 'courses' && (
-            <>
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
             <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-              <h2 className="text-xl font-bold mb-6 text-gray-900">My Courses</h2>
-              {loading ? (
-                <div className="text-center py-8">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto"></div>
-                  <p className="mt-4 text-gray-600">Loading courses...</p>
-                </div>
-              ) : courses.length === 0 ? (
-                <div className="text-center py-8">
-                  <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-4">No enrolled courses yet</p>
-                  <button
-                    onClick={() => navigate('/dashboard/course')}
-                    className="px-6 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600"
-                  >
-                    Browse Courses
-                  </button>
-                </div>
-              ) : (
-              <div className="space-y-4">
-                {courses.map(course => (
-                  <div key={course.id} className="bg-gray-50 border-gray-200 rounded-lg p-4 border hover:border-emerald-400 transition-all">
-                    <div className="flex gap-4">
-                      <img src={course.thumbnail} alt={course.title} className="w-32 h-20 rounded-lg object-cover" />
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <h3 className="font-semibold mb-1 text-gray-900">{course.title}</h3>
-                            <p className="text-sm text-gray-600">{course.instructor}</p>
+              <div className="flex items-center justify-between mb-2">
+                <BookOpen className="w-8 h-8 text-emerald-400" />
+              </div>
+              <p className="text-3xl font-bold mb-1 text-gray-900">{totalCourses}</p>
+              <p className="text-sm text-gray-600">Total Courses</p>
+            </div>
+
+            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <TrendingUp className="w-8 h-8 text-blue-400" />
+              </div>
+              <p className="text-3xl font-bold mb-1 text-gray-900">{inProgressCourses}</p>
+              <p className="text-sm text-gray-600">In Progress</p>
+            </div>
+
+            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <Award className="w-8 h-8 text-yellow-400" />
+              </div>
+              <p className="text-3xl font-bold mb-1 text-gray-900">{completedCourses}</p>
+              <p className="text-sm text-gray-600">Completed</p>
+            </div>
+
+            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <AlertCircle className="w-8 h-8 text-orange-400" />
+              </div>
+              <p className="text-3xl font-bold mb-1 text-gray-900">{pendingTasks}</p>
+              <p className="text-sm text-gray-600">Pending Tasks</p>
+            </div>
+
+            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <Clock className="w-8 h-8 text-purple-400" />
+              </div>
+              <p className="text-3xl font-bold mb-1 text-gray-900">{upcomingClasses.length}</p>
+              <p className="text-sm text-gray-600">Upcoming Classes</p>
+            </div>
+          </div>
+
+          {/* Tab bar */}
+          <div className="mb-6 flex gap-2">
+            {[
+              { key: 'courses', label: 'My Courses' },
+              { key: 'orders', label: 'My Orders' },
+              { key: 'wishlist', label: 'Wishlist' },
+            ].map(t => (
+              <button
+                key={t.key}
+                onClick={() => setActiveTab(t.key)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium ${activeTab === t.key ? 'bg-emerald-500 text-white' : 'bg-gray-100 text-gray-800'}`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Main Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Column - Courses */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* My Courses */}
+              {activeTab === 'courses' && (
+                <>
+                  <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+                    <h2 className="text-xl font-bold mb-6 text-gray-900">My Courses</h2>
+                    {loading ? (
+                      <div className="text-center py-8">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto"></div>
+                        <p className="mt-4 text-gray-600">Loading courses...</p>
+                      </div>
+                    ) : courses.length === 0 ? (
+                      <div className="text-center py-8">
+                        <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                        <p className="text-gray-600 mb-4">No enrolled courses yet</p>
+                        <button
+                          onClick={() => navigate('/dashboard/course')}
+                          className="px-6 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600"
+                        >
+                          Browse Courses
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {filteredCourses.map(course => (
+                          <div key={course.id} className="bg-gray-50 border-gray-200 rounded-lg p-4 border hover:border-emerald-400 transition-all">
+                            <div className="flex gap-4">
+                              <img src={course.thumbnail} alt={course.title} className="w-32 h-20 rounded-lg object-cover" />
+                              <div className="flex-1">
+                                <div className="flex items-start justify-between mb-2">
+                                  <div>
+                                    <h3 className="font-semibold mb-1 text-gray-900">{course.title}</h3>
+                                    <p className="text-sm text-gray-600">{course.instructor}</p>
+                                  </div>
+                                  {course.liveNow && (
+                                    <span className="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full animate-pulse">
+                                      LIVE
+                                    </span>
+                                  )}
+                                </div>
+
+                                <div className="mb-3">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <span className="text-sm text-gray-600">Progress</span>
+                                    <span className="text-sm font-semibold text-emerald-600">{course.progress}%</span>
+                                  </div>
+                                  <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                                    <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full" style={{ width: `${course.progress}%` }}></div>
+                                  </div>
+                                </div>
+
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-4 text-sm">
+                                    <span className="text-gray-600">
+                                      {course.pendingAssignments} Pending
+                                    </span>
+                                    <span className="text-gray-600">
+                                      Due: {course.nextDeadline}
+                                    </span>
+                                  </div>
+                                  <div className="flex gap-2">
+                                    {course.liveNow && (
+                                      <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
+                                        <Play className="w-4 h-4" />
+                                        Join Now
+                                      </button>
+                                    )}
+                                    <button
+                                      onClick={() => navigate(`/dashboard/course/${course.id}`)}
+                                      className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+                                    >
+                                      View Course
+                                      <ChevronRight className="w-4 h-4" />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          {course.liveNow && (
-                            <span className="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full animate-pulse">
-                              LIVE
-                            </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Assignments */}
+                  <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+                    <h2 className="text-xl font-bold mb-6 text-gray-900">Upcoming Assignments</h2>
+                    <div className="space-y-3">
+                      {assignments.map(assignment => (
+                        <div key={assignment.id} className="bg-gray-50 border-gray-200 rounded-lg p-4 border flex items-center justify-between hover:border-emerald-400 transition-all">
+                          <div className="flex-1">
+                            <h3 className="font-semibold mb-1 text-gray-900">{assignment.title}</h3>
+                            <p className="text-sm mb-2 text-gray-600">{assignment.courseTitle}</p>
+                            <div className="flex items-center gap-3">
+                              <span className="text-xs flex items-center gap-1 text-gray-600">
+                                <Clock className="w-3 h-3" />
+                                Due: {assignment.deadline}
+                              </span>
+                              {assignment.status === 'pending' ? (
+                                <span className="px-2 py-1 bg-orange-500/20 text-orange-600 text-xs font-medium rounded">
+                                  Pending
+                                </span>
+                              ) : (
+                                <span className="px-2 py-1 bg-emerald-500/20 text-emerald-600 text-xs font-medium rounded flex items-center gap-1">
+                                  <CheckCircle className="w-3 h-3" />
+                                  Submitted
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          {assignment.status === 'pending' && (
+                            <button
+                              onClick={() => navigate(`/dashboard/assignment/${assignment.id}`)}
+                              className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+                            >
+                              <Upload className="w-4 h-4" />
+                              Submit
+                            </button>
                           )}
                         </div>
-
-                        <div className="mb-3">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-sm text-gray-600">Progress</span>
-                            <span className="text-sm font-semibold text-emerald-600">{course.progress}%</span>
-                          </div>
-                          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full" style={{ width: `${course.progress}%` }}></div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4 text-sm">
-                            <span className="text-gray-600">
-                              {course.pendingAssignments} Pending
-                            </span>
-                            <span className="text-gray-600">
-                              Due: {course.nextDeadline}
-                            </span>
-                          </div>
-                          <div className="flex gap-2">
-                            {course.liveNow && (
-                              <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
-                                <Play className="w-4 h-4" />
-                                Join Now
-                              </button>
-                            )}
-                            <button
-                              onClick={() => navigate(`/dashboard/course/${course.id}`)}
-                              className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-900 text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
-                            >
-                              View Course
-                              <ChevronRight className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
-                ))}
-              </div>
+
+                  {/* Instructors */}
+                  <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+                    <h2 className="text-xl font-bold mb-6 text-gray-900">Your Instructors</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {instructors.map((instructor, idx) => (
+                        <div key={idx} className="bg-gray-50 border-gray-200 rounded-lg p-4 border text-center hover:border-emerald-400 transition-all">
+                          <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span className="text-white text-lg font-bold">{instructor.avatar}</span>
+                          </div>
+                          <h3 className="font-semibold mb-1 text-gray-900">{instructor.name}</h3>
+                          <p className="text-sm mb-2 text-gray-600">{instructor.expertise}</p>
+                          <p className="text-xs text-gray-500">{instructor.courses} Courses</p>
+                          <button className="mt-3 w-full px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 text-sm font-medium rounded-lg transition-colors">
+                            Message
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {activeTab === 'orders' && (
+                <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+                  <h2 className="text-xl font-bold mb-6 text-gray-900">My Orders</h2>
+                  <div className="space-y-3">
+                    {orders.length === 0 && <p className="text-gray-600">No orders yet.</p>}
+                    {orders.map((o) => (
+                      <div key={o._id} className="bg-gray-50 border-gray-200 rounded-lg p-4 border flex items-center justify-between">
+                        <div>
+                          <p className="text-gray-900 font-semibold">Order #{o._id.slice(-6)}</p>
+                          <p className="text-gray-600 text-sm">{new Date(o.createdAt).toLocaleString()}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold">₹{o.amount}</p>
+                          <p className={`text-sm ${o.status === 'paid' ? 'text-emerald-500' : 'text-orange-500'}`}>{o.status}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'wishlist' && (
+                <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+                  <h2 className="text-xl font-bold mb-6 text-gray-900">Wishlist</h2>
+                  <div className="space-y-3">
+                    {wishlist.length === 0 && <p className="text-gray-600">Your wishlist is empty.</p>}
+                    {wishlist.map((w) => (
+                      <div key={w.course?._id || w.course} className="bg-gray-50 border-gray-200 rounded-lg p-4 border flex items-center justify-between">
+                        <div>
+                          <p className="text-gray-900 font-semibold">{w.course?.title}</p>
+                          <p className="text-gray-600 text-sm">Added {new Date(w.addedAt).toLocaleDateString()}</p>
+                        </div>
+                        <div className="text-right font-semibold">₹{w.course?.price}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
 
-            {/* Assignments */}
-            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-              <h2 className="text-xl font-bold mb-6 text-gray-900">Upcoming Assignments</h2>
-              <div className="space-y-3">
-                {assignments.map(assignment => (
-                  <div key={assignment.id} className="bg-gray-50 border-gray-200 rounded-lg p-4 border flex items-center justify-between hover:border-emerald-400 transition-all">
-                    <div className="flex-1">
-                      <h3 className="font-semibold mb-1 text-gray-900">{assignment.title}</h3>
-                      <p className="text-sm mb-2 text-gray-600">{assignment.courseTitle}</p>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs flex items-center gap-1 text-gray-600">
-                          <Clock className="w-3 h-3" />
-                          Due: {assignment.deadline}
-                        </span>
-                        {assignment.status === 'pending' ? (
-                          <span className="px-2 py-1 bg-orange-500/20 text-orange-600 text-xs font-medium rounded">
-                            Pending
-                          </span>
-                        ) : (
-                          <span className="px-2 py-1 bg-emerald-500/20 text-emerald-600 text-xs font-medium rounded flex items-center gap-1">
-                            <CheckCircle className="w-3 h-3" />
-                            Submitted
-                          </span>
-                        )}
-                      </div>
+            {/* Right Column - Sidebar */}
+            <div className="space-y-6">
+              {/* Upcoming Classes */}
+              <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-lg font-bold text-gray-900">Upcoming Classes</h2>
+                  <Calendar className="w-5 h-5 text-gray-600" />
+                </div>
+                <div className="space-y-4">
+                  {upcomingClasses.length === 0 ? (
+                    <div className="text-center py-8 text-gray-500 text-sm">
+                      <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-2" />
+                      <p>No upcoming classes scheduled</p>
                     </div>
-                    {assignment.status === 'pending' && (
-                      <button
-                        onClick={() => navigate(`/dashboard/assignment/${assignment.id}`)}
-                        className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2"
+                  ) : (
+                    upcomingClasses.map((cls, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-gray-50 rounded-lg p-4 hover:bg-emerald-50 hover:border-emerald-400 border border-transparent transition-all cursor-pointer group"
+                        title={`Join ${cls.course} with ${cls.instructor}`}
                       >
-                        <Upload className="w-4 h-4" />
-                        Submit
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Instructors */}
-            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-              <h2 className="text-xl font-bold mb-6 text-gray-900">Your Instructors</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {instructors.map((instructor, idx) => (
-                  <div key={idx} className="bg-gray-50 border-gray-200 rounded-lg p-4 border text-center hover:border-emerald-400 transition-all">
-                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <span className="text-white text-lg font-bold">{instructor.avatar}</span>
-                    </div>
-                    <h3 className="font-semibold mb-1 text-gray-900">{instructor.name}</h3>
-                    <p className="text-sm mb-2 text-gray-600">{instructor.expertise}</p>
-                    <p className="text-xs text-gray-500">{instructor.courses} Courses</p>
-                    <button className="mt-3 w-full px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 text-sm font-medium rounded-lg transition-colors">
-                      Message
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-            </>
-            )}
-
-            {activeTab === 'orders' && (
-            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-              <h2 className="text-xl font-bold mb-6 text-gray-900">My Orders</h2>
-              <div className="space-y-3">
-                {orders.length === 0 && <p className="text-gray-600">No orders yet.</p>}
-                {orders.map((o) => (
-                  <div key={o._id} className="bg-gray-50 border-gray-200 rounded-lg p-4 border flex items-center justify-between">
-                    <div>
-                      <p className="text-gray-900 font-semibold">Order #{o._id.slice(-6)}</p>
-                      <p className="text-gray-600 text-sm">{new Date(o.createdAt).toLocaleString()}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold">₹{o.amount}</p>
-                      <p className={`text-sm ${o.status === 'paid' ? 'text-emerald-500' : 'text-orange-500'}`}>{o.status}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            )}
-
-            {activeTab === 'wishlist' && (
-            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-              <h2 className="text-xl font-bold mb-6 text-gray-900">Wishlist</h2>
-              <div className="space-y-3">
-                {wishlist.length === 0 && <p className="text-gray-600">Your wishlist is empty.</p>}
-                {wishlist.map((w) => (
-                  <div key={w.course?._id || w.course} className="bg-gray-50 border-gray-200 rounded-lg p-4 border flex items-center justify-between">
-                    <div>
-                      <p className="text-gray-900 font-semibold">{w.course?.title}</p>
-                      <p className="text-gray-600 text-sm">Added {new Date(w.addedAt).toLocaleDateString()}</p>
-                    </div>
-                    <div className="text-right font-semibold">₹{w.course?.price}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            )}
-          </div>
-
-          {/* Right Column - Sidebar */}
-          <div className="space-y-6">
-            {/* Upcoming Classes */}
-            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-bold text-gray-900">Upcoming Classes</h2>
-                <Calendar className="w-5 h-5 text-gray-600" />
-              </div>
-              <div className="space-y-4">
-                {upcomingClasses.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500 text-sm">
-                    <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-2" />
-                    <p>No upcoming classes scheduled</p>
-                  </div>
-                ) : (
-                  upcomingClasses.map((cls, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-gray-50 rounded-lg p-4 hover:bg-emerald-50 hover:border-emerald-400 border border-transparent transition-all cursor-pointer group"
-                      title={`Join ${cls.course} with ${cls.instructor}`}
-                    >
-                      <p className="text-sm font-semibold mb-2 text-gray-900 group-hover:text-emerald-600 transition-colors">
-                        {cls.course}
-                      </p>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Clock className="w-4 h-4 text-gray-600 group-hover:text-emerald-600 transition-colors" />
-                        <span className="text-xs text-gray-600 group-hover:text-emerald-600 transition-colors">
-                          {cls.time}
-                        </span>
+                        <p className="text-sm font-semibold mb-2 text-gray-900 group-hover:text-emerald-600 transition-colors">
+                          {cls.course}
+                        </p>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Clock className="w-4 h-4 text-gray-600 group-hover:text-emerald-600 transition-colors" />
+                          <span className="text-xs text-gray-600 group-hover:text-emerald-600 transition-colors">
+                            {cls.time}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-600 group-hover:text-emerald-600 transition-colors">
+                          {cls.instructor}
+                        </p>
+                        <div className="mt-3 pt-3 border-t border-gray-200 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button className="w-full px-3 py-1.5 bg-emerald-500 text-white text-xs font-medium rounded hover:bg-emerald-600 transition-colors">
+                            Join Class
+                          </button>
+                        </div>
                       </div>
-                      <p className="text-xs text-gray-600 group-hover:text-emerald-600 transition-colors">
-                        {cls.instructor}
-                      </p>
-                      <div className="mt-3 pt-3 border-t border-gray-200 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button className="w-full px-3 py-1.5 bg-emerald-500 text-white text-xs font-medium rounded hover:bg-emerald-600 transition-colors">
-                          Join Class
-                        </button>
-                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Progress Chart */}
+              <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+                <h2 className="text-lg font-bold mb-6 text-gray-900">Overall Progress</h2>
+                <div className="flex items-center justify-center">
+                  <div className="relative w-40 h-40">
+                    <svg className="transform -rotate-90 w-40 h-40">
+                      <circle cx="80" cy="80" r="70" stroke="#e5e7eb" strokeWidth="12" fill="none" />
+                      <circle cx="80" cy="80" r="70" stroke="url(#gradient)" strokeWidth="12" fill="none" strokeDasharray="440" strokeDashoffset="110" strokeLinecap="round" />
+                      <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#34d399" />
+                          <stop offset="100%" stopColor="#14b8a6" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center flex-col">
+                      <span className="text-3xl font-bold text-gray-900">75%</span>
+                      <span className="text-sm text-gray-600">Complete</span>
                     </div>
-                  ))
-                )}
-              </div>
-            </div>
-
-            {/* Progress Chart */}
-            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-              <h2 className="text-lg font-bold mb-6 text-gray-900">Overall Progress</h2>
-              <div className="flex items-center justify-center">
-                <div className="relative w-40 h-40">
-                  <svg className="transform -rotate-90 w-40 h-40">
-                    <circle cx="80" cy="80" r="70" stroke="#e5e7eb" strokeWidth="12" fill="none" />
-                    <circle cx="80" cy="80" r="70" stroke="url(#gradient)" strokeWidth="12" fill="none" strokeDasharray="440" strokeDashoffset="110" strokeLinecap="round" />
-                    <defs>
-                      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#34d399" />
-                        <stop offset="100%" stopColor="#14b8a6" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center flex-col">
-                    <span className="text-3xl font-bold text-gray-900">75%</span>
-                    <span className="text-sm text-gray-600">Complete</span>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Achievements */}
-            <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
-              <h2 className="text-lg font-bold mb-6 text-gray-900">Achievements</h2>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
-                    <Award className="w-6 h-6 text-white" />
+              {/* Achievements */}
+              <div className="bg-white border-gray-200 rounded-xl p-6 border shadow-sm">
+                <h2 className="text-lg font-bold mb-6 text-gray-900">Achievements</h2>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">5 Courses Completed</p>
+                      <p className="text-xs text-gray-600">Keep going!</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">5 Courses Completed</p>
-                    <p className="text-xs text-gray-600">Keep going!</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center">
+                      <TrendingUp className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">30 Day Streak</p>
+                      <p className="text-xs text-gray-600">Amazing consistency!</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">30 Day Streak</p>
-                    <p className="text-xs text-gray-600">Amazing consistency!</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full flex items-center justify-center">
-                    <MessageSquare className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">Top Contributor</p>
-                    <p className="text-xs text-gray-600">Active in discussions!</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full flex items-center justify-center">
+                      <MessageSquare className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">Top Contributor</p>
+                      <p className="text-xs text-gray-600">Active in discussions!</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Quick Actions */}
-            <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl p-6 shadow-sm">
-              <h3 className="text-white font-bold text-lg mb-4">Ready to Learn?</h3>
-              <p className="text-emerald-50 text-sm mb-4">Explore new courses and expand your skills</p>
-              <button className="w-full px-4 py-2 bg-white text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50 transition-colors" onClick={() => navigate('/dashboard/course')}>
-                Browse Courses
-              </button>
+              {/* Quick Actions */}
+              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl p-6 shadow-sm">
+                <h3 className="text-white font-bold text-lg mb-4">Ready to Learn?</h3>
+                <p className="text-emerald-50 text-sm mb-4">Explore new courses and expand your skills</p>
+                <button className="w-full px-4 py-2 bg-white text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50 transition-colors" onClick={() => navigate('/dashboard/course')}>
+                  Browse Courses
+                </button>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
