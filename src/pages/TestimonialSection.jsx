@@ -85,7 +85,7 @@ export default function TestimonialSection() {
           <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
         </button>
 
-        <div className="relative max-w-xl w-full overflow-hidden mx-8 sm:mx-10 lg:mx-12 xl:mx-16 h-[400px] min-h-[400px]">
+        <div className="relative max-w-xl w-full overflow-hidden mx-8 sm:mx-10 lg:mx-12 xl:mx-16 h-[400px]">
           {/* Card Background */}
           <img
             src="./Reviews_bg.svg"
@@ -95,7 +95,7 @@ export default function TestimonialSection() {
 
           {/* Content */}
           <div className="relative z-10 text-white h-full flex flex-col justify-between" style={{ padding: "48px 40px" }}>
-            <p className="mb-6 sm:mb-8 text-sm sm:text-base md:text-lg leading-relaxed animate-fadeIn flex-1 overflow-hidden">
+            <p className="mb-6 sm:mb-8 text-sm sm:text-base md:text-lg leading-relaxed animate-fadeIn flex-1 line-clamp-6">
               {current.quote}
             </p>
 
