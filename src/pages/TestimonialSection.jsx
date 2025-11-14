@@ -85,7 +85,7 @@ export default function TestimonialSection() {
           <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
         </button>
 
-        <div className="relative max-w-xl w-full overflow-hidden mx-8 sm:mx-10 lg:mx-12 xl:mx-16">
+        <div className="relative max-w-xl w-full overflow-hidden mx-8 sm:mx-10 lg:mx-12 xl:mx-16 h-[400px] min-h-[400px]">
           {/* Card Background */}
           <img
             src="./Reviews_bg.svg"
@@ -94,21 +94,21 @@ export default function TestimonialSection() {
           />
 
           {/* Content */}
-          <div className="relative z-10 text-white" style={{ padding: "48px 40px" }}>
-            <p className="mb-6 sm:mb-8 text-sm sm:text-base md:text-lg leading-relaxed animate-fadeIn">
+          <div className="relative z-10 text-white h-full flex flex-col justify-between" style={{ padding: "48px 40px" }}>
+            <p className="mb-6 sm:mb-8 text-sm sm:text-base md:text-lg leading-relaxed animate-fadeIn flex-1 overflow-hidden">
               {current.quote}
             </p>
 
             {/* Profile */}
-            <div className="flex items-center space-x-3 sm:space-x-4 mb-6">
+            <div className="flex items-center space-x-3 sm:space-x-4 mb-6 flex-shrink-0">
               <img
                 src={current.avatar}
                 alt={current.name}
-                className="w-16 h-16 sm:w-20 sm:h-20 md:w-[90px] md:h-[90px] object-cover rounded-full border-2 border-white/30"
+                className="w-16 h-16 sm:w-20 sm:h-20 md:w-[90px] md:h-[90px] object-cover rounded-full border-2 border-white/30 flex-shrink-0"
               />
-              <div>
-                <h4 className="font-semibold text-base sm:text-lg">{current.name}</h4>
-                <p className="text-gray-300 text-xs sm:text-sm">{current.position}</p>
+              <div className="min-w-0 flex-1">
+                <h4 className="font-semibold text-base sm:text-lg truncate">{current.name}</h4>
+                <p className="text-gray-300 text-xs sm:text-sm truncate">{current.position}</p>
               </div>
             </div>
           </div>
@@ -133,3 +133,4 @@ export default function TestimonialSection() {
     </div>
   );
 }
+
