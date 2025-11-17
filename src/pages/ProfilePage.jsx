@@ -994,7 +994,7 @@ const ProfilePage = () => {
                     </div>
 
                     <div className="pt-4 border-t border-gray-100">
-                      <button 
+                      <button
                         onClick={handleLogoutAllDevices}
                         disabled={saving}
                         className="w-full px-4 py-3 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-medium transition-colors disabled:opacity-50"
