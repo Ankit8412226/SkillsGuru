@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone, Twitter, Linkedin } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import Alert from "../assets/components/Alert.jsx";
@@ -13,9 +13,9 @@ export default function Footer() {
 
     const navigate = useNavigate();
 
-  const handleCourseClick = (categoryName) => {
-    navigate(`/courses?search=${encodeURIComponent(categoryName)}`);
-};
+    const handleCourseClick = (categoryName) => {
+        navigate(`/courses?search=${encodeURIComponent(categoryName)}`);
+    };
 
     const handleSubscribe = async () => {
         if (!email) {
@@ -69,7 +69,7 @@ export default function Footer() {
                         }`
                     }
                 >
-                    
+
                 </NavLink>
                 <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-gray-700 border-b border-gray-700">
                     {/* Address */}
@@ -110,35 +110,37 @@ export default function Footer() {
                                 <img
                                     src="/Skill Guru Logo Teal footer.svg"
                                     alt="Suh Tech Logo"
-                                    className="w-28 h-28 sm:w-28 sm:h-28 object-contain"
+                                    className="w-28 h-28 sm:w-28 sm:h-28 object-contain -mt-10"
                                 />
                             </h2>
 
-                            <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed text-center sm:text-left">
+                            <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed text-center sm:text-left -mt-4">
                                 From learning to earning – Suh Tech helps you build skills that get you hired.
                             </p>
 
                             <div className="flex gap-3 justify-center sm:justify-start">
                                 <a
-                                    href="#"
+                                    href="https://www.facebook.com/profile.php?id=61571524414304"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300"
                                     aria-label="Facebook"
                                 >
-                                    <Facebook size={18} />
+                                    <Facebook size={18} className="text-white" />
                                 </a>
                                 <a
-                                    href="#"
+                                    href="https://www.instagram.com/suhtechpvtltd/"
                                     className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300"
                                     aria-label="Instagram"
                                 >
                                     <Instagram size={18} />
                                 </a>
                                 <a
-                                    href="#"
+                                    href="https://www.linkedin.com/company/suh-tech?originalSubdomain=in"
                                     className="p-2 bg-gray-800 rounded-full hover:bg-teal-500 transition-colors duration-300"
-                                    aria-label="Twitter"
+                                    aria-label="Linkedin"
                                 >
-                                    <Twitter size={18} />
+                                    <Linkedin size={18} />
                                 </a>
                             </div>
                         </div>
@@ -149,32 +151,32 @@ export default function Footer() {
                             <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white">
                                 Our Courses:
                             </h3>
-       <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-    <li
-        onClick={() => handleCourseClick("Development")}
-        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
-    >
-        › Web Development
-    </li>
-    <li
-        onClick={() => handleCourseClick("Mobile")}
-        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
-    >
-        › Mobile Apps
-    </li>
-    <li
-        onClick={() => handleCourseClick("Design")}
-        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
-    >
-        › UI/UX Design
-    </li>
-    <li
-        onClick={() => handleCourseClick("Marketing")}
-        className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
-    >
-        › Digital Marketing
-    </li>
-</ul>
+                            <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
+                                <li
+                                    onClick={() => handleCourseClick("Development")}
+                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                >
+                                    › Web Development
+                                </li>
+                                <li
+                                    onClick={() => handleCourseClick("Mobile")}
+                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                >
+                                    › Mobile Apps
+                                </li>
+                                <li
+                                    onClick={() => handleCourseClick("Design")}
+                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                >
+                                    › UI/UX Design
+                                </li>
+                                <li
+                                    onClick={() => handleCourseClick("Marketing")}
+                                    className="hover:text-[#2FC7A1] transition-colors cursor-pointer"
+                                >
+                                    › Digital Marketing
+                                </li>
+                            </ul>
 
                         </div>
 

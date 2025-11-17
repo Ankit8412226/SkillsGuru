@@ -158,22 +158,20 @@ const Auth = () => {
                 <button
                   onClick={() => !loading && toggleAuthMode()}
                   disabled={loading}
-                  className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
-                    isLogin
-                      ? "bg-[#2FC7A1] text-white shadow-md"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
+                  className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${isLogin
+                    ? "bg-[#2FC7A1] text-white shadow-md"
+                    : "text-gray-600 hover:text-gray-900"
+                    }`}
                 >
                   Login
                 </button>
                 <button
                   onClick={() => !loading && toggleAuthMode()}
                   disabled={loading}
-                  className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
-                    !isLogin
-                      ? "bg-[#2FC7A1] text-white shadow-md"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
+                  className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${!isLogin
+                    ? "bg-[#2FC7A1] text-white shadow-md"
+                    : "text-gray-600 hover:text-gray-900"
+                    }`}
                 >
                   Sign Up
                 </button>
@@ -271,14 +269,14 @@ const Auth = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
+                    className="w-full rounded-[200px] bg-[#2FC7A1] text-white font-medium 
+                    h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors 
+                    duration-200 overflow-hidden flex items-center justify-center 
+                    disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
+                    <span className="text-xs lg:text-sm font-medium">
                       {loading ? "Logging in......" : "Login"}
                     </span>
-                    <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 ml-1">
-                      <ArrowRight size={16} className="lg:w-5 lg:h-5" />
-                    </div>
                   </button>
                 </form>
               ) : (
@@ -437,14 +435,11 @@ const Auth = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex items-center justify-between rounded-[200px] bg-[#2FC7A1] text-white font-medium h-10 lg:h-12 shadow-md hover:bg-[#28B895] transition-colors duration-200 overflow-hidden"
+                    className="w-full bg-[#2FC7A1] text-white py-3 rounded-[200px] font-medium 
+             hover:bg-[#28B895] transition-all duration-200 disabled:opacity-50 
+             disabled:cursor-not-allowed flex items-center justify-center"
                   >
-                    <span className="px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium">
-                      {loading ? "Creating account......" : "Create Account"}
-                    </span>
-                    <div className="flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 ml-1">
-                      <ArrowRight size={16} className="lg:w-5 lg:h-5" />
-                    </div>
+                    {loading ? "Creating account..." : "Create Account"}
                   </button>
                 </form>
               )}

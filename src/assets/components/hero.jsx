@@ -29,7 +29,7 @@ const Hero = () => {
                             Learn , Implement & Achieve
                         </span>
                         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight px-2">
-                            Launch Your Career with Industry-Ready Skills <br />
+                            Hello This is Akriti ,Launch Your Career with Industry-Ready Skills <br />
                             & Guaranteed Placement Support <br />
                         </h1>
                         <p className="text-gray-600 text-base sm:text-lg px-4">

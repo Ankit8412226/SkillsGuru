@@ -631,7 +631,7 @@ const SkillGuruDashboard = () => {
                         <p className="text-gray-600 mb-6 text-sm">Save courses you love and come back to them later</p>
                         <button
                           onClick={() => navigate('/dashboard/course')}
-                          className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:from-emerald-600 hover:to-teal-600 transition-all transform hover:scale-105 font-medium shadow-lg"
+                          className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg transition-all transform hover:scale-105 font-medium shadow-lg"
                         >
                           Explore Courses
                         </button>
@@ -683,7 +683,7 @@ const SkillGuruDashboard = () => {
                               <div className="flex gap-2 mt-auto">
                                 <button
                                   onClick={() => navigate(`/dashboard/course/${w.course?._id || w.course}`)}
-                                  className="flex-1 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-sm font-semibold rounded-lg transition-all transform hover:scale-105 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                                  className="flex-1 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                                 >
                                   <BookOpen className="w-4 h-4" />
                                   View Course

@@ -40,7 +40,7 @@ const InternshipBanner = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">Mentorship</h3>
-                    <p className="text-sm text-gray-300">Expert guidance</p>
+                    <p className="text-sm text-gray-300">Expert guidance & Support</p>
                   </div>
                 </div>
 
