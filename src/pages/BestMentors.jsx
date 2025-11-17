@@ -33,14 +33,14 @@ const BestMentors = () => {
             description: "Specialist in Big Data, Python, and Cloud Computing. Loves mentoring students."
         },
         {
-            name: "Er. Pulkit Pandey",
+            name: "Er. Rahul Mehta",
             subject: "Frontend Development",
             experience: "2+ years",
             rating: 4.9,
             imageUrl:
                 "https://plus.unsplash.com/premium_photo-1682098022877-593355cd975a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             category: "Development",
-            description: "Full Stack specialist in MERN stack & Java Spring Boot with real-world industry experience."
+            description: "Frontend specialist in the MERN stack with production experience building high-performing design systems."
         },
         {
             name: "Ms.Samiksha",

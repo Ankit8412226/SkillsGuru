@@ -19,11 +19,11 @@ const instructors = [
   },
   {
     id: 3,
-    name: "Pulkit",
+    name: "Rahul",
     role: "Teacher",
     img: "./teacher3.png",
     description:
-      "Pulkit is an expert in cloud computing and DevOps. He guides students through cloud architectures and best practices.",
+      "Rahul is an expert in cloud computing and DevOps. He guides students through cloud architectures and best practices.",
   },
   {
     id: 4,

@@ -59,11 +59,11 @@ const ProfilePage = () => {
         return;
       }
 
-      const res = await api.get(`${import.meta.env.VITE_API_BASE_URL}/user/me`, {
+      const res = await api.get(`/user/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const user = res.data;
+      const user = res.data?.data || res.data?.user || res.data;
       setProfileData(user);
       setEditedData({
         firstName: user.firstName || '',
@@ -122,7 +122,7 @@ const ProfilePage = () => {
       };
 
       const response = await api.put(
-        `${import.meta.env.VITE_API_BASE_URL}/user/me`,
+        `/user/me`,
         payload,
         {
           headers: {
@@ -132,7 +132,7 @@ const ProfilePage = () => {
         }
       );
 
-      const updated = response.data;
+      const updated = response.data?.data || response.data?.user || response.data;
       setProfileData(updated);
       setEditedData({
         firstName: updated.firstName || '',
@@ -145,6 +145,14 @@ const ProfilePage = () => {
         postalCode: updated.postalCode || '',
         gender: updated.gender || 'Male',
       });
+      const derivedName = `${updated.firstName || ''} ${updated.lastName || ''}`.trim();
+      if (derivedName) {
+        localStorage.setItem('name', derivedName);
+      }
+      if (updated.email) {
+        localStorage.setItem('email', updated.email);
+      }
+
       setIsEditing(false);
       setShowToast('success');
       setTimeout(() => setShowToast(null), 3000);
@@ -316,7 +324,7 @@ const ProfilePage = () => {
   const handleTwoFactorToggle = async () => {
     const newState = !twoFactorEnabled;
     setTwoFactorEnabled(newState);
-    
+
     setSaving(true);
     try {
       const token = localStorage.getItem('token');
@@ -775,7 +783,7 @@ const ProfilePage = () => {
                           disabled
                           className="flex-1 px-4 py-3 rounded-lg bg-white text-gray-500 border border-gray-200"
                         />
-                        <button 
+                        <button
                           onClick={() => setShowEmailChangeModal(true)}
                           className="px-4 py-3 bg-[#2FC7A1] hover:bg-[#2FC7A1] text-white rounded-lg border border-gray-200 font-medium transition-colors"
                         >
@@ -986,7 +994,7 @@ const ProfilePage = () => {
                     </div>
 
                     <div className="pt-4 border-t border-gray-100">
-                      <button 
+                      <button
                         onClick={handleLogoutAllDevices}
                         disabled={saving}
                         className="w-full px-4 py-3 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg font-medium transition-colors disabled:opacity-50"
