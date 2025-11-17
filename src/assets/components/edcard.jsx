@@ -39,12 +39,12 @@ const CourseCard = ({
         {/* 👁️ View Details Button */}
         <button
           onClick={handleViewDetails}
-          className="absolute top-3 right-3 flex items-center justify-center w-10 h-10 rounded-full bg-black/40 text-white hover:bg-black/40 transition-all duration-300 backdrop-blur-sm hover:scale-110 hover:rotate-12 group"
+          className="absolute top-3 right-3 flex items-center justify-center w-10 h-10 rounded-full  text-white transition-all duration-300 backdrop-blur-sm hover:scale-110 hover:rotate-12 group"
         >
           <img
             src="/Arrow (1).svg"
             alt="arrow icon"
-            className="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
+            className="w-8 h-8 transition-transform duration-300 group-hover:scale-110"
             style={{ fill: "#2FC7A1" }}
           />
         </button>
